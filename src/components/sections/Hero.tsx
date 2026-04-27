@@ -56,7 +56,7 @@ export default function Hero() {
         </div>
 
         <div className="relative animate-in fade-in zoom-in duration-1000 delay-300">
-          <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900 aspect-video lg:aspect-auto lg:h-[700px]">
+          <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900 aspect-video lg:aspect-auto lg:h-[900px]">
             {/* Using a placeholder high-quality image from Unsplash or Pinimg as referenced */}
             <Image
               src="/profile-avatar.jpg"
