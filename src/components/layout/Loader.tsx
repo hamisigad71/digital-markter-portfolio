@@ -57,29 +57,35 @@ export default function Loader() {
           </div>
 
           {/* Floating Particles */}
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ 
-                x: Math.random() * window.innerWidth, 
-                y: Math.random() * window.innerHeight,
-                scale: 0
-              }}
-              animate={{ 
-                y: [null, Math.random() * window.innerHeight],
-                x: [null, Math.random() * window.innerWidth],
-                scale: [0, 1, 0],
-                opacity: [0, 0.5, 0]
-              }}
-              transition={{ 
-                duration: 8 + Math.random() * 4,
-                repeat: Infinity,
-                delay: i * 0.8,
-                ease: "easeInOut"
-              }}
-              className="absolute w-2 h-2 bg-gradient-to-br from-primary/40 to-primary/20 rounded-full blur-sm"
-            />
-          ))}
+          {[...Array(6)].map((_, i) => {
+            const isClient = typeof window !== 'undefined';
+            const winWidth = isClient ? window.innerWidth : 1000;
+            const winHeight = isClient ? window.innerHeight : 1000;
+            
+            return (
+              <motion.div
+                key={i}
+                initial={{ 
+                  x: Math.random() * winWidth, 
+                  y: Math.random() * winHeight,
+                  scale: 0
+                }}
+                animate={{ 
+                  y: [null, Math.random() * winHeight],
+                  x: [null, Math.random() * winWidth],
+                  scale: [0, 1, 0],
+                  opacity: [0, 0.5, 0]
+                }}
+                transition={{ 
+                  duration: 8 + Math.random() * 4,
+                  repeat: Infinity,
+                  delay: i * 0.8,
+                  ease: "easeInOut"
+                }}
+                className="absolute w-2 h-2 bg-gradient-to-br from-primary/40 to-primary/20 rounded-full blur-sm"
+              />
+            );
+          })}
 
           <div className="relative flex flex-col items-center z-10">
             {/* Logo Container with Orbital Rings */}
