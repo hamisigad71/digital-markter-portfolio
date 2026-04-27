@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Award, Briefcase, GraduationCap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -73,30 +75,32 @@ export default function About() {
           </div>
         </div>
 
-        {/* Mission & Story - Added Section */}
-        <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-12 pt-24 border-t border-zinc-100 dark:border-zinc-800">
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold font-display tracking-tight">The Mission</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              My mission is to democratize high-level digital growth strategies that were once only available to massive corporations. I believe every brand has a story worth telling and a community waiting to be built.
-            </p>
-          </div>
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold font-display tracking-tight">The Vision</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              I envision a digital landscape where data and creativity coexist in perfect harmony. My goal is to be the bridge that connects ambitious brands with their ideal audience through ethical and sustainable marketing.
-            </p>
-          </div>
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold font-display tracking-tight">The Values</h3>
-            <ul className="space-y-3">
-              {["Radical Transparency", "Data Over Opinion", "Continuous Evolution", "Human-Centric Growth"].map((value, i) => (
-                <li key={i} className="flex items-center gap-2 font-bold text-zinc-900 dark:text-zinc-100">
-                  <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                  {value}
-                </li>
-              ))}
-            </ul>
+        {/* Mission, Vision, Values - Desktop Only */}
+        <div className="hidden md:block mt-24 pt-24 border-t border-zinc-100 dark:border-zinc-800">
+          <div className="grid grid-cols-3 gap-12">
+            {[
+              { id: 'mission', title: 'The Mission', content: 'My mission is to democratize high-level digital growth strategies that were once only available to massive corporations. I believe every brand has a story worth telling and a community waiting to be built.' },
+              { id: 'vision', title: 'The Vision', content: 'I envision a digital landscape where data and creativity coexist in perfect harmony. My goal is to be the bridge that connects ambitious brands with their ideal audience through ethical and sustainable marketing.' },
+              { id: 'values', title: 'The Values', content: ['Radical Transparency', 'Data Over Opinion', 'Continuous Evolution', 'Human-Centric Growth'], type: 'list' }
+            ].map((item) => (
+              <div key={item.id} className="space-y-4">
+                <h3 className="text-2xl font-bold font-display tracking-tight">{item.title}</h3>
+                {item.type === 'list' && Array.isArray(item.content) ? (
+                  <ul className="space-y-3">
+                    {item.content.map((value, i) => (
+                      <li key={i} className="flex items-center gap-2 font-bold text-zinc-900 dark:text-zinc-100">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        {value}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-muted-foreground leading-relaxed">
+                    {item.content as string}
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

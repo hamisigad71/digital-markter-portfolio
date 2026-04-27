@@ -54,25 +54,25 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
           {services.map((service, index) => (
             <Card key={service.title} className="group hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <CardHeader>
-                <div className={`h-14 w-14 rounded-2xl ${service.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <service.icon className="h-7 w-7" />
+              <CardHeader className="p-4 md:p-6 pb-2 md:pb-4">
+                <div className={`h-10 w-10 md:h-14 md:w-14 rounded-xl md:rounded-2xl ${service.color} flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform`}>
+                  <service.icon className="h-5 w-5 md:h-7 md:w-7" />
                 </div>
-                <CardTitle className="text-2xl font-display font-bold group-hover:text-primary transition-colors">
+                <CardTitle className="text-base md:text-2xl font-display font-bold group-hover:text-primary transition-colors line-clamp-1">
                   {service.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
+              <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
+                <CardDescription className="text-xs md:text-base leading-relaxed line-clamp-2 md:line-clamp-none">
                   {service.description}
                 </CardDescription>
-                <div className="mt-6 pt-6 border-t border-zinc-100 dark:border-zinc-800">
-                  <button className="text-sm font-bold flex items-center text-primary hover:translate-x-1 transition-transform">
+                <div className="mt-3 md:mt-6 pt-3 md:pt-6 border-t border-zinc-100 dark:border-zinc-800">
+                  <button className="text-[10px] md:text-sm font-bold flex items-center text-primary hover:translate-x-1 transition-transform">
                     Learn More
-                    <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>

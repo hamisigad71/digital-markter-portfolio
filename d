@@ -1,0 +1,1 @@
+only show six cards on phone view with add a load more button at the buttom of the six cards.these should be in arranged in 1 line with a sroll effect on phone view

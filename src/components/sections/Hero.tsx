@@ -29,16 +29,16 @@ export default function Hero() {
             I help brands grow through innovative digital marketing strategies, data-driven SEO, and impactful social media campaigns.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <Button size="lg" className="rounded-full px-8 h-14 text-base font-bold group">
+          <div className="flex flex-row items-center gap-2 sm:gap-4">
+            <Button size="lg" className="rounded-full px-5 md:px-8 h-12 md:h-14 text-[13px] md:text-base font-bold group shrink-0">
               Get Started Now
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <button className="flex items-center space-x-3 group px-6 py-3 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors">
-              <div className="h-12 w-12 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                <Play className="h-5 w-5 fill-current text-primary group-hover:text-white" />
+            <button className="flex items-center space-x-2 md:space-x-3 group px-3 md:px-6 py-2 md:py-3 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors shrink-0">
+              <div className="h-10 w-10 md:h-12 md:w-12 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                <Play className="h-4 w-4 md:h-5 md:w-5 fill-current text-primary group-hover:text-white" />
               </div>
-              <span className="font-bold text-sm">Watch Video</span>
+              <span className="font-bold text-[13px] md:text-sm">Watch Video</span>
             </button>
           </div>
 
@@ -56,7 +56,7 @@ export default function Hero() {
         </div>
 
         <div className="relative animate-in fade-in zoom-in duration-1000 delay-300">
-          <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900 aspect-video lg:aspect-auto lg:h-[900px]">
+          <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900 h-[400px] sm:h-[500px] lg:h-[700px] w-full">
             {/* Using a placeholder high-quality image from Unsplash or Pinimg as referenced */}
             <Image
               src="/profile-avatar.jpg"

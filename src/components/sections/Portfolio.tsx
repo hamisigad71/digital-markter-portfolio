@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,12 @@ const tabs = ["All", "Marketing", "Development", "Design", "SEO", "Content", "So
 export default function Portfolio() {
 const [active, setActive] = useState("All");
 const [visibleCount, setVisibleCount] = useState(9);
+
+useEffect(() => {
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
+    setVisibleCount(6);
+  }
+}, []);
 
 const filtered =
 active === "All" ? projects : projects.filter((p) => p.category === active);
@@ -51,12 +57,12 @@ text
     </div>
 
     {/* Tabs */}
-    <div className="flex flex-wrap gap-2 mb-11">
+    <div className="flex overflow-x-auto md:flex-wrap gap-2 mb-11 pb-2 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {tabs.map((tab) => (
         <button
           key={tab}
           onClick={() => setActive(tab)}
-          className={`px-5 py-2 rounded-full text-[13px] font-medium border-[1.5px] transition-all duration-200 ${
+          className={`shrink-0 px-5 py-2 rounded-full text-[13px] font-medium border-[1.5px] transition-all duration-200 ${
             active === tab
               ? "bg-primary text-white border-primary shadow-lg shadow-primary/30"
               : "bg-white dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-primary/50 hover:text-primary"
@@ -70,83 +76,87 @@ text
     {/* Grid */}
     <motion.div 
       layout
-      className="grid grid-cols-2 lg:grid-cols-4 gap-4"
     >
-      <AnimatePresence mode="popLayout">
-        {displayedProjects.map((project, index) => (
-          <motion.div
-            layout
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1], delay: index * 0.05 }}
-            key={project.slug}
-            className={`group relative overflow-hidden rounded-[2rem] bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-all duration-700 hover:shadow-2xl hover:shadow-primary/10 ${
-              index === 0 ? "lg:col-span-2 lg:row-span-1 aspect-video md:aspect-[21/9] lg:aspect-video" : "aspect-[3/2] lg:aspect-[4/3]"
-            }`}
-          >
-            {/* Background Blur Effect */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
-               <Image
-                src={project.image}
-                alt=""
-                fill
-                className="object-cover blur-3xl opacity-20 dark:opacity-40 scale-150 transition-transform duration-1000 group-hover:scale-125"
-              />
-            </div>
+        <div className="grid grid-cols-2 lg:grid-cols-2 md:grid-cols-2 gap-3 md:gap-8">
+          <AnimatePresence mode="popLayout">
+            {displayedProjects.map((project, index) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1], delay: index * 0.05 }}
+                key={project.slug}
+                  className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-zinc-200/50 dark:hover:shadow-primary/5"
+                >
+                  {/* Image Section */}
+                  <div className="relative overflow-hidden aspect-video">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    />
+                    {/* Category Badge Overlaid on Image */}
+                    <div className="absolute top-2 left-2 z-20">
+                      <div className="px-2 py-0.5 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[8px] font-bold text-zinc-900 dark:text-white shadow-sm border border-white/20">
+                        {project.category}
+                      </div>
+                    </div>
+                  </div>
 
-            {/* Main Image (Fill and Fit) */}
-            <div className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden">
-              <div className="relative w-full h-full">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
-                />
-              </div>
-            </div>
+                  {/* Content Section */}
+                  <div className="p-3 md:p-8 space-y-3 md:space-y-5">
+                    {/* Metadata Row */}
+                    <div className="flex items-center gap-2 md:gap-5 text-zinc-400 dark:text-zinc-500">
+                      <div className="flex items-center gap-1">
+                        <svg className="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-[8px] md:text-[10px] font-semibold uppercase tracking-wider">May 12, 2024</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <svg className="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-[8px] md:text-[10px] font-semibold uppercase tracking-wider">8 min read</span>
+                      </div>
+                    </div>
 
-            {/* Top Badge */}
-            <div className="absolute top-4 left-4 z-30">
-              <div className="px-3 py-1.5 rounded-xl bg-white/60 dark:bg-black/60 backdrop-blur-xl border border-white/20 dark:border-white/10 text-[9px] font-black uppercase tracking-[.2em] text-zinc-900 dark:text-white shadow-sm">
-                {project.category}
-              </div>
-            </div>
+                    {/* Title & Description */}
+                    <div className="space-y-1 md:space-y-3">
+                      <h4 className="font-display font-black text-zinc-900 dark:text-white leading-[1.2] transition-colors group-hover:text-primary text-[11px] md:text-xl">
+                        {project.title}
+                      </h4>
+                      <p className="text-zinc-500 dark:text-zinc-400 text-[10px] md:text-[14px] leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
+                    </div>
 
-            {/* Bottom Content Overlay - Not centered, elegant glassmorphism */}
-            <div className="absolute bottom-4 left-4 right-4 z-30 pointer-events-none">
-              <div className="max-w-[90%] p-4 md:p-5 rounded-2xl bg-white/70 dark:bg-zinc-900/70 backdrop-blur-2xl border border-white/40 dark:border-white/10 shadow-2xl transition-all duration-500 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 pointer-events-auto">
-                <div className="space-y-2">
-                  <h4 className={`font-display font-black text-zinc-900 dark:text-white leading-tight ${index === 0 ? "text-xl md:text-2xl" : "text-lg"}`}>
-                    {project.title}
-                  </h4>
-                  <p className="text-zinc-700 dark:text-zinc-300 text-xs leading-relaxed line-clamp-1">
-                    {project.description}
-                  </p>
-                  <Link 
-                    href={`/case-study/${project.slug}`}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-[10px] font-bold transition-all duration-300 hover:gap-4 hover:shadow-lg hover:shadow-primary/30"
-                  >
-                    View Case Study
-                    <ArrowUpRight className="h-3 w-3" />
-                  </Link>
-                </div>
-              </div>
-            </div>
+                    {/* Divider */}
+                    <div className="h-px w-full bg-zinc-100 dark:bg-zinc-800" />
 
-            {/* Corner Accent Link (Visible always) */}
-            <Link 
-              href={`/case-study/${project.slug}`}
-              className="absolute bottom-4 right-4 z-30 h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-110 transition-all duration-500 group-hover:scale-0 group-hover:opacity-0"
-            >
-              <ArrowUpRight className="h-5 w-5" />
-            </Link>
-
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-          </motion.div>
-        ))}
-      </AnimatePresence>
+                    {/* Footer Section */}
+                    <div className="flex items-center justify-between pt-0.5">
+                      <div className="flex items-center gap-1.5 md:gap-3">
+                        <div className="h-6 w-6 md:h-9 md:w-9 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+                          <span className="text-primary text-[8px] md:text-xs font-black">H</span>
+                        </div>
+                        <span className="text-zinc-900 dark:text-white text-[10px] md:text-sm font-bold">Hamisi</span>
+                      </div>
+                      
+                      <Link 
+                        href={`/case-study/${project.slug}`}
+                        className="h-7 w-7 md:h-10 md:w-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center transition-all duration-300 hover:bg-primary hover:border-primary hover:text-white group-hover:shadow-lg group-hover:shadow-primary/20"
+                      >
+                        <ArrowUpRight className="h-3 w-3 md:h-5 md:w-5" />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
     </motion.div>
 
     {/* Footer */}

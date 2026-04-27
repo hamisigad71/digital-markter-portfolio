@@ -8,49 +8,42 @@ export default function Footer() {
   return (
     <footer className="bg-zinc-50 dark:bg-zinc-950 pt-20 pb-10 border-t border-zinc-200 dark:border-zinc-800">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16">
           {/* Brand Section */}
-          <div className="space-y-6">
+          <div className="col-span-2 lg:col-span-1 space-y-4 md:space-y-6">
             <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-12 h-12 bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden group">
+              <div className="relative w-10 h-10 md:w-12 md:h-12 bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden group">
                 <Image
                   src="/logo.png"
                   alt="Daysman Marketer Logo"
                   fill
-                  className="object-contain p-2"
+                  className="object-contain p-1.5 md:p-2"
                 />
               </div>
-              <span className="text-xl font-display font-bold text-zinc-900 dark:text-white">
+              <span className="text-lg md:text-xl font-display font-bold text-zinc-900 dark:text-white">
                 Daysman <span className="text-primary italic">Marketer.</span>
               </span>
             </Link>
 
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-xs md:text-base text-muted-foreground leading-relaxed">
               I provide high-quality digital marketing services to help your business grow in the digital landscape.
             </p>
-            <div className="flex space-x-4">
-              <Link href="#" className="p-2 bg-white dark:bg-zinc-900 rounded-full shadow-sm hover:bg-primary hover:text-primary-foreground transition-all">
-                <Facebook className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="p-2 bg-white dark:bg-zinc-900 rounded-full shadow-sm hover:bg-primary hover:text-primary-foreground transition-all">
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="p-2 bg-white dark:bg-zinc-900 rounded-full shadow-sm hover:bg-primary hover:text-primary-foreground transition-all">
-                <Instagram className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="p-2 bg-white dark:bg-zinc-900 rounded-full shadow-sm hover:bg-primary hover:text-primary-foreground transition-all">
-                <Linkedin className="h-5 w-5" />
-              </Link>
+            <div className="flex space-x-3 md:space-x-4">
+              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
+                <Link key={i} href="#" className="p-1.5 md:p-2 bg-white dark:bg-zinc-900 rounded-full shadow-sm hover:bg-primary hover:text-primary-foreground transition-all">
+                  <Icon className="h-4 w-4 md:h-5 md:w-5" />
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-6">
-            <h3 className="text-lg font-bold font-display">Quick Links</h3>
-            <ul className="space-y-4">
+          <div className="space-y-4 md:space-y-6">
+            <h3 className="text-base md:text-lg font-bold font-display">Quick Links</h3>
+            <ul className="space-y-2 md:space-y-4">
               {["Home", "About", "Services", "Portfolio", "Contact"].map((item) => (
                 <li key={item}>
-                  <Link href={`#${item.toLowerCase()}`} className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link href={`#${item.toLowerCase()}`} className="text-xs md:text-base text-muted-foreground hover:text-primary transition-colors">
                     {item}
                   </Link>
                 </li>
@@ -59,12 +52,12 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div className="space-y-6">
-            <h3 className="text-lg font-bold font-display">Services</h3>
-            <ul className="space-y-4">
-              {["Web Development", "SEO Optimization", "Social Marketing", "Content Writing"].map((item) => (
+          <div className="space-y-4 md:space-y-6">
+            <h3 className="text-base md:text-lg font-bold font-display">Services</h3>
+            <ul className="space-y-2 md:space-y-4">
+              {["Web Dev", "SEO", "Social", "Content"].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                  <Link href="#" className="text-xs md:text-base text-muted-foreground hover:text-primary transition-colors">
                     {item}
                   </Link>
                 </li>
@@ -73,20 +66,20 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-6">
-            <h3 className="text-lg font-bold font-display">Get In Touch</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start space-x-3 text-muted-foreground">
-                <MapPin className="h-5 w-5 text-primary shrink-0" />
-                <span>123 Market St, Nairobi , KE 94105</span>
+          <div className="col-span-2 lg:col-span-1 space-y-4 md:space-y-6">
+            <h3 className="text-base md:text-lg font-bold font-display">Get In Touch</h3>
+            <ul className="space-y-3 md:space-y-4">
+              <li className="flex items-start space-x-2 md:space-x-3 text-xs md:text-base text-muted-foreground">
+                <MapPin className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
+                <span>Nairobi , KE</span>
               </li>
-              <li className="flex items-center space-x-3 text-muted-foreground">
-                <Phone className="h-5 w-5 text-primary shrink-0" />
+              <li className="flex items-center space-x-2 md:space-x-3 text-xs md:text-base text-muted-foreground">
+                <Phone className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
                 <span>+254 742630973</span>
               </li>
-              <li className="flex items-center space-x-3 text-muted-foreground">
-                <Mail className="h-5 w-5 text-primary shrink-0" />
-                <span>hamisigad77@gmail.com</span>
+              <li className="flex items-center space-x-2 md:space-x-3 text-xs md:text-base text-muted-foreground">
+                <Mail className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
+                <span className="truncate">hamisigad77@gmail.com</span>
               </li>
             </ul>
           </div>

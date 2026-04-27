@@ -37,16 +37,38 @@ export default function Testimonials() {
       <div className="container mx-auto px-4">
         
         {/* Brand Logos */}
-        <div className="mb-24">
+        <div className="mb-24 overflow-hidden">
           <p className="text-center text-sm font-bold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-600 mb-10">
             Trusted by Industry Leaders
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-50 dark:opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-            {brands.map((brand, index) => (
-              <span key={index} className="text-2xl md:text-3xl font-display font-black tracking-tighter">
-                {brand}
-              </span>
-            ))}
+          
+          <style dangerouslySetInnerHTML={{__html: `
+            @keyframes marquee {
+              0% { transform: translateX(0%); }
+              100% { transform: translateX(-50%); }
+            }
+            .animate-marquee {
+              animation: marquee 60s linear infinite;
+            }
+            .animate-marquee:hover {
+              animation-play-state: paused;
+            }
+          `}} />
+
+          <div 
+            className="flex relative opacity-50 dark:opacity-40 grayscale hover:grayscale-0 transition-opacity duration-500 w-full"
+            style={{ 
+              maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', 
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' 
+            }}
+          >
+            <div className="animate-marquee flex shrink-0 whitespace-nowrap items-center gap-10 md:gap-20">
+              {[...brands, ...brands, ...brands, ...brands].map((brand, index) => (
+                <span key={index} className="text-2xl md:text-3xl font-display font-black tracking-tighter shrink-0 pr-10 md:pr-20">
+                  {brand}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -67,40 +89,30 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
+          {testimonials.map((testimonial) => (
             <div 
-              key={index} 
-              className="group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-xl"
+              key={testimonial.name} 
+              className="p-4 md:p-8 rounded-2xl md:rounded-3xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 relative group"
             >
-              <div className="absolute top-6 right-8 text-primary/10 group-hover:text-primary/20 transition-colors">
-                <Quote className="h-12 w-12 fill-current" />
-              </div>
-
-              <div className="flex gap-1 mb-6">
+              <div className="flex gap-0.5 mb-2 md:mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  <Star key={i} className="h-2.5 w-2.5 md:h-4 md:w-4 fill-primary text-primary" />
                 ))}
               </div>
-
-              <p className="text-lg leading-relaxed text-zinc-700 dark:text-zinc-300 mb-8 relative z-10">
+              <p className="text-[10px] md:text-lg text-zinc-900 dark:text-zinc-100 font-medium leading-relaxed mb-3 md:mb-6 line-clamp-4 md:line-clamp-none italic">
                 &quot;{testimonial.content}&quot;
               </p>
-
-              <div className="flex items-center gap-4 mt-auto">
-                <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-primary/20">
-                  <Image
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    fill
-                    className="object-cover"
-                  />
+              <div className="flex items-center gap-2 md:gap-4">
+                <div className="relative h-8 w-8 md:h-12 md:w-12 rounded-full overflow-hidden border-2 border-primary/20">
+                  <Image src={testimonial.avatar} alt={testimonial.name} fill className="object-cover" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-zinc-900 dark:text-white leading-tight">{testimonial.name}</h4>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                  <p className="text-[10px] md:text-base font-bold text-zinc-900 dark:text-zinc-100">{testimonial.name}</p>
+                  <p className="text-[8px] md:text-sm text-muted-foreground">{testimonial.role}</p>
                 </div>
               </div>
+              <Quote className="absolute top-4 right-4 h-6 w-6 md:h-12 md:w-12 text-primary/5 group-hover:text-primary/10 transition-colors" />
             </div>
           ))}
         </div>
