@@ -1,0 +1,26 @@
+export async function resetAll(): Promise<void> {
+  // 1. Delete existing
+  await supabase.from("projects").delete().neq("slug", "");
+  await supabase.from("blogs").delete().neq("id", "");
+  
+  // 2. Insert defaults
+  await supabase.from("projects").insert(defaultProjects);
+  await supabase.from("blogs").insert(defaultBlogs.map(b => ({
+    id: b.id,
+    title: b.title,
+    excerpt: b.excerpt,
+    category: b.category,
+    date: b.date,
+    author: b.author,
+    read_time: b.readTime,
+    image: b.image
+  })));
+  
+  await supabase.from("settings").upsert({ key: "profile", profile_image: defaultSettings.profileImage });
+
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("portfolio-updated"));
+    window.dispatchEvent(new Event("blog-updated"));
+    window.dispatchEvent(new Event("settings-updated"));
+  }
+}

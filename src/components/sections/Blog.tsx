@@ -11,14 +11,11 @@ export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
-    setPosts(getBlogs());
-    const handler = () => setPosts(getBlogs());
-    window.addEventListener("blog-updated", handler);
-    window.addEventListener("storage", handler);
-    return () => {
-      window.removeEventListener("blog-updated", handler);
-      window.removeEventListener("storage", handler);
-    };
+    async function fetchPosts() {
+      const data = await getBlogs();
+      setPosts(data);
+    }
+    fetchPosts();
   }, []);
 
   return (

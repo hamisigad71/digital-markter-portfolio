@@ -11,28 +11,25 @@ export default function SettingsManager() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
-    const load = () => setSettings(getSettings());
+    const load = async () => {
+      const s = await getSettings();
+      setSettings(s);
+    };
     load();
     window.addEventListener("settings-updated", load);
-    window.addEventListener("storage", load);
-    return () => {
-      window.removeEventListener("settings-updated", load);
-      window.removeEventListener("storage", load);
-    };
+    return () => window.removeEventListener("settings-updated", load);
   }, []);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!settings) return;
-
     setIsSaving(true);
-    saveSettings(settings);
-    
+    await saveSettings(settings);
     setTimeout(() => {
       setIsSaving(false);
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
-    }, 800);
+    }, 400);
   };
 
   if (!settings) return null;

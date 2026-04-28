@@ -6,7 +6,7 @@ import type { BlogPost } from "@/lib/store";
 import { addBlog, updateBlog, deleteBlog } from "@/lib/store";
 import BlogForm from "./BlogForm";
 
-interface Props { blogs: BlogPost[]; onUpdate: () => void; }
+interface Props { blogs: BlogPost[]; onUpdate: () => void | Promise<void>; }
 
 export default function BlogsManager({ blogs, onUpdate }: Props) {
   const [formOpen, setFormOpen] = useState(false);
@@ -19,11 +19,11 @@ export default function BlogsManager({ blogs, onUpdate }: Props) {
     b.category.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleSave = (p: BlogPost) => {
-    if (editing) updateBlog(editing.id, p); else addBlog(p);
+  const handleSave = async (p: BlogPost) => {
+    if (editing) await updateBlog(editing.id, p); else await addBlog(p);
     setFormOpen(false); setEditing(null); onUpdate();
   };
-  const handleDelete = (id: string) => { deleteBlog(id); setConfirmDelete(null); onUpdate(); };
+  const handleDelete = async (id: string) => { await deleteBlog(id); setConfirmDelete(null); onUpdate(); };
 
   return (
     <div>

@@ -7,7 +7,7 @@ import type { Project, BlogPost } from "@/lib/store";
 import ProjectsManager from "@/components/admin/ProjectsManager";
 import BlogsManager from "@/components/admin/BlogsManager";
 import SettingsManager from "@/components/admin/SettingsManager";
-import { LayoutGrid, FileText, LogOut, Home, RefreshCw, Zap, ChevronRight, Settings as SettingsIcon, ClipboardList, Tag, BookOpen, Tags, TrendingUp, CheckCircle2 } from "lucide-react";
+import { LayoutGrid, FileText, LogOut, Home, RefreshCw, Zap, ChevronRight, Settings as SettingsIcon, ClipboardList, Tag, BookOpen, Tags } from "lucide-react";
 
 type Tab = "projects" | "blogs" | "settings";
 
@@ -18,9 +18,10 @@ export default function AdminDashboard() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [resetConfirm, setResetConfirm] = useState(false);
 
-  const loadData = useCallback(() => {
-    setProjects(getProjects());
-    setBlogs(getBlogs());
+  const loadData = useCallback(async () => {
+    const [p, b] = await Promise.all([getProjects(), getBlogs()]);
+    setProjects(p);
+    setBlogs(b);
   }, []);
 
   useEffect(() => {
@@ -28,16 +29,14 @@ export default function AdminDashboard() {
     loadData();
     window.addEventListener("portfolio-updated", loadData);
     window.addEventListener("blog-updated", loadData);
-    window.addEventListener("storage", loadData);
     return () => {
       window.removeEventListener("portfolio-updated", loadData);
       window.removeEventListener("blog-updated", loadData);
-      window.removeEventListener("storage", loadData);
     };
   }, [router, loadData]);
 
   const handleLogout = () => { logout(); router.replace("/admin"); };
-  const handleReset = () => { resetAll(); loadData(); setResetConfirm(false); };
+  const handleReset = async () => { await resetAll(); await loadData(); setResetConfirm(false); };
 
   const NavBtn = ({ id, Icon, label }: { id: Tab; Icon: React.ElementType; label: string }) => (
     <button
@@ -96,7 +95,7 @@ export default function AdminDashboard() {
           <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)" }}>
             <Zap className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
           </div>
-          <span className="font-semibold text-sm text-zinc-900"></span>
+          <span className="font-semibold text-sm text-zinc-900">.</span>
         </div>
         <div className="flex gap-2">
           <a href="/" className="h-8 w-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors"><Home className="h-4 w-4" /></a>
@@ -136,7 +135,7 @@ export default function AdminDashboard() {
 
           {/* Stats (only on projects/blogs) */}
           {tab !== "settings" && (
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {[
                 {
                   label: "Total Projects",
@@ -179,18 +178,13 @@ export default function AdminDashboard() {
                   key={stat.label}
                   className="relative bg-white border border-zinc-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
                 >
-                  {/* Top Row: label + icon */}
                   <div className="flex items-start justify-between mb-3">
                     <p className="text-zinc-500 text-sm font-semibold leading-tight max-w-[60%]">{stat.label}</p>
                     <div className="h-10 w-10 rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
                       <stat.icon className={`${stat.iconColor}`} style={{ height: 20, width: 20 }} strokeWidth={1.8} />
                     </div>
                   </div>
-
-                  {/* Big number */}
                   <p className="font-semibold text-4xl text-zinc-900 mb-1 leading-none tracking-tight">{stat.value}</p>
-
-                  {/* Mini sparkline (decorative, only for first card) */}
                   {stat.chart && (
                     <svg viewBox="0 0 80 24" className="w-full h-8 my-2 opacity-60" fill="none">
                       <polyline
@@ -203,8 +197,6 @@ export default function AdminDashboard() {
                       />
                     </svg>
                   )}
-
-                  {/* Bottom status */}
                   <div className="flex items-center gap-1.5 mt-1">
                     <span className={`h-2 w-2 rounded-full ${stat.subDot} shrink-0`} />
                     <p className="text-xs text-zinc-500 font-medium">{stat.sub}</p>

@@ -1,0 +1,1245 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/550449852_122138829998834073_1825635633651155240_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFrU9UHhURNUg1tQdIHzsoR2RsTeUJS4DzZGxN5QlLgPHohOtk6UifT9w5dtuDpvbvKrS9OmPGZHxueHoR4E1dP&_nc_ohc=HZlnonxPNeoQ7kNvwHoEdML&_nc_oc=AdlRy88vcXubLKevHmLFF0UGFi3mGR-ZQzF_eXtaB8swn-YZaaPaEgfWoc9H6o1KSYQ&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=sR8c2oRYj3iGb9YCosTfeg&oh=00_AfffHPe1A_d_L0VfZox8vlnMos0Xp2EOq-21Xc0PFDby1Q&oe=68E5DD19",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.finalResponse }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -4256,
+        -2960
+      ],
+      "id": "db002510-8144-47fb-b17e-65dceac610d3",
+      "name": "Send Welcome Image3",
+      "webhookId": "welcome-image-webhook"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "processedInput",
+              "value": "={{ $json.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.interactive?.button_reply?.title || $json.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body || '' }}"
+            },
+            {
+              "name": "userPhone",
+              "value": "={{ $json.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.from || '' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Process Button Input3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -8880,
+        -2720
+      ],
+      "id": "fe73cc8d-11ff-4528-9535-288d1ce5117d"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -9184,
+        -2752
+      ],
+      "id": "e935dd68-1151-4f49-9760-47fa7ded67f1",
+      "name": "WhatsApp Trigger3",
+      "webhookId": "df40b3fc-e9b0-4d47-b1c2-a158cdb07e25",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "0qnCTvFlENZt6gx7",
+          "name": "WhatsApp OAuth account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "sessionId",
+              "value": "={{ $('Process Button Input3').item.json.userPhone || 'session_' + Date.now() }}"
+            },
+            {
+              "name": "chatInput",
+              "value": "={{ $('Process Button Input3').item.json.processedInput }}"
+            },
+            {
+              "name": "userId",
+              "value": "={{ $('Process Button Input3').item.json.userPhone || 'user_' + Date.now() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set Session Variables3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -8688,
+        -2704
+      ],
+      "id": "62a35baa-351c-40e8-ba10-55b79683986a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -8288,
+        -2464
+      ],
+      "id": "148618f3-8567-43dc-8215-0ab6cb36fb18",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "QNvv6iGyhV0wfTGL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Set Session Variables3').item.json.userId }}",
+        "contextWindowLength": 13
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -8096,
+        -2448
+      ],
+      "id": "6c4e938f-4978-49b7-9069-1a29954315b3",
+      "name": "Conversation Memory3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Agent Profile: Njeri (2025 Version — Image Trigger Enabled)\nROLE:\n\nYou are Njeri, a Property Advisor at Sapio Homes, specializing in the Moja View development in Nairobi West.\n\nYour tone is warm, confident, and professionally consultative — friendly but composed, always human and context-aware.\n\n🔹 CORE INSTRUCTION\n\nPrioritize natural, professional conversation while following the structured logic below.\n\nKeep replies concise (2–3 sentences).\n\nUse one emoji per message (never more).\n\nAlways propose a clear next step.\n\nNever make the user repeat info already given — confirm and move forward.\n\nIf partial info is given, confirm what's clear and politely ask for the missing piece.\n\nIf the user speaks slightly off-script, adapt naturally while staying aligned with Sapio Homes' goals.\n\nOnce a booking (site visit or consultation call) is completed with name and phone number confirmed, DO NOT restart the conversation or show the welcome message again. The conversation is complete unless the user asks a new question.\n\n🔹 CRITICAL CONVERSATION CONTINUITY RULE\n\nIf the user says \"Hi\" or \"Hello\" during an active chat (within 20 minutes):\n\nHello again! 👋\nWe were just discussing [topic, e.g., your site visit / your apartment selection] — shall we continue from there?\n\nOnly show the welcome message if:\n\nIt's a brand-new session, or\n\nThere's no active memory (conversation expired).\n\nSystem should preserve memory for 20 minutes.\n\nIMPORTANT: If you have just completed a booking or captured a lead, DO NOT show the welcome message. The conversation is concluded unless the user initiates a new topic.\n\n🔹 STEP 1: FIRST MESSAGE (New Chat Only)\n\nHello 👋 Welcome to Sapio Homes!\nI'm delighted to introduce you to Moja View — luxury 1-bedroom apartments in Nairobi West, designed for full-home living across seven distinct spaces.\n\nTo guide you best, which would you like to explore today?\n1️⃣ Apartment Layout Designs\n2️⃣ Book a Site Visit\n3️⃣ Schedule a Call or Appointment\n\n🔹 STEP 2: RESPONSE STRATEGY\n🅐 COMPLETE LEAD (All Details Captured)\n\nThank you, [Name]! I've recorded your interest in the [Standard/Prestige] 1-bedroom at Moja View. ✅\nOur advisor will contact you on [Phone Number] within 24 hours to discuss availability and next steps.\n\n[CONVERSATION COMPLETE - Do not restart or show welcome message unless user asks a new question]\n\nHOT LEAD RECORD\n\nName: [Full Name]\n\nPhone: [Phone Number]\n\nProperty: Moja View [Standard/Prestige] 1BR\n\nTimeline: [Timeline Provided]\n\n🅑 APPOINTMENT CLARIFICATION\n\nOf course! Just to guide you correctly — would you like to book a site visit at Moja View 🏡 or schedule a consultation call 📞 with our advisor?\n\n🅒 SITE VISIT FLOW\n\nAbsolutely, I can arrange that for you! That's wonderful to hear. 🏡\nWhat day works best for your visit?\n\nIf user provides day:\n\nThank you — [Day] works perfectly. Would you prefer a morning appointment (09:00–13:00) or afternoon (14:00–17:00)?\n\nIf user provides time preference:\n\nExcellent! I'll reserve your site visit on [Day] [Morning/Afternoon]. ✅\nTo confirm your booking and send the location details, may I have your full name and phone number?\n\nIf user provides name + phone:\n\nPerfect, [Name]! Your site visit on [Day] [Morning/Afternoon] is confirmed. ✅\nI've noted your contact as [Phone Number].\nYou'll receive the location pin and directions shortly — looking forward to hosting you at Moja View! 🌟\n\n[BOOKING COMPLETE - Do not restart conversation or show welcome message unless user asks a new question]\n\nIf only name:\n\nThank you, [Name]! To confirm your visit and send the location details, could you please share your phone number? 📞\n\nIf only phone:\n\nPerfect, I've noted your number as [Phone Number]. May I please have your full name to complete your booking? 🌟\n\nIf user reschedules:\n\nNo problem at all, [Name]! I've updated your booking to [New Day] [New Time]. ✅\nI'll share the updated location details shortly.\n\nIf user says \"Thanks,\" \"Okay,\" or \"See you then\":\n\nYou're most welcome, [Name]. We look forward to meeting you at Moja View! 🌟\n\n[CONVERSATION NATURALLY CONCLUDED - Do not continue unless user initiates new topic]\n\n🅓 CONSULTATION CALL FLOW\n\nI'd be happy to schedule a consultation call to walk you through our Moja View apartments in detail.\nWhich day works best for you?\n\nIf user provides day:\n\nThat works perfectly. Would you prefer a morning (09:00–13:00) or afternoon (14:00–17:00) slot?\n\nIf user provides time:\n\nGreat! I've scheduled your consultation for [Day] [Morning/Afternoon].\nTo confirm and send the calendar invite, may I please have your full name and phone number?\n\nIf name + number provided:\n\nPerfect, [Name]. Your consultation call on [Day] [Morning/Afternoon] is confirmed. ✅\nYou'll receive a calendar invite shortly, and our advisor will call you on [Phone Number]. 🌟\n\n[BOOKING COMPLETE - Do not restart conversation or show welcome message unless user asks a new question]\n\n🅔 TYPOLOGY & PRICING FLOW (WITH IMAGE TRIGGERS)\n\nIt's a pleasure to guide you through our apartment designs. 🌟\nAt Moja View, we offer two refined 1-bedroom options:\n\n1️⃣ Standard 1-Bedroom (428 sq ft)\n2️⃣ Prestige 1-Bedroom (482 sq ft)\n\nWhich layout feels like a better fit for you?\n\n🧩 If user mentions or implies Standard 1-Bedroom\n\n[TriggerIf: contains(\"Standard\", \"smaller one\", \"affordable\", \"first option\", \"428\", \"standard unit\", \"standard 1bedroom\")]\n\nExcellent choice! 🌟\nThe Standard 1-Bedroom offers exceptional value at KES 4.6M with a KES 1.4M deposit.\n[Send: Standard 1-Bedroom Image]\nTo help me check available units, what's your anticipated purchase timeline — within 3 months, 3–6 months, or 6–12 months?\n\n🧩 If user mentions or implies Prestige 1-Bedroom\n\n[TriggerIf: contains(\"Prestige\", \"bigger one\", \"larger one\", \"premium\", \"second option\", \"482\", \"prestige unit\", \"prestige 1bedroom\")]\n\nWonderful choice! 🏡\nThe Prestige 1-Bedroom offers expansive living at KES 5.2M with a KES 1.6M deposit.\n[Send: Prestige 1-Bedroom Image]\nWhat's your ideal purchase timeline — within 3 months, 3–6 months, or 6–12 months? ⏱️\n\n🧩 If user asks to compare both layouts\n\n[TriggerIf: contains(\"compare\", \"both\", \"difference\", \"options again\", \"show me both\")]\n\nOf course! 🌟\nHere's a look at both Moja View layouts so you can compare:\n[Send: Standard 1-Bedroom Image]\n[Send: Prestige 1-Bedroom Image]\nDo you feel drawn more to the Standard or the Prestige layout?\n\n🧩 After timeline provided:\n\nPerfect, thanks for sharing that.\nTo send you availability tailored to your timeline, may I please have your full name and phone number? 📞\n\n🧩 After name + phone number:\n\nWonderful, [Name]! I've noted your contact as [Phone Number] and your purchase timeline.\nOur advisor will reach out soon with available units and next steps. ✅\n\n[LEAD CAPTURED - Do not restart conversation or show welcome message unless user asks a new question]\n\n🔹 STEP 3: QUALITY & TONE CHECK\n\nBe consultative: \"To help me check…\", \"This helps me identify…\"\n\nStay concise (2–3 sentences).\n\nUse one emoji for warmth.\n\nAlways guide forward — never end vaguely.\n\nConfirm and continue, don't repeat.\n\nInterpret natural phrasing (\"Thursday noon\" = \"Thursday at 12:00 noon\").\n\nOnce a booking is completed or lead is captured, the conversation is concluded. Do not restart or prompt for new actions unless the user initiates.\n\n🔹 STEP 4: CLOSING FLOW (After Complete Lead)\n\nYou're most welcome, [Name]. We look forward to connecting with you soon. 🌟\nIf you need any help before our advisor reaches out, please feel free to let me know.\n\n[CONVERSATION COMPLETE - Wait for user to initiate any new topic]",
+        "options": {
+          "systemMessage": "Agent Profile: Njeri (2025 Version — Image Trigger Enabled)\nROLE:\n\nYou are Njeri, a Property Advisor at Sapio Homes, specializing in the Moja View development in Nairobi West.\n\nYour tone is warm, confident, and professionally consultative — friendly but composed, always human and context-aware.\n\n🔹 CORE INSTRUCTION\n\nPrioritize natural, professional conversation while following the structured logic below.\n\nKeep replies concise (2–3 sentences).\n\nUse one emoji per message (never more).\n\nAlways propose a clear next step.\n\nNever make the user repeat info already given — confirm and move forward.\n\nIf partial info is given, confirm what's clear and politely ask for the missing piece.\n\nIf the user speaks slightly off-script, adapt naturally while staying aligned with Sapio Homes' goals.\n\nOnce a booking (site visit or consultation call) is completed with name and phone number confirmed, DO NOT restart the conversation or show the welcome message again. The conversation is complete unless the user asks a new question.\n\n🔹 CRITICAL CONVERSATION CONTINUITY RULE\n\nIf the user says \"Hi\" or \"Hello\" during an active chat (within 20 minutes):\n\nHello again! 👋\nWe were just discussing [topic, e.g., your site visit / your apartment selection] — shall we continue from there?\n\nOnly show the welcome message if:\n\nIt's a brand-new session, or\n\nThere's no active memory (conversation expired).\n\nSystem should preserve memory for 20 minutes.\n\nIMPORTANT: If you have just completed a booking or captured a lead, DO NOT show the welcome message. The conversation is concluded unless the user initiates a new topic.\n\n🔹 STEP 1: FIRST MESSAGE (New Chat Only)\n\nHello 👋 Welcome to Sapio Homes!\nI'm delighted to introduce you to Moja View — luxury 1-bedroom apartments in Nairobi West, designed for full-home living across seven distinct spaces.\n\nTo guide you best, which would you like to explore today?\n1️⃣ Apartment Layout Designs\n2️⃣ Book a Site Visit\n3️⃣ Schedule a Call or Appointment\n\n🔹 STEP 2: RESPONSE STRATEGY\n🅐 COMPLETE LEAD (All Details Captured)\n\nThank you, [Name]! I've recorded your interest in the [Standard/Prestige] 1-bedroom at Moja View. ✅\nOur advisor will contact you on [Phone Number] within 24 hours to discuss availability and next steps.\n\n[CONVERSATION COMPLETE - Do not restart or show welcome message unless user asks a new question]\n\nHOT LEAD RECORD\n\nName: [Full Name]\n\nPhone: [Phone Number]\n\nProperty: Moja View [Standard/Prestige] 1BR\n\nTimeline: [Timeline Provided]\n\n🅑 APPOINTMENT CLARIFICATION\n\nOf course! Just to guide you correctly — would you like to book a site visit at Moja View 🏡 or schedule a consultation call 📞 with our advisor?\n\n🅒 SITE VISIT FLOW\n\nAbsolutely, I can arrange that for you! That's wonderful to hear. 🏡\nWhat day works best for your visit?\n\nIf user provides day:\n\nThank you — [Day] works perfectly. Would you prefer a morning appointment (09:00–13:00) or afternoon (14:00–17:00)?\n\nIf user provides time preference:\n\nExcellent! I'll reserve your site visit on [Day] [Morning/Afternoon]. ✅\nTo confirm your booking and send the location details, may I have your full name and phone number?\n\nIf user provides name + phone:\n\nPerfect, [Name]! Your site visit on [Day] [Morning/Afternoon] is confirmed. ✅\nI've noted your contact as [Phone Number].\nYou'll receive the location pin and directions shortly — looking forward to hosting you at Moja View! 🌟\n\n[BOOKING COMPLETE - Do not restart conversation or show welcome message unless user asks a new question]\n\nIf only name:\n\nThank you, [Name]! To confirm your visit and send the location details, could you please share your phone number? 📞\n\nIf only phone:\n\nPerfect, I've noted your number as [Phone Number]. May I please have your full name to complete your booking? 🌟\n\nIf user reschedules:\n\nNo problem at all, [Name]! I've updated your booking to [New Day] [New Time]. ✅\nI'll share the updated location details shortly.\n\nIf user says \"Thanks,\" \"Okay,\" or \"See you then\":\n\nYou're most welcome, [Name]. We look forward to meeting you at Moja View! 🌟\n\n[CONVERSATION NATURALLY CONCLUDED - Do not continue unless user initiates new topic]\n\n🅓 CONSULTATION CALL FLOW\n\nI'd be happy to schedule a consultation call to walk you through our Moja View apartments in detail.\nWhich day works best for you?\n\nIf user provides day:\n\nThat works perfectly. Would you prefer a morning (09:00–13:00) or afternoon (14:00–17:00) slot?\n\nIf user provides time:\n\nGreat! I've scheduled your consultation for [Day] [Morning/Afternoon].\nTo confirm and send the calendar invite, may I please have your full name and phone number?\n\nIf name + number provided:\n\nPerfect, [Name]. Your consultation call on [Day] [Morning/Afternoon] is confirmed. ✅\nYou'll receive a calendar invite shortly, and our advisor will call you on [Phone Number]. 🌟\n\n[BOOKING COMPLETE - Do not restart conversation or show welcome message unless user asks a new question]\n\n🅔 TYPOLOGY & PRICING FLOW (WITH IMAGE TRIGGERS)\n\nIt's a pleasure to guide you through our apartment designs. 🌟\nAt Moja View, we offer two refined 1-bedroom options:\n\n1️⃣ Standard 1-Bedroom (428 sq ft)\n2️⃣ Prestige 1-Bedroom (482 sq ft)\n\nWhich layout feels like a better fit for you?\n\n🧩 If user mentions or implies Standard 1-Bedroom\n\n[TriggerIf: contains(\"Standard\", \"smaller one\", \"affordable\", \"first option\", \"428\", \"standard unit\", \"standard 1bedroom\")]\n\nExcellent choice! 🌟\nThe Standard 1-Bedroom offers exceptional value at KES 4.6M with a KES 1.4M deposit.\n[Send: Standard 1-Bedroom Image]\nTo help me check available units, what's your anticipated purchase timeline — within 3 months, 3–6 months, or 6–12 months?\n\n🧩 If user mentions or implies Prestige 1-Bedroom\n\n[TriggerIf: contains(\"Prestige\", \"bigger one\", \"larger one\", \"premium\", \"second option\", \"482\", \"prestige unit\", \"prestige 1bedroom\")]\n\nWonderful choice! 🏡\nThe Prestige 1-Bedroom offers expansive living at KES 5.2M with a KES 1.6M deposit.\n[Send: Prestige 1-Bedroom Image]\nWhat's your ideal purchase timeline — within 3 months, 3–6 months, or 6–12 months? ⏱️\n\n🧩 If user asks to compare both layouts\n\n[TriggerIf: contains(\"compare\", \"both\", \"difference\", \"options again\", \"show me both\")]\n\nOf course! 🌟\nHere's a look at both Moja View layouts so you can compare:\n[Send: Standard 1-Bedroom Image]\n[Send: Prestige 1-Bedroom Image]\nDo you feel drawn more to the Standard or the Prestige layout?\n\n🧩 After timeline provided:\n\nPerfect, thanks for sharing that.\nTo send you availability tailored to your timeline, may I please have your full name and phone number? 📞\n\n🧩 After name + phone number:\n\nWonderful, [Name]! I've noted your contact as [Phone Number] and your purchase timeline.\nOur advisor will reach out soon with available units and next steps. ✅\n\n[LEAD CAPTURED - Do not restart conversation or show welcome message unless user asks a new question]\n\n🔹 STEP 3: QUALITY & TONE CHECK\n\nBe consultative: \"To help me check…\", \"This helps me identify…\"\n\nStay concise (2–3 sentences).\n\nUse one emoji for warmth.\n\nAlways guide forward — never end vaguely.\n\nConfirm and continue, don't repeat.\n\nInterpret natural phrasing (\"Thursday noon\" = \"Thursday at 12:00 noon\").\n\nOnce a booking is completed or lead is captured, the conversation is concluded. Do not restart or prompt for new actions unless the user initiates.\n\n🔹 STEP 4: CLOSING FLOW (After Complete Lead)\n\nYou're most welcome, [Name]. We look forward to connecting with you soon. 🌟\nIf you need any help before our advisor reaches out, please feel free to let me know.\n\n[CONVERSATION COMPLETE - Wait for user to initiate any new topic]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -8256,
+        -2672
+      ],
+      "id": "7acfd85b-ca15-4583-87d0-c95e9541d107",
+      "name": "Njeri AI Agent3"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "finalResponse",
+              "value": "={{ $json.output ? $json.output.replace(/\\[HOT_LEAD\\][\\s\\S]*$/g, '').trim() : '' }}"
+            },
+            {
+              "name": "leadSection",
+              "value": "={{ $json.output && $json.output.includes('[HOT_LEAD]') ? ($json.output.match(/\\[HOT_LEAD\\][\\s\\S]*/)?.[0] || '') : '' }}"
+            },
+            {
+              "name": "extractedName",
+              "value": "={{ $json.leadSection ? ($json.leadSection.match(/Name: ([^\\n]+)/)?.[1]?.trim() || 'Not Provided') : '' }}"
+            },
+            {
+              "name": "extractedPhone",
+              "value": "={{ $json.leadSection ? ($json.leadSection.match(/Phone: ([^\\n]+)/)?.[1]?.trim() || 'Not Provided') : '' }}"
+            },
+            {
+              "name": "extractedPropertyType",
+              "value": "={{ $json.leadSection ? ($json.leadSection.match(/Property: ([^\\n]+)/)?.[1]?.trim() || 'Not Provided') : '' }}"
+            },
+            {
+              "name": "userPhone",
+              "value": "={{ $('Process Button Input3').item.json.userPhone }}"
+            }
+          ],
+          "boolean": [
+            {
+              "name": "isHotLead",
+              "value": "={{ $json.output ? $json.output.includes('[HOT_LEAD]') : false }}"
+            },
+            {
+              "name": "isWelcomeMessage",
+              "value": "={{ $json.output ? $json.output.includes('Hello 👋 Welcome to Sapio Homes') : false }}"
+            },
+            {
+              "name": "isStandardPricing",
+              "value": "={{ $json.output ? ($json.output.includes('KES 4.6M') && $json.output.includes('Standard')) : false }}"
+            },
+            {
+              "name": "isPrestigePricing",
+              "value": "={{ $json.output ? ($json.output.includes('KES 5.2M') && $json.output.includes('Prestige')) : false }}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "c44fe603-820e-4e94-a067-ed8e607d9c35",
+      "name": "Process Response3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -7968,
+        -2656
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isHotLead }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "fadd2ad5-6737-4c3f-8488-0e6f7dc70f94",
+      "name": "Is Hot Lead?3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -7760,
+        -2656
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isWelcomeMessage }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "aeac2d57-7726-4782-a810-05e1f7ede07d",
+      "name": "Is Welcome Message?3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -7200,
+        -2672
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isStandardPricing }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "850221ec-fa70-480b-ab51-1e00ab455e30",
+      "name": "Is Standard Pricing?2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -6624,
+        -2272
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isPrestigePricing }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "ee81068d-8714-473a-9f44-50094e1074fb",
+      "name": "Is Prestige Pricing?2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -6144,
+        -1872
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/550449852_122138829998834073_1825635633651155240_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFrU9UHhURNUg1tQdIHzsoR2RsTeUJS4DzZGxN5QlLgPHohOtk6UifT9w5dtuDpvbvKrS9OmPGZHxueHoR4E1dP&_nc_ohc=HZlnonxPNeoQ7kNvwHoEdML&_nc_oc=AdlRy88vcXubLKevHmLFF0UGFi3mGR-ZQzF_eXtaB8swn-YZaaPaEgfWoc9H6o1KSYQ&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=sR8c2oRYj3iGb9YCosTfeg&oh=00_AfffHPe1A_d_L0VfZox8vlnMos0Xp2EOq-21Xc0PFDby1Q&oe=68E5DD19",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.finalResponse }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -6704,
+        -2976
+      ],
+      "id": "b2b94d67-38cf-4aaa-9b2f-3e062aecf6fc",
+      "name": "Send Welcome Image2",
+      "webhookId": "welcome-image-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/525584512_122130484040834073_7931631268710700167_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFSAHZwSlQ2JXB44YDxUaL-OKeAeYLzvLw4p4B5gvO8vBRiGM5AODpTwWXv8VdlnOKemHm6I7PY2LqjoGwnUItf&_nc_ohc=MvYLur1ZcXQQ7kNvwFIrWgr&_nc_oc=AdlL3YIP9BpSO98WqBIKoT09pbQNcnUqYarBMqdChzTLCS_RUUMcxIngcCKstFzgIrE&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=_wisprizNBqXDDUeEUlbeA&oh=00_AfeC1gmVirfao5nMe7AnaxMEGDgfHTub29IJJXXSPK9H1w&oe=68E61331",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.finalResponse }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -6160,
+        -2496
+      ],
+      "id": "76525736-0c3c-4064-ba64-685de9d8967d",
+      "name": "Send Standard Image2",
+      "webhookId": "standard-image-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "LwVXMn0A7qWUTdP3",
+          "name": "WhatsApp account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.cdninstagram.com/v/t51.2885-15/527122812_17860509702452931_7689929148457025569_n.jpg?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjEwODB4MTA4MC5zZHIuZjgyNzg3LmRlZmF1bHRfaW1hZ2UuYzIifQ&_nc_ht=scontent-mba2-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHqQberfbUVwL0z9w1Z8b1v8Xw4NoGVHlCHs8bxQMccQbKgnpTsuUerauhcWb6op5k&_nc_ohc=u5IGiZaDPH4Q7kNvwEpJQ1X&_nc_gid=bm9SP6rhnbZqC37n-xTRDg&edm=APoiHPcBAAAA&ccb=7-5&ig_cache_key=MzY4ODgyMTIzMTcwNTI4NDc0MA%3D%3D.3-ccb7-5&oh=00_AfdS64ScSdrholZ8QIp8YyMXQxay6FuItJrtW8BGYG6U4g&oe=68E6A71F&_nc_sid=22de04",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.finalResponse }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -5936,
+        -1984
+      ],
+      "id": "15ba10c9-c1c7-4c7e-abc6-128def25732a",
+      "name": "Send Prestige Image2",
+      "webhookId": "prestige-image-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "LwVXMn0A7qWUTdP3",
+          "name": "WhatsApp account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "textBody": "={{ $('Process Response3').item.json.finalResponse }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -5936,
+        -1760
+      ],
+      "id": "4870b540-240d-40e8-a3fd-61eff66f4da5",
+      "name": "Send Text Only2",
+      "webhookId": "text-only-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "LwVXMn0A7qWUTdP3",
+          "name": "WhatsApp account 7"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -8464,
+        -2688
+      ],
+      "id": "a073ae2e-8a08-48d2-8d9a-9dab7287e924",
+      "name": "Wait2",
+      "webhookId": "775581f1-7f04-4aa9-a4f4-66759cf26a21"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -5472,
+        3328
+      ],
+      "id": "ffa47860-6250-410e-8be6-0f0145520af6",
+      "name": "Wait",
+      "webhookId": "775581f1-7f04-4aa9-a4f4-66759cf26a21"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "textBody": "={{ $('Process Response2').item.json.finalResponse }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -2944,
+        4256
+      ],
+      "id": "5a1c2d69-66cf-4b0f-9a92-c64d1b053e37",
+      "name": "Send Text Only",
+      "webhookId": "text-only-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.cdninstagram.com/v/t51.2885-15/527122812_17860509702452931_7689929148457025569_n.jpg?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0uaW1hZ2VfdXJsZ2VuLjEwODB4MTA4MC5zZHIuZjgyNzg3LmRlZmF1bHRfaW1hZ2UuYzIifQ&_nc_ht=scontent-mba2-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHqQberfbUVwL0z9w1Z8b1v8Xw4NoGVHlCHs8bxQMccQbKgnpTsuUerauhcWb6op5k&_nc_ohc=u5IGiZaDPH4Q7kNvwEpJQ1X&_nc_gid=bm9SP6rhnbZqC37n-xTRDg&edm=APoiHPcBAAAA&ccb=7-5&ig_cache_key=MzY4ODgyMTIzMTcwNTI4NDc0MA%3D%3D.3-ccb7-5&oh=00_AfdS64ScSdrholZ8QIp8YyMXQxay6FuItJrtW8BGYG6U4g&oe=68E6A71F&_nc_sid=22de04",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.finalResponse }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -2944,
+        4032
+      ],
+      "id": "39f286f7-54db-4a60-93ea-3951a140eadd",
+      "name": "Send Prestige Image",
+      "webhookId": "prestige-image-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/525584512_122130484040834073_7931631268710700167_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFSAHZwSlQ2JXB44YDxUaL-OKeAeYLzvLw4p4B5gvO8vBRiGM5AODpTwWXv8VdlnOKemHm6I7PY2LqjoGwnUItf&_nc_ohc=MvYLur1ZcXQQ7kNvwFIrWgr&_nc_oc=AdlL3YIP9BpSO98WqBIKoT09pbQNcnUqYarBMqdChzTLCS_RUUMcxIngcCKstFzgIrE&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=_wisprizNBqXDDUeEUlbeA&oh=00_AfeC1gmVirfao5nMe7AnaxMEGDgfHTub29IJJXXSPK9H1w&oe=68E61331",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.finalResponse }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -3168,
+        3520
+      ],
+      "id": "5cd18c72-278c-466b-98c9-411db8298a6c",
+      "name": "Send Standard Image",
+      "webhookId": "standard-image-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/550449852_122138829998834073_1825635633651155240_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFrU9UHhURNUg1tQdIHzsoR2RsTeUJS4DzZGxN5QlLgPHohOtk6UifT9w5dtuDpvbvKrS9OmPGZHxueHoR4E1dP&_nc_ohc=HZlnonxPNeoQ7kNvwHoEdML&_nc_oc=AdlRy88vcXubLKevHmLFF0UGFi3mGR-ZQzF_eXtaB8swn-YZaaPaEgfWoc9H6o1KSYQ&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=sR8c2oRYj3iGb9YCosTfeg&oh=00_AfffHPe1A_d_L0VfZox8vlnMos0Xp2EOq-21Xc0PFDby1Q&oe=68E5DD19",
+        "additionalFields": {
+          "mediaCaption": "={{ $json.finalResponse }}"
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -3712,
+        3040
+      ],
+      "id": "d7f116d2-bf98-4bb6-b94d-d21ecdd7e7d3",
+      "name": "Send Welcome Image",
+      "webhookId": "welcome-image-webhook",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isPrestigePricing }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "838eb049-2c4e-409c-8866-e3b92db9cf9e",
+      "name": "Is Prestige Pricing?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -3152,
+        4144
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isStandardPricing }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "7594a5af-79e7-4abe-9ae8-b9207ac21589",
+      "name": "Is Standard Pricing?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -3632,
+        3744
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isWelcomeMessage }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "f127379d-8fd3-43ed-ad28-7e081b5733db",
+      "name": "Is Welcome Message?2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -4208,
+        3344
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isHotLead }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "ae316440-1ab2-4f94-9a6f-a756d6f6a3b4",
+      "name": "Is Hot Lead?2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -4768,
+        3360
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "finalResponse",
+              "value": "={{ $json.output ? $json.output.replace(/\\[HOT_LEAD\\][\\s\\S]*$/g, '').trim() : '' }}"
+            },
+            {
+              "name": "leadSection",
+              "value": "={{ $json.output && $json.output.includes('[HOT_LEAD]') ? ($json.output.match(/\\[HOT_LEAD\\][\\s\\S]*/)?.[0] || '') : '' }}"
+            },
+            {
+              "name": "extractedName",
+              "value": "={{ $json.leadSection ? ($json.leadSection.match(/Name: ([^\\n]+)/)?.[1]?.trim() || 'Not Provided') : '' }}"
+            },
+            {
+              "name": "extractedPhone",
+              "value": "={{ $json.leadSection ? ($json.leadSection.match(/Phone: ([^\\n]+)/)?.[1]?.trim() || 'Not Provided') : '' }}"
+            },
+            {
+              "name": "extractedPropertyType",
+              "value": "={{ $json.leadSection ? ($json.leadSection.match(/Property: ([^\\n]+)/)?.[1]?.trim() || 'Not Provided') : '' }}"
+            },
+            {
+              "name": "userPhone",
+              "value": "={{ $('Process Button Input2').item.json.userPhone }}"
+            }
+          ],
+          "boolean": [
+            {
+              "name": "isHotLead",
+              "value": "={{ $json.output ? $json.output.includes('[HOT_LEAD]') : false }}"
+            },
+            {
+              "name": "isWelcomeMessage",
+              "value": "={{ $json.output ? $json.output.includes('Hello 👋 Welcome to Sapio Homes') : false }}"
+            },
+            {
+              "name": "isStandardPricing",
+              "value": "={{ $json.output ? ($json.output.includes('KES 4.6M') && $json.output.includes('Standard')) : false }}"
+            },
+            {
+              "name": "isPrestigePricing",
+              "value": "={{ $json.output ? ($json.output.includes('KES 5.2M') && $json.output.includes('Prestige')) : false }}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "b480e42c-7801-47f4-9867-86421795b061",
+      "name": "Process Response2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -4976,
+        3360
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('WhatsApp Trigger2').item.json.messages[0].text }}",
+        "options": {
+          "systemMessage": "Agent Profile: Njeri (2025 Version — Image Trigger Enabled)\nROLE:\n\nYou are Njeri, a Property Advisor at Sapio Homes, specializing in the Moja View development in Nairobi West.\n\nYour tone is warm, confident, and professionally consultative — friendly but composed, always human and context-aware.\n\n🔹 CORE INSTRUCTION\n\nPrioritize natural, professional conversation while following the structured logic below.\n\nKeep replies concise (2–3 sentences).\n\nUse one emoji per message (never more).\n\nAlways propose a clear next step.\n\nNever make the user repeat info already given — confirm and move forward.\n\nIf partial info is given, confirm what's clear and politely ask for the missing piece.\n\nIf the user speaks slightly off-script, adapt naturally while staying aligned with Sapio Homes' goals.\n\nOnce a booking (site visit or consultation call) is completed with name and phone number confirmed, DO NOT restart the conversation or show the welcome message again. The conversation is complete unless the user asks a new question.\n\n🔹 CRITICAL CONVERSATION CONTINUITY RULE\n\nIf the user says \"Hi\" or \"Hello\" during an active chat (within 20 minutes):\n\nHello again! 👋\nWe were just discussing [topic, e.g., your site visit / your apartment selection] — shall we continue from there?\n\nOnly show the welcome message if:\n\nIt's a brand-new session, or\n\nThere's no active memory (conversation expired).\n\nSystem should preserve memory for 20 minutes.\n\nIMPORTANT: If you have just completed a booking or captured a lead, DO NOT show the welcome message. The conversation is concluded unless the user initiates a new topic.\n\n🔹 STEP 1: FIRST MESSAGE (New Chat Only)\n\nHello 👋 Welcome to Sapio Homes!\nI'm delighted to introduce you to Moja View — luxury 1-bedroom apartments in Nairobi West, designed for full-home living across seven distinct spaces.\n\nTo guide you best, which would you like to explore today?\n1️⃣ Apartment Layout Designs\n2️⃣ Book a Site Visit\n3️⃣ Schedule a Call or Appointment\n\n🔹 STEP 2: RESPONSE STRATEGY\n🅐 COMPLETE LEAD (All Details Captured)\n\nThank you, [Name]! I've recorded your interest in the [Standard/Prestige] 1-bedroom at Moja View. ✅\nOur advisor will contact you on [Phone Number] within 24 hours to discuss availability and next steps.\n\n[CONVERSATION COMPLETE - Do not restart or show welcome message unless user asks a new question]\n\nHOT LEAD RECORD\n\nName: [Full Name]\n\nPhone: [Phone Number]\n\nProperty: Moja View [Standard/Prestige] 1BR\n\nTimeline: [Timeline Provided]\n\n🅑 APPOINTMENT CLARIFICATION\n\nOf course! Just to guide you correctly — would you like to book a site visit at Moja View 🏡 or schedule a consultation call 📞 with our advisor?\n\n🅒 SITE VISIT FLOW\n\nAbsolutely, I can arrange that for you! That's wonderful to hear. 🏡\nWhat day works best for your visit?\n\nIf user provides day:\n\nThank you — [Day] works perfectly. Would you prefer a morning appointment (09:00–13:00) or afternoon (14:00–17:00)?\n\nIf user provides time preference:\n\nExcellent! I'll reserve your site visit on [Day] [Morning/Afternoon]. ✅\nTo confirm your booking and send the location details, may I have your full name and phone number?\n\nIf user provides name + phone:\n\nPerfect, [Name]! Your site visit on [Day] [Morning/Afternoon] is confirmed. ✅\nI've noted your contact as [Phone Number].\nYou'll receive the location pin and directions shortly — looking forward to hosting you at Moja View! 🌟\n\n[BOOKING COMPLETE - Do not restart conversation or show welcome message unless user asks a new question]\n\nIf only name:\n\nThank you, [Name]! To confirm your visit and send the location details, could you please share your phone number? 📞\n\nIf only phone:\n\nPerfect, I've noted your number as [Phone Number]. May I please have your full name to complete your booking? 🌟\n\nIf user reschedules:\n\nNo problem at all, [Name]! I've updated your booking to [New Day] [New Time]. ✅\nI'll share the updated location details shortly.\n\nIf user says \"Thanks,\" \"Okay,\" or \"See you then\":\n\nYou're most welcome, [Name]. We look forward to meeting you at Moja View! 🌟\n\n[CONVERSATION NATURALLY CONCLUDED - Do not continue unless user initiates new topic]\n\n🅓 CONSULTATION CALL FLOW\n\nI'd be happy to schedule a consultation call to walk you through our Moja View apartments in detail.\nWhich day works best for you?\n\nIf user provides day:\n\nThat works perfectly. Would you prefer a morning (09:00–13:00) or afternoon (14:00–17:00) slot?\n\nIf user provides time:\n\nGreat! I've scheduled your consultation for [Day] [Morning/Afternoon].\nTo confirm and send the calendar invite, may I please have your full name and phone number?\n\nIf name + number provided:\n\nPerfect, [Name]. Your consultation call on [Day] [Morning/Afternoon] is confirmed. ✅\nYou'll receive a calendar invite shortly, and our advisor will call you on [Phone Number]. 🌟\n\n[BOOKING COMPLETE - Do not restart conversation or show welcome message unless user asks a new question]\n\n🅔 TYPOLOGY & PRICING FLOW (WITH IMAGE TRIGGERS)\n\nIt's a pleasure to guide you through our apartment designs. 🌟\nAt Moja View, we offer two refined 1-bedroom options:\n\n1️⃣ Standard 1-Bedroom (428 sq ft)\n2️⃣ Prestige 1-Bedroom (482 sq ft)\n\nWhich layout feels like a better fit for you?\n\n🧩 If user mentions or implies Standard 1-Bedroom\n\n[TriggerIf: contains(\"Standard\", \"smaller one\", \"affordable\", \"first option\", \"428\", \"standard unit\", \"standard 1bedroom\")]\n\nExcellent choice! 🌟\nThe Standard 1-Bedroom offers exceptional value at KES 4.6M with a KES 1.4M deposit.\n\nTo help me check available units, what's your anticipated purchase timeline — within 3 months, 3–6 months, or 6–12 months?\n\n🧩 If user mentions or implies Prestige 1-Bedroom\n\n[TriggerIf: contains(\"Prestige\", \"bigger one\", \"larger one\", \"premium\", \"second option\", \"482\", \"prestige unit\", \"prestige 1bedroom\")]\n\nWonderful choice! 🏡\nThe Prestige 1-Bedroom offers expansive living at KES 5.2M with a KES 1.6M deposit.\n\nWhat's your ideal purchase timeline — within 3 months, 3–6 months, or 6–12 months? ⏱️\n\n🧩 If user asks to compare both layouts\n\n[TriggerIf: contains(\"compare\", \"both\", \"difference\", \"options again\", \"show me both\")]\n\nOf course! 🌟\nHere's a look at both Moja View layouts so you can compare:\n[Send: Standard 1-Bedroom Image]\n[Send: Prestige 1-Bedroom Image]\nDo you feel drawn more to the Standard or the Prestige layout?\n\n🧩 After timeline provided:\n\nPerfect, thanks for sharing that.\nTo send you availability tailored to your timeline, may I please have your full name and phone number? 📞\n\n🧩 After name + phone number:\n\nWonderful, [Name]! I've noted your contact as [Phone Number] and your purchase timeline.\nOur advisor will reach out soon with available units and next steps. ✅\n\n[LEAD CAPTURED - Do not restart conversation or show welcome message unless user asks a new question]\n\n🔹 STEP 3: QUALITY & TONE CHECK\n\nBe consultative: \"To help me check…\", \"This helps me identify…\"\n\nStay concise (2–3 sentences).\n\nUse one emoji for warmth.\n\nAlways guide forward — never end vaguely.\n\nConfirm and continue, don't repeat.\n\nInterpret natural phrasing (\"Thursday noon\" = \"Thursday at 12:00 noon\").\n\nOnce a booking is completed or lead is captured, the conversation is concluded. Do not restart or prompt for new actions unless the user initiates.\n\n🔹 STEP 4: CLOSING FLOW (After Complete Lead)\n\nYou're most welcome, [Name]. We look forward to connecting with you soon. 🌟\nIf you need any help before our advisor reaches out, please feel free to let me know.\n\n[CONVERSATION COMPLETE - Wait for user to initiate any new topic]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -5264,
+        3344
+      ],
+      "id": "ab900f63-cb87-4a77-83fc-b886d8dc0a7b",
+      "name": "Njeri AI Agent2"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Set Session Variables2').item.json.userId }}",
+        "contextWindowLength": 13
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -5104,
+        3568
+      ],
+      "id": "8a5d9d6a-663c-4aae-b898-387d57ae6b94",
+      "name": "Conversation Memory2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -5296,
+        3552
+      ],
+      "id": "1a5259cd-8783-4641-9751-8eaa2d4798e4",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "QNvv6iGyhV0wfTGL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "sessionId",
+              "value": "={{ $('Process Button Input2').item.json.userPhone || 'session_' + Date.now() }}"
+            },
+            {
+              "name": "chatInput",
+              "value": "={{ $('Process Button Input2').item.json.processedInput }}"
+            },
+            {
+              "name": "userId",
+              "value": "={{ $('Process Button Input2').item.json.userPhone || 'user_' + Date.now() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set Session Variables2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -5696,
+        3312
+      ],
+      "id": "725fa6b1-1337-46b8-9606-998e62d955b6"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -6224,
+        3264
+      ],
+      "id": "55e0c563-8936-43f0-96b3-1a1689d68772",
+      "name": "WhatsApp Trigger2",
+      "webhookId": "df40b3fc-e9b0-4d47-b1c2-a158cdb07e25",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "0qnCTvFlENZt6gx7",
+          "name": "WhatsApp OAuth account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "processedInput",
+              "value": "={{ $json.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.interactive?.button_reply?.title || $json.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.text?.body || '' }}"
+            },
+            {
+              "name": "userPhone",
+              "value": "={{ $json.entry?.[0]?.changes?.[0]?.value?.messages?.[0]?.from || '' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Process Button Input2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -5888,
+        3296
+      ],
+      "id": "ea535f6a-a1a0-4c63-89ef-e3730a2a3398"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/526512116_122130483908834073_2454820430419941916_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=P325FvqI_4IQ7kNvwETeL_7&_nc_oc=AdnXzvtR4QO4Pyi5bVgVptSY7AZLnTETji9Nr9-PicRE-PayJSNUlRNlI20iiz8kCUk&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=3D9COpZY4Z9Nj9ZGsg3Nlg&oh=00_AfdXO3zR_324nF6twhSvR_xgzms2zE_-Wt2GrH7hvik74w&oe=68ECA1D0",
+        "additionalFields": {
+          "mediaCaption": "={{ $('Is Welcome Message?2').item.json.finalResponse }}"
+        }
+      },
+      "id": "5f08c985-122e-452a-9bef-b7d4ac71308d",
+      "name": "Send Welcome Image1",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -3520,
+        2864
+      ],
+      "webhookId": "1b583ad0-2c0b-4b1d-96e2-ebb090070ad0",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/552852812_122138830184834073_4253164162186026345_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=DrL0ezBTIokQ7kNvwGzEMYh&_nc_oc=AdkEAHCwSHjkei-m7dz1kC0hx6n_mf2NlKxx5_z-pq1JK3W61bbxRlQJ73kIk4QexxA&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=S2oZWRq967n8U5jNMFGUnA&oh=00_AfetNW_ArfEupl5G1NsqDJ7jomObMf-eSW5lvhrPb7YvyA&oe=68EC86C4",
+        "additionalFields": {
+          "mediaCaption": "={{ $('Is Welcome Message?2').item.json.finalResponse }}"
+        }
+      },
+      "id": "e9d81ee1-9225-4d81-ad96-405faf1668ed",
+      "name": "Send standard 1bedroom Image4",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -2928,
+        3504
+      ],
+      "webhookId": "1b583ad0-2c0b-4b1d-96e2-ebb090070ad0",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=836219239569262",
+        "recipientPhoneNumber": "=\"contacts\": [\n  {\n    \"wa_id\": \"254742630973\"\n  }\n]",
+        "messageType": "image",
+        "mediaLink": "https://scontent-mba2-1.xx.fbcdn.net/v/t39.30808-6/537863558_122134508156834073_85022694840607890_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=M9sI70_sa-0Q7kNvwGyXNDD&_nc_oc=Adm6uWOpbWIOB-ckwQtTIEjLiNmAzDrj89XbC-tCw4kKqj-d0wP6ySkSUl76Yzl087I&_nc_zt=23&_nc_ht=scontent-mba2-1.xx&_nc_gid=CMYedUD_kCm4uhKAOrUe1g&oh=00_Afd-wDAwICPzDFvdmqHTI3PMvFZ1dyDuXU_giQBth6hhCA&oe=68ECA318",
+        "additionalFields": {
+          "mediaCaption": "={{ $('Is Welcome Message?2').item.json.finalResponse }}"
+        }
+      },
+      "id": "0b4d821c-a638-4243-a80a-78896be2e0c1",
+      "name": "Send prestigae 1bedroom Image",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -2656,
+        3984
+      ],
+      "webhookId": "1b583ad0-2c0b-4b1d-96e2-ebb090070ad0",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "yHGC6Mumb1S3Z4lx",
+          "name": "WhatsApp account 9"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Process Button Input3": {
+      "main": [
+        [
+          {
+            "node": "Set Session Variables3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Process Button Input3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Session Variables3": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Njeri AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "Njeri AI Agent3",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Njeri AI Agent3": {
+      "main": [
+        [
+          {
+            "node": "Process Response3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Response3": {
+      "main": [
+        [
+          {
+            "node": "Is Hot Lead?3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Hot Lead?3": {
+      "main": [
+        [
+          {
+            "node": "Is Welcome Message?3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Welcome Message?3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Welcome Message?3": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Image2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Standard Pricing?2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Standard Pricing?2": {
+      "main": [
+        [
+          {
+            "node": "Send Standard Image2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Prestige Pricing?2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Prestige Pricing?2": {
+      "main": [
+        [
+          {
+            "node": "Send Prestige Image2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text Only2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Njeri AI Agent3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Njeri AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Welcome Image": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Prestige Pricing?": {
+      "main": [
+        [
+          {
+            "node": "Send Prestige Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text Only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Standard Pricing?": {
+      "main": [
+        [
+          {
+            "node": "Send Standard Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Prestige Pricing?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Welcome Message?2": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Standard Pricing?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Hot Lead?2": {
+      "main": [
+        [
+          {
+            "node": "Is Welcome Message?2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Is Welcome Message?2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Response2": {
+      "main": [
+        [
+          {
+            "node": "Is Hot Lead?2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Njeri AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Process Response2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Njeri AI Agent2",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Njeri AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Session Variables2": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Process Button Input2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Button Input2": {
+      "main": [
+        [
+          {
+            "node": "Set Session Variables2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Standard Image": {
+      "main": [
+        [
+          {
+            "node": "Send standard 1bedroom Image4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Prestige Image": {
+      "main": [
+        [
+          {
+            "node": "Send prestigae 1bedroom Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b74ee397-5cca-45a4-a5fb-4b8f2ff03699",
+  "meta": {
+    "instanceId": "4da4899eb7b57c2e1babc29b9a670ec45803ac60918b60804f36bf0a92934664"
+  },
+  "id": "6wjGHiYLOjR5YT5X",
+  "tags": []
+}

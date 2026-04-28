@@ -10,21 +10,25 @@ export default function Hero() {
   const [profileImg, setProfileImg] = useState("/profile-avatar.jpg");
 
   useEffect(() => {
-    // Initial load
-    setProfileImg(getSettings().profileImage);
+    const load = async () => {
+      try {
+        const settings = await getSettings();
+        if (settings?.profileImage) {
+          setProfileImg(settings.profileImage);
+        }
+      } catch (err) {
+        console.error("Failed to load hero settings", err);
+      }
+    };
 
-    // Listen for real-time updates from admin
+    load();
+
     const handler = () => {
-      setProfileImg(getSettings().profileImage);
+      load();
     };
     
     window.addEventListener("settings-updated", handler);
-    window.addEventListener("storage", handler);
-    
-    return () => {
-      window.removeEventListener("settings-updated", handler);
-      window.removeEventListener("storage", handler);
-    };
+    return () => window.removeEventListener("settings-updated", handler);
   }, []);
 
   return (
@@ -87,7 +91,7 @@ export default function Hero() {
               fill
               className="object-cover"
               priority
-              unoptimized={profileImg.startsWith('data:')}
+              unoptimized={profileImg ? profileImg.startsWith('data:') : false}
             />
           </div>
           

@@ -25,7 +25,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
       setShowUrlInput(false);
     } catch (err) {
       console.error("Upload failed", err);
-      alert("Failed to upload image. Please try a smaller file.");
+      alert("Failed to upload image. Your file might be too large for Supabase storage (default limit is 50MB).");
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -52,6 +52,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
         setShowUrlInput(false);
       } catch (err) {
         console.error("Upload failed", err);
+        alert("Upload failed. Check your Supabase storage limits.");
       } finally {
         setIsUploading(false);
       }
@@ -112,7 +113,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
                 </div>
                 <div className="text-center">
                   <p className="text-sm font-medium text-zinc-900 group-hover:text-amber-700">Click to upload</p>
-                  <p className="text-xs text-zinc-400">PNG, JPG, WebP — max 5MB</p>
+                  <p className="text-xs text-zinc-400">PNG, JPG, WebP — max 50MB</p>
                 </div>
               </>
             )}

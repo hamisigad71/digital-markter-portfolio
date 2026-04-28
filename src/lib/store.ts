@@ -1,3 +1,4 @@
+import { supabase } from "./supabase";
 import { projects as defaultProjects } from "@/data/projects";
 import { defaultBlogs, BlogPost } from "@/data/blogs";
 
@@ -18,104 +19,13 @@ export interface Settings {
   profileImage: string;
 }
 
-const PROJECTS_KEY = "admin_projects";
-const BLOGS_KEY = "admin_blogs";
-const SETTINGS_KEY = "admin_settings";
-const AUTH_KEY = "admin_authenticated";
-
 const defaultSettings: Settings = {
   profileImage: "/profile-avatar.jpg",
 };
 
-// ── Projects ──────────────────────────────────────────────────────────────────
-
-export function getProjects(): Project[] {
-  if (typeof window === "undefined") return defaultProjects as Project[];
-  try {
-    const raw = localStorage.getItem(PROJECTS_KEY);
-    if (!raw) return defaultProjects as Project[];
-    return JSON.parse(raw) as Project[];
-  } catch {
-    return defaultProjects as Project[];
-  }
-}
-
-export function saveProjects(projects: Project[]): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
-  window.dispatchEvent(new Event("portfolio-updated"));
-}
-
-export function addProject(project: Project): void {
-  const current = getProjects();
-  saveProjects([...current, project]);
-}
-
-export function updateProject(slug: string, updated: Project): void {
-  const current = getProjects();
-  saveProjects(current.map((p) => (p.slug === slug ? updated : p)));
-}
-
-export function deleteProject(slug: string): void {
-  const current = getProjects();
-  saveProjects(current.filter((p) => p.slug !== slug));
-}
-
-// ── Blogs ─────────────────────────────────────────────────────────────────────
-
-export function getBlogs(): BlogPost[] {
-  if (typeof window === "undefined") return defaultBlogs;
-  try {
-    const raw = localStorage.getItem(BLOGS_KEY);
-    if (!raw) return defaultBlogs;
-    return JSON.parse(raw) as BlogPost[];
-  } catch {
-    return defaultBlogs;
-  }
-}
-
-export function saveBlogs(blogs: BlogPost[]): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(BLOGS_KEY, JSON.stringify(blogs));
-  window.dispatchEvent(new Event("blog-updated"));
-}
-
-export function addBlog(post: BlogPost): void {
-  const current = getBlogs();
-  saveBlogs([...current, post]);
-}
-
-export function updateBlog(id: string, updated: BlogPost): void {
-  const current = getBlogs();
-  saveBlogs(current.map((b) => (b.id === id ? updated : b)));
-}
-
-export function deleteBlog(id: string): void {
-  const current = getBlogs();
-  saveBlogs(current.filter((b) => b.id !== id));
-}
-
-// ── Settings ──────────────────────────────────────────────────────────────────
-
-export function getSettings(): Settings {
-  if (typeof window === "undefined") return defaultSettings;
-  try {
-    const raw = localStorage.getItem(SETTINGS_KEY);
-    if (!raw) return defaultSettings;
-    return { ...defaultSettings, ...JSON.parse(raw) };
-  } catch {
-    return defaultSettings;
-  }
-}
-
-export function saveSettings(settings: Settings): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  window.dispatchEvent(new Event("settings-updated"));
-}
-
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
+const AUTH_KEY = "admin_authenticated";
 export const ADMIN_PASSWORD = "admin2025";
 
 export function isAuthenticated(): boolean {
@@ -135,27 +45,155 @@ export function logout(): void {
   sessionStorage.removeItem(AUTH_KEY);
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+// ── Projects ──────────────────────────────────────────────────────────────────
 
-/**
- * Converts a file to a base64 data URL.
- */
-export function handleImageUpload(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+export async function getProjects(): Promise<Project[]> {
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("created_at", { ascending: true });
+
+  if (error || !data) {
+    return [];
+  }
+
+  return data as Project[];
+}
+
+export async function addProject(project: Project): Promise<void> {
+  await supabase.from("projects").insert(project);
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("portfolio-updated"));
+}
+
+export async function updateProject(slug: string, updated: Project): Promise<void> {
+  await supabase.from("projects").update(updated).eq("slug", slug);
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("portfolio-updated"));
+}
+
+export async function deleteProject(slug: string): Promise<void> {
+  await supabase.from("projects").delete().eq("slug", slug);
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("portfolio-updated"));
+}
+
+// ── Blogs ─────────────────────────────────────────────────────────────────────
+
+export async function getBlogs(): Promise<BlogPost[]> {
+  const { data, error } = await supabase
+    .from("blogs")
+    .select("*")
+    .order("id", { ascending: true });
+
+  if (error || !data) {
+    return [];
+  }
+
+  return data.map((b) => ({
+    id: b.id,
+    title: b.title,
+    excerpt: b.excerpt,
+    category: b.category,
+    date: b.date,
+    author: b.author,
+    readTime: b.read_time,
+    image: b.image,
+  })) as BlogPost[];
+}
+
+export async function addBlog(post: BlogPost): Promise<void> {
+  await supabase.from("blogs").insert({
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt,
+    category: post.category,
+    date: post.date,
+    author: post.author,
+    read_time: post.readTime,
+    image: post.image,
   });
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("blog-updated"));
+}
+
+export async function updateBlog(id: string, updated: BlogPost): Promise<void> {
+  await supabase.from("blogs").update({
+    title: updated.title,
+    excerpt: updated.excerpt,
+    category: updated.category,
+    date: updated.date,
+    author: updated.author,
+    read_time: updated.readTime,
+    image: updated.image,
+  }).eq("id", id);
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("blog-updated"));
+}
+
+export async function deleteBlog(id: string): Promise<void> {
+  await supabase.from("blogs").delete().eq("id", id);
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("blog-updated"));
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+
+export async function getSettings(): Promise<Settings> {
+  const { data, error } = await supabase
+    .from("settings")
+    .select("profile_image")
+    .eq("key", "profile")
+    .single();
+
+  if (error || !data) return defaultSettings;
+  return { profileImage: data.profile_image ?? defaultSettings.profileImage };
+}
+
+export async function saveSettings(settings: Settings): Promise<void> {
+  await supabase.from("settings").upsert({
+    key: "profile",
+    profile_image: settings.profileImage,
+  });
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("settings-updated"));
+}
+
+// ── Image Upload (Supabase Storage) ───────────────────────────────────────────
+
+export async function handleImageUpload(file: File): Promise<string> {
+  const ext = file.name.split(".").pop();
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const path = `uploads/${filename}`;
+
+  const { error } = await supabase.storage
+    .from("portfolio-images")
+    .upload(path, file, { upsert: true });
+
+  if (error) throw error;
+
+  const { data } = supabase.storage.from("portfolio-images").getPublicUrl(path);
+  return data.publicUrl;
 }
 
 // ── Reset ─────────────────────────────────────────────────────────────────────
 
-export function resetAll(): void {
-  localStorage.removeItem(PROJECTS_KEY);
-  localStorage.removeItem(BLOGS_KEY);
-  localStorage.removeItem(SETTINGS_KEY);
-  window.dispatchEvent(new Event("portfolio-updated"));
-  window.dispatchEvent(new Event("blog-updated"));
-  window.dispatchEvent(new Event("settings-updated"));
+export async function resetAll(): Promise<void> {
+  // 1. Delete existing
+  await supabase.from("projects").delete().neq("slug", "");
+  await supabase.from("blogs").delete().neq("id", "");
+  
+  // 2. Insert defaults
+  await supabase.from("projects").insert(defaultProjects);
+  await supabase.from("blogs").insert(defaultBlogs.map(b => ({
+    id: b.id,
+    title: b.title,
+    excerpt: b.excerpt,
+    category: b.category,
+    date: b.date,
+    author: b.author,
+    read_time: b.readTime,
+    image: b.image
+  })));
+  
+  await supabase.from("settings").upsert({ key: "profile", profile_image: defaultSettings.profileImage });
+
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("portfolio-updated"));
+    window.dispatchEvent(new Event("blog-updated"));
+    window.dispatchEvent(new Event("settings-updated"));
+  }
 }
