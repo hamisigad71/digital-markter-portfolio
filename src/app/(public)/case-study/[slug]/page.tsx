@@ -31,6 +31,7 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
 
   if (loading) return null;
   if (!project) notFound();
+  return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pt-20">
       {/* Back Button */}
       <motion.div 
