@@ -53,7 +53,7 @@ export default function BlogForm({ post, onSave, onClose }: Props) {
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-zinc-100 px-8 py-5 flex items-center justify-between rounded-t-3xl z-10">
           <div>
-            <h2 className="text-zinc-900 font-black text-xl">{post ? "Edit Post" : "New Blog Post"}</h2>
+            <h2 className="text-zinc-900 font-semibold text-xl">{post ? "Edit Post" : "New Blog Post"}</h2>
             <p className="text-zinc-400 text-xs mt-0.5">Fill in the details for your article</p>
           </div>
           <button onClick={onClose} className="h-9 w-9 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors">
@@ -109,7 +109,7 @@ export default function BlogForm({ post, onSave, onClose }: Props) {
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 py-3 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-300 font-semibold text-sm transition-all">Cancel</button>
-            <button type="submit" className="flex-1 py-3 rounded-xl font-black text-sm text-white transition-all"
+            <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
               style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
               {post ? "Save Changes" : "Add Post"}
             </button>

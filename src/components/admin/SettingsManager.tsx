@@ -44,13 +44,13 @@ export default function SettingsManager() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-black text-zinc-900">Site Settings</h2>
+            <h2 className="text-2xl font-semibold text-zinc-900">Site Settings</h2>
             <p className="text-zinc-500 text-sm">Configure your personal brand and site-wide properties.</p>
           </div>
           <button
             type="submit"
             disabled={isSaving}
-            className="flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-bold text-sm text-white transition-all w-full md:w-auto"
+            className="flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-medium text-sm text-white transition-all w-full md:w-auto"
             style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}
           >
             {isSaving ? (
@@ -73,7 +73,7 @@ export default function SettingsManager() {
         {showSuccess && (
           <div className="bg-green-50 border border-green-100 rounded-2xl p-4 flex items-center gap-3 text-green-700 animate-in fade-in slide-in-from-top-2">
             <CheckCircle2 className="h-5 w-5" />
-            <p className="text-sm font-bold">Settings updated successfully!</p>
+            <p className="text-sm font-medium">Settings updated successfully!</p>
           </div>
         )}
 
@@ -85,7 +85,7 @@ export default function SettingsManager() {
                 <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
                   <UserCircle className="h-6 w-6" />
                 </div>
-                <h3 className="font-black text-lg text-zinc-900">Brand Identity</h3>
+                <h3 className="font-semibold text-lg text-zinc-900">Brand Identity</h3>
               </div>
 
               <div className="space-y-6">
@@ -106,7 +106,7 @@ export default function SettingsManager() {
                 <div className="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
                   <Globe className="h-6 w-6" />
                 </div>
-                <h3 className="font-black text-lg text-zinc-900">SEO & Metadata</h3>
+                <h3 className="font-semibold text-lg text-zinc-900">SEO & Metadata</h3>
               </div>
               <div className="p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
                 <p className="text-xs text-zinc-500 font-medium italic">Site name and global meta-descriptions will be added to the next update.</p>
@@ -120,15 +120,15 @@ export default function SettingsManager() {
               <div className="h-10 w-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
                 <Shield className="h-5 w-5" />
               </div>
-              <h4 className="font-bold text-amber-900">Privacy & Security</h4>
+              <h4 className="font-medium text-amber-900">Privacy & Security</h4>
               <p className="text-sm text-amber-800/70 leading-relaxed">
                 Changes to these settings take effect immediately across all public pages. Be sure to verify your changes in a new tab.
               </p>
             </div>
             
             <div className="bg-zinc-900 rounded-3xl p-8 text-white space-y-4 shadow-lg shadow-zinc-200">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Quick Tip</p>
-              <h4 className="font-bold text-lg leading-tight">Optimizing Site Performance</h4>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">Quick Tip</p>
+              <h4 className="font-medium text-lg leading-tight">Optimizing Site Performance</h4>
               <p className="text-sm text-zinc-400 leading-relaxed">
                 When uploading images directly, we recommend keeping file sizes under 200KB for the fastest loading speeds for your visitors.
               </p>

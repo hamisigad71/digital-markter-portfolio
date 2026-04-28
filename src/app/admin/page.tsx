@@ -46,7 +46,7 @@ export default function AdminLoginPage() {
           <div className="h-14 w-14 rounded-2xl flex items-center justify-center shadow-xl mb-4" style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 8px 24px rgba(255,170,23,0.35)" }}>
             <Zap className="h-7 w-7 text-white" strokeWidth={2.5} />
           </div>
-          <h1 className="text-zinc-900 text-2xl font-black tracking-tight"></h1>
+          <h1 className="text-zinc-900 text-2xl font-semibold tracking-tight"></h1>
           <p className="text-zinc-400 text-sm mt-1">Admin access only</p>
         </div>
 
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
               id="admin-login-btn"
               type="submit"
               disabled={loading || !password}
-              className="w-full py-3.5 rounded-xl font-black text-sm text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3.5 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 16px rgba(255,170,23,0.35)" }}
             >
               {loading ? (

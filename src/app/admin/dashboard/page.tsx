@@ -65,7 +65,7 @@ export default function AdminDashboard() {
               <Zap className="h-4 w-4 text-white" strokeWidth={2.5} />
             </div>
             <div>
-              <p className="font-black text-sm text-zinc-900">.</p>
+              <p className="font-semibold text-sm text-zinc-900">.</p>
               <p className="text-zinc-400 text-[10px]">Admin Panel</p>
             </div>
           </div>
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
           <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)" }}>
             <Zap className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
           </div>
-          <span className="font-black text-sm text-zinc-900"></span>
+          <span className="font-semibold text-sm text-zinc-900"></span>
         </div>
         <div className="flex gap-2">
           <a href="/" className="h-8 w-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors"><Home className="h-4 w-4" /></a>
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
               <span>Admin</span><ChevronRight className="h-3 w-3" />
               <span className="text-zinc-900 font-semibold capitalize">{tab}</span>
             </div>
-            <h1 className="text-3xl font-black text-zinc-900">
+            <h1 className="text-3xl font-semibold text-zinc-900">
               {tab === "projects" ? "Projects" : tab === "blogs" ? "Blog Posts" : "Site Settings"}
             </h1>
             {tab !== "settings" && (
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Big number */}
-                  <p className="font-black text-4xl text-zinc-900 mb-1 leading-none tracking-tight">{stat.value}</p>
+                  <p className="font-semibold text-4xl text-zinc-900 mb-1 leading-none tracking-tight">{stat.value}</p>
 
                   {/* Mini sparkline (decorative, only for first card) */}
                   {stat.chart && (
@@ -231,11 +231,11 @@ export default function AdminDashboard() {
             <div className="h-12 w-12 rounded-full bg-orange-50 flex items-center justify-center mx-auto mb-4">
               <RefreshCw className="h-6 w-6 text-orange-500" />
             </div>
-            <h3 className="text-zinc-900 font-black text-lg mb-2">Reset All Data?</h3>
+            <h3 className="text-zinc-900 font-semibold text-lg mb-2">Reset All Data?</h3>
             <p className="text-zinc-500 text-sm mb-6">This will restore all projects and blog posts to their original defaults. Your custom edits will be lost.</p>
             <div className="flex gap-3">
               <button onClick={() => setResetConfirm(false)} className="flex-1 py-2.5 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 font-semibold text-sm transition-all">Cancel</button>
-              <button onClick={handleReset} className="flex-1 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm transition-all">Reset</button>
+              <button onClick={handleReset} className="flex-1 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-medium text-sm transition-all">Reset</button>
             </div>
           </div>
         </div>

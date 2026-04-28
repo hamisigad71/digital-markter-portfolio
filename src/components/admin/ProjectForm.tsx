@@ -58,7 +58,7 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
       <div className="bg-white border border-zinc-200 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="sticky top-0 bg-white border-b border-zinc-100 px-8 py-5 flex items-center justify-between rounded-t-3xl z-10">
           <div>
-            <h2 className="text-zinc-900 font-black text-xl">{project ? "Edit Project" : "New Project"}</h2>
+            <h2 className="text-zinc-900 font-semibold text-xl">{project ? "Edit Project" : "New Project"}</h2>
             <p className="text-zinc-400 text-xs mt-0.5">Fields marked * are required</p>
           </div>
           <button onClick={onClose} className="h-9 w-9 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors">
@@ -116,7 +116,7 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
             <button type="button" onClick={onClose} className="flex-1 py-3 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-300 font-semibold text-sm transition-all">
               Cancel
             </button>
-            <button type="submit" className="flex-1 py-3 rounded-xl font-black text-sm text-white transition-all"
+            <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
               style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
               {project ? "Save Changes" : "Add Project"}
             </button>

@@ -51,7 +51,7 @@ export default function ProjectsManager({ projects, onUpdate }: Props) {
         <button
           id="add-project-btn"
           onClick={() => { setEditing(null); setFormOpen(true); }}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm text-white transition-all shrink-0"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm text-white transition-all shrink-0"
           style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 12px rgba(255,170,23,0.3)" }}
         >
           <Plus className="h-4 w-4" />Add Project
@@ -87,7 +87,7 @@ export default function ProjectsManager({ projects, onUpdate }: Props) {
                 
                 {/* Category Overlay */}
                 <div className="absolute top-2 left-2">
-                  <span className={`text-[7px] md:text-[10px] font-black uppercase tracking-wider px-2 py-0.5 md:px-3 md:py-1 rounded-full border shadow-sm backdrop-blur-md ${categoryColors[project.category]?.replace('bg-', 'bg-opacity-90 bg-') ?? "bg-white/90 text-zinc-600 border-zinc-200"}`}>
+                  <span className={`text-[7px] md:text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 md:px-3 md:py-1 rounded-full border shadow-sm backdrop-blur-md ${categoryColors[project.category]?.replace('bg-', 'bg-opacity-90 bg-') ?? "bg-white/90 text-zinc-600 border-zinc-200"}`}>
                     {project.category}
                   </span>
                 </div>
@@ -96,7 +96,7 @@ export default function ProjectsManager({ projects, onUpdate }: Props) {
               {/* Content Section */}
               <div className="p-3 md:p-5 flex flex-col flex-1">
                 <div className="mb-3 md:mb-4">
-                  <h4 className="text-zinc-900 font-black text-xs md:text-lg leading-tight mb-0.5 md:mb-1 group-hover:text-amber-600 transition-colors line-clamp-1">
+                  <h4 className="text-zinc-900 font-semibold text-xs md:text-lg leading-tight mb-0.5 md:mb-1 group-hover:text-amber-600 transition-colors line-clamp-1">
                     {project.title}
                   </h4>
                   <p className="text-zinc-500 text-[10px] md:text-xs line-clamp-1 md:line-clamp-2 leading-relaxed">
@@ -139,11 +139,11 @@ export default function ProjectsManager({ projects, onUpdate }: Props) {
             <div className="h-12 w-12 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
               <AlertTriangle className="h-6 w-6 text-red-500" />
             </div>
-            <h3 className="text-zinc-900 font-black text-lg mb-2">Delete Project?</h3>
+            <h3 className="text-zinc-900 font-semibold text-lg mb-2">Delete Project?</h3>
             <p className="text-zinc-400 text-sm mb-6">This action cannot be undone. The project will be permanently removed.</p>
             <div className="flex gap-3">
               <button onClick={() => setConfirmDelete(null)} className="flex-1 py-2.5 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 font-semibold text-sm transition-all">Cancel</button>
-              <button onClick={() => handleDelete(confirmDelete)} className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-sm transition-all">Delete</button>
+              <button onClick={() => handleDelete(confirmDelete)} className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium text-sm transition-all">Delete</button>
             </div>
           </div>
         </div>

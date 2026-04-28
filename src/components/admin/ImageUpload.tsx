@@ -77,7 +77,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-zinc-900 font-bold text-xs shadow-lg hover:bg-amber-400 hover:text-white transition-all"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-zinc-900 font-medium text-xs shadow-lg hover:bg-amber-400 hover:text-white transition-all"
               >
                 {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
                 {isUploading ? "Uploading…" : "Replace"}
@@ -85,7 +85,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
               <button
                 type="button"
                 onClick={handleClear}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-red-500 font-bold text-xs shadow-lg hover:bg-red-500 hover:text-white transition-all"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-red-500 font-medium text-xs shadow-lg hover:bg-red-500 hover:text-white transition-all"
               >
                 <X className="h-4 w-4" />Remove
               </button>
@@ -111,7 +111,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
                   <Upload className="h-6 w-6" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-bold text-zinc-900 group-hover:text-amber-700">Click to upload</p>
+                  <p className="text-sm font-medium text-zinc-900 group-hover:text-amber-700">Click to upload</p>
                   <p className="text-xs text-zinc-400">PNG, JPG, WebP — max 5MB</p>
                 </div>
               </>
@@ -134,7 +134,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
           type="button"
           onClick={() => fileInputRef.current?.click()}
           disabled={isUploading}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-dashed border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-600 hover:bg-amber-50/30 transition-all text-xs font-bold disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-dashed border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-600 hover:bg-amber-50/30 transition-all text-xs font-medium disabled:opacity-50"
         >
           {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
           {isUploading ? "Uploading…" : "Upload New Image"}
@@ -158,7 +158,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
           <button
             type="button"
             onClick={() => setShowUrlInput(true)}
-            className="text-xs font-bold text-amber-600 hover:text-amber-700 transition-colors flex items-center gap-1"
+            className="text-xs font-medium text-amber-600 hover:text-amber-700 transition-colors flex items-center gap-1"
           >
             <Link2 className="h-3 w-3" />
             Use URL instead
