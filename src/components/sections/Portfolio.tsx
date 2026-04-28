@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/data/projects";
+import { getProjects } from "@/lib/store";
+import type { Project } from "@/lib/store";
 import { motion, AnimatePresence } from "framer-motion";
 
 const tabs = ["All", "Marketing", "Development", "Design", "SEO", "Content", "Social Media"];
@@ -12,6 +13,18 @@ const tabs = ["All", "Marketing", "Development", "Design", "SEO", "Content", "So
 export default function Portfolio() {
 const [active, setActive] = useState("All");
 const [visibleCount, setVisibleCount] = useState(9);
+const [allProjects, setAllProjects] = useState<Project[]>([]);
+
+useEffect(() => {
+  setAllProjects(getProjects());
+  const handler = () => setAllProjects(getProjects());
+  window.addEventListener("portfolio-updated", handler);
+  window.addEventListener("storage", handler);
+  return () => {
+    window.removeEventListener("portfolio-updated", handler);
+    window.removeEventListener("storage", handler);
+  };
+}, []);
 
 useEffect(() => {
   if (typeof window !== "undefined" && window.innerWidth < 768) {
@@ -20,7 +33,7 @@ useEffect(() => {
 }, []);
 
 const filtered =
-active === "All" ? projects : projects.filter((p) => p.category === active);
+active === "All" ? allProjects : allProjects.filter((p) => p.category === active);
 
 const displayedProjects = filtered.slice(0, visibleCount);
 
@@ -31,8 +44,6 @@ setVisibleCount(prev => prev + 8);
 return (
 <section id="portfolio" className="py-24 bg-zinc-50 dark:bg-zinc-950">
 <div className="container mx-auto px-6 lg:px-10">
-
-text
 
     {/* Header */}
     <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-10">
@@ -77,7 +88,7 @@ text
     <motion.div 
       layout
     >
-        <div className="grid grid-cols-2 lg:grid-cols-2 md:grid-cols-2 gap-3 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 gap-3 md:gap-6">
           <AnimatePresence mode="popLayout">
             {displayedProjects.map((project, index) => (
               <motion.div

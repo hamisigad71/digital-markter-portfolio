@@ -1,40 +1,26 @@
 'use client';
 
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Calendar, User, Clock } from "lucide-react";
+import { ArrowRight, Calendar, Clock } from "lucide-react";
 import Image from "next/image";
-
-const posts = [
-  {
-    title: "Mastering GA4: From Data to Actionable Insights",
-    excerpt: "Learn how to leverage Google Analytics 4 to track user journeys and optimize your conversion rates.",
-    category: "Analytics",
-    date: "May 12, 2024",
-    author: "Hamisi",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
-  },
-  {
-    title: "The Future of SEO in an AI-Driven World",
-    excerpt: "How generative AI is changing search intent and what you need to do to stay ahead of the curve.",
-    category: "SEO",
-    date: "Jun 05, 2024",
-    author: "Hamisi",
-    readTime: "12 min read",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    title: "Scaling Paid Ads: When to Spend More",
-    excerpt: "A data-backed guide on identifying the point of diminishing returns in your PPC campaigns.",
-    category: "PPC",
-    date: "Jun 28, 2024",
-    author: "Hamisi",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-  },
-];
+import { getBlogs } from "@/lib/store";
+import type { BlogPost } from "@/lib/store";
 
 export default function Blog() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    setPosts(getBlogs());
+    const handler = () => setPosts(getBlogs());
+    window.addEventListener("blog-updated", handler);
+    window.addEventListener("storage", handler);
+    return () => {
+      window.removeEventListener("blog-updated", handler);
+      window.removeEventListener("storage", handler);
+    };
+  }, []);
+
   return (
     <section id="blog" className="py-24 bg-zinc-50 dark:bg-zinc-900/30">
       <div className="container mx-auto px-4">

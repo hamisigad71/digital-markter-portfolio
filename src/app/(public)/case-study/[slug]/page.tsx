@@ -1,23 +1,36 @@
 'use client';
 
-import { projects } from "@/data/projects";
+import { useState, useEffect, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle2, Trophy, Lightbulb, Target } from "lucide-react";
 import { motion } from "framer-motion";
-import { use } from "react";
+import { getProjects, type Project } from "@/lib/store";
 
 export default function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const project = projects.find((p) => p.slug === slug);
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!project) {
-    notFound();
-  }
+  useEffect(() => {
+    const load = () => {
+      const all = getProjects();
+      const found = all.find((p) => p.slug === slug);
+      setProject(found || null);
+      setLoading(false);
+    };
+    load();
+    window.addEventListener("portfolio-updated", load);
+    window.addEventListener("storage", load);
+    return () => {
+      window.removeEventListener("portfolio-updated", load);
+      window.removeEventListener("storage", load);
+    };
+  }, [slug]);
 
-
-  return (
+  if (loading) return null;
+  if (!project) notFound();
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pt-20">
       {/* Back Button */}
       <motion.div 
@@ -203,8 +216,10 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
 
       {/* Next Project Navigation */}
       {(() => {
-        const currentIndex = projects.findIndex((p) => p.slug === project.slug);
-        const nextProject = projects[(currentIndex + 1) % projects.length];
+        const allProjects = getProjects();
+        if (allProjects.length <= 1) return null;
+        const currentIndex = allProjects.findIndex((p) => p.slug === project.slug);
+        const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
         
         return (
           <section className="py-24 bg-white dark:bg-zinc-900 border-t border-zinc-100 dark:border-zinc-800">

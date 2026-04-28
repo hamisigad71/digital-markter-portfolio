@@ -1,8 +1,32 @@
+'use client';
+
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import Image from "next/image";
+import { getSettings } from "@/lib/store";
 
 export default function Hero() {
+  const [profileImg, setProfileImg] = useState("/profile-avatar.jpg");
+
+  useEffect(() => {
+    // Initial load
+    setProfileImg(getSettings().profileImage);
+
+    // Listen for real-time updates from admin
+    const handler = () => {
+      setProfileImg(getSettings().profileImage);
+    };
+    
+    window.addEventListener("settings-updated", handler);
+    window.addEventListener("storage", handler);
+    
+    return () => {
+      window.removeEventListener("settings-updated", handler);
+      window.removeEventListener("storage", handler);
+    };
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-white dark:bg-black">
       {/* Background Gradients */}
@@ -56,14 +80,14 @@ export default function Hero() {
         </div>
 
         <div className="relative animate-in fade-in zoom-in duration-1000 delay-300">
-          <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900 h-[400px] sm:h-[700px] lg:h-[700px] w-full">
-            {/* Using a placeholder high-quality image from Unsplash or Pinimg as referenced */}
+          <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-zinc-900 h-[400px] sm:h-[700px] lg:h-[700px] w-full bg-zinc-100">
             <Image
-              src="/profile-avatar.jpg"
-              alt="Digital Marketing Team"
+              src={profileImg}
+              alt="Digital Marketing Specialist"
               fill
               className="object-cover"
               priority
+              unoptimized={profileImg.startsWith('data:')}
             />
           </div>
           
