@@ -96,7 +96,7 @@ export default function AdminDashboard() {
           <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)" }}>
             <Zap className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
           </div>
-          <span className="font-black text-sm text-zinc-900">.</span>
+          <span className="font-black text-sm text-zinc-900"></span>
         </div>
         <div className="flex gap-2">
           <a href="/" className="h-8 w-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors"><Home className="h-4 w-4" /></a>
