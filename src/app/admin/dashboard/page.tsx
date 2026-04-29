@@ -195,17 +195,17 @@ export default function AdminDashboard() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="relative bg-white border border-zinc-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                  className="relative bg-white border border-zinc-100 rounded-2xl md:rounded-3xl p-3 md:p-6 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <p className="text-zinc-500 text-sm font-semibold leading-tight max-w-[60%]">{stat.label}</p>
-                    <div className="h-10 w-10 rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
-                      <stat.icon className={`${stat.iconColor}`} style={{ height: 20, width: 20 }} strokeWidth={1.8} />
+                  <div className="flex items-start justify-between mb-2 md:mb-3">
+                    <p className="text-zinc-500 text-[10px] md:text-sm font-medium md:font-semibold leading-tight max-w-[70%]">{stat.label}</p>
+                    <div className="h-7 w-7 md:h-10 md:w-10 rounded-xl md:rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
+                      <stat.icon className={`${stat.iconColor}`} style={{ height: 14, width: 14 }} strokeWidth={1.8} className="md:w-5 md:h-5" />
                     </div>
                   </div>
-                  <p className="font-semibold text-4xl text-zinc-900 mb-1 leading-none tracking-tight">{stat.value}</p>
+                  <p className="text-2xl md:text-4xl font-semibold text-zinc-900 mb-1 leading-none tracking-tight">{stat.value}</p>
                   {stat.chart && (
-                    <svg viewBox="0 0 80 24" className="w-full h-8 my-2 opacity-60" fill="none">
+                    <svg viewBox="0 0 80 24" className="w-full h-5 md:h-8 my-1 md:my-2 opacity-60" fill="none">
                       <polyline
                         points="0,20 12,14 24,16 36,8 48,12 60,6 72,10 80,4"
                         stroke="#ffcc00"
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
                   )}
                   <div className="flex items-center gap-1.5 mt-1">
                     <span className={`h-2 w-2 rounded-full ${stat.subDot} shrink-0`} />
-                    <p className="text-xs text-zinc-500 font-medium">{stat.sub}</p>
+                    <p className="text-[10px] md:text-xs text-zinc-500 font-medium">{stat.sub}</p>
                   </div>
                 </div>
               ))}
