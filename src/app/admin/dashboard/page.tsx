@@ -200,7 +200,7 @@ export default function AdminDashboard() {
                   <div className="flex items-start justify-between mb-2 md:mb-3">
                     <p className="text-zinc-500 text-[10px] md:text-sm font-medium md:font-semibold leading-tight max-w-[70%]">{stat.label}</p>
                     <div className="h-7 w-7 md:h-10 md:w-10 rounded-xl md:rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
-                      <stat.icon className={`${stat.iconColor}`} style={{ height: 14, width: 14 }} strokeWidth={1.8} className="md:w-5 md:h-5" />
+                      <stat.icon className={`${stat.iconColor} md:w-5 md:h-5`} style={{ height: 14, width: 14 }} strokeWidth={1.8} />
                     </div>
                   </div>
                   <p className="text-2xl md:text-4xl font-semibold text-zinc-900 mb-1 leading-none tracking-tight">{stat.value}</p>
