@@ -18,7 +18,7 @@ const empty: Project = { slug: "", title: "", category: "Marketing", description
 
 const inputCls = "w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-zinc-900 text-sm placeholder-zinc-400 focus:outline-none transition-all";
 const focusAmber = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  e.currentTarget.style.borderColor = "#FFAA17";
+  e.currentTarget.style.borderColor = "#ffcc00";
   e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.12)";
 };
 const blurField = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -128,7 +128,7 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
               Cancel
             </button>
             <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
-              style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
+              style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
               {project ? "Save Changes" : "Add Project"}
             </button>
           </div>

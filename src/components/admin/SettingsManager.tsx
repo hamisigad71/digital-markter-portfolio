@@ -48,7 +48,7 @@ export default function SettingsManager() {
             type="submit"
             disabled={isSaving}
             className="flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-medium text-sm text-white transition-all w-full md:w-auto"
-            style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}
+            style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}
           >
             {isSaving ? (
               <span className="flex items-center gap-2">

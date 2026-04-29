@@ -19,7 +19,7 @@ const empty: BlogPost = { id: "", title: "", excerpt: "", category: "Analytics",
 
 const inputCls = "w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-zinc-900 text-sm placeholder-zinc-400 focus:outline-none transition-all";
 const focusAmber = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  e.currentTarget.style.borderColor = "#FFAA17";
+  e.currentTarget.style.borderColor = "#ffcc00";
   e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.12)";
 };
 const blurField = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -121,7 +121,7 @@ export default function BlogForm({ post, onSave, onClose }: Props) {
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 py-3 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-300 font-semibold text-sm transition-all">Cancel</button>
             <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
-              style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
+              style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
               {post ? "Save Changes" : "Add Post"}
             </button>
           </div>

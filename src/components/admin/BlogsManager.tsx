@@ -35,7 +35,7 @@ export default function BlogsManager({ blogs, onUpdate }: Props) {
             type="text" value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Search blog posts..."
             className="w-full bg-zinc-50 border border-zinc-200 rounded-xl pl-10 pr-4 py-2.5 text-zinc-900 text-sm placeholder-zinc-400 focus:outline-none transition-all"
-            onFocus={e => { e.currentTarget.style.borderColor = "#FFAA17"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.1)"; }}
+            onFocus={e => { e.currentTarget.style.borderColor = "#ffcc00"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.1)"; }}
             onBlur={e => { e.currentTarget.style.borderColor = "#e4e4e7"; e.currentTarget.style.boxShadow = "none"; }}
           />
         </div>
@@ -43,7 +43,7 @@ export default function BlogsManager({ blogs, onUpdate }: Props) {
           id="add-blog-btn"
           onClick={() => { setEditing(null); setFormOpen(true); }}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm text-white transition-all shrink-0"
-          style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 12px rgba(255,170,23,0.3)" }}
+          style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 12px rgba(255,170,23,0.3)" }}
         >
           <Plus className="h-4 w-4" />Add Post
         </button>

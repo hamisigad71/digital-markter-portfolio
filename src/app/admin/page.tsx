@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login, isAuthenticated } from "@/lib/store";
-import { Eye, EyeOff, Lock } from "lucide-react";
+import { Eye, EyeOff, Lock, User } from "lucide-react";
 import Image from "next/image";
 
 export default function AdminLoginPage() {
@@ -44,23 +44,39 @@ export default function AdminLoginPage() {
       <div className="relative z-10 w-full max-w-md px-6">
         {/* Logo */}
         <div className="flex flex-col items-center mb-10">
-          <div className="h-14 w-14 rounded-2xl flex items-center justify-center shadow-xl mb-4 overflow-hidden border border-zinc-100 bg-white" style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.08)" }}>
-            <Image 
-              src="/administrator (1).png" 
-              alt="Admin" 
-              width={56} 
-              height={56} 
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <h1 className="text-zinc-900 text-2xl font-semibold tracking-tight"></h1>
+         <div
+  className="h-16 w-16 rounded-2xl flex items-center justify-center mb-4 overflow-hidden relative"
+  style={{
+    background: "linear-gradient(145deg, #ffffff, #fff8e1)", // soft white → warm yellow tint
+    boxShadow: "0 10px 30px rgba(255, 193, 7, 0.25), 0 6px 12px rgba(0,0,0,0.08)",
+    border: "1px solid rgba(255, 215, 0, 0.25)" // subtle gold border
+  }}
+>
+  {/* Glow Ring */}
+  <div
+    className="absolute inset-0 rounded-2xl"
+    style={{
+      boxShadow: "0 0 20px rgba(255, 214, 0, 0.4)",
+      opacity: 0.6
+    }}
+  />
+
+  <Image
+    src="/administrator (1).png"
+    alt="Admin"
+    width={64}
+    height={64}
+    className="w-full h-full object-cover rounded-2xl relative z-10"
+  />
+</div> 
+          <h1 className="text-zinc-900 text-2xl font-semibold tracking-tight">Admin Portal</h1>
           <p className="text-zinc-400 text-sm mt-1">Admin access only</p>
         </div>
 
         {/* Card */}
         <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-xl shadow-zinc-100">
           <div className="flex items-center gap-2 mb-6">
-            <Lock className="h-4 w-4" style={{ color: "#FFAA17" }} />
+            <Lock className="h-4 w-4" style={{ color: "#ffcc00" }} />
             <span className="text-zinc-700 font-semibold text-sm">Enter your password to continue</span>
           </div>
 
@@ -74,7 +90,7 @@ export default function AdminLoginPage() {
                 placeholder="Password"
                 autoComplete="current-password"
                 className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3.5 pr-12 text-zinc-900 placeholder-zinc-400 text-sm focus:outline-none transition-all"
-                onFocus={(e) => { e.currentTarget.style.borderColor = "#FFAA17"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.12)"; }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = "#ffcc00"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.12)"; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = "#e4e4e7"; e.currentTarget.style.boxShadow = "none"; }}
               />
               <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors">
@@ -91,7 +107,7 @@ export default function AdminLoginPage() {
               type="submit"
               disabled={loading || !password}
               className="w-full py-3.5 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 16px rgba(255,170,23,0.35)" }}
+              style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 16px rgba(255,170,23,0.35)" }}
             >
               {loading ? (
                 <><svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg> Verifying...</>

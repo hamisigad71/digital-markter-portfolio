@@ -57,7 +57,7 @@ export default function AIChatAssistant({ type, onGenerate }: Props) {
           disabled={loading || !prompt.trim()}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-all group shrink-0 active:scale-95 disabled:opacity-50 disabled:active:scale-100"
           style={{ 
-            background: "linear-gradient(135deg, #FFAA17, #e8900a)",
+            background: "linear-gradient(135deg, #ffcc00, #e8900a)",
             boxShadow: "0 4px 12px rgba(255,170,23,0.2)"
           }}
         >

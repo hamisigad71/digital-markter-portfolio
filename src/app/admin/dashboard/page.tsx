@@ -7,7 +7,7 @@ import type { Project, BlogPost } from "@/lib/store";
 import ProjectsManager from "@/components/admin/ProjectsManager";
 import BlogsManager from "@/components/admin/BlogsManager";
 import SettingsManager from "@/components/admin/SettingsManager";
-import { LayoutGrid, FileText, LogOut, Home, RefreshCw, ChevronRight, Settings as SettingsIcon, ClipboardList, Tag, BookOpen, Tags } from "lucide-react";
+import { LayoutGrid, FileText, LogOut, Home, RefreshCw, ChevronRight, Settings as SettingsIcon, ClipboardList, Tag, BookOpen, Tags, User } from "lucide-react";
 import Image from "next/image";
 
 type Tab = "projects" | "blogs" | "settings";
@@ -61,12 +61,13 @@ export default function AdminDashboard() {
       <aside className="fixed left-0 top-0 h-full w-60 bg-white border-r border-zinc-200 flex-col z-40 hidden md:flex shadow-sm">
         <div className="px-6 py-6 border-b border-zinc-100">
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg flex items-center justify-center overflow-hidden bg-white border border-zinc-100 shadow-sm">
-              <Image src="/administrator (1).png" alt="Admin" width={32} height={32} className="w-full h-full object-cover" />
+            <div className="h-9 w-9 rounded-xl flex items-center justify-center overflow-hidden border border-white/50 bg-white" 
+                 style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 12px rgba(255,170,23,0.3)" }}>
+              <User className="h-5 w-5 text-white" />
             </div>
             <div>
-              <p className="font-semibold text-sm text-zinc-900">.</p>
-              <p className="text-zinc-400 text-[10px]">Admin Panel</p>
+              <p className="font-bold text-sm text-zinc-900 tracking-tight">Admin</p>
+              <p className="text-zinc-400 text-[10px]">Dashboard</p>
             </div>
           </div>
         </div>
@@ -93,10 +94,11 @@ export default function AdminDashboard() {
       {/* ── Mobile top bar ─────────────────────────── */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-zinc-200 px-4 py-3 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-lg flex items-center justify-center overflow-hidden bg-white border border-zinc-100 shadow-sm">
-            <Image src="/administrator (1).png" alt="Admin" width={28} height={28} className="w-full h-full object-cover" />
+          <div className="h-8 w-8 rounded-lg flex items-center justify-center overflow-hidden border border-white/40 shadow-sm"
+               style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)" }}>
+            <User className="h-4 w-4 text-white" />
           </div>
-          <span className="font-semibold text-sm text-zinc-900">.</span>
+          <span className="font-bold text-sm text-zinc-900">Admin</span>
         </div>
         <div className="flex gap-2">
           <a href="/" className="h-8 w-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors"><Home className="h-4 w-4" /></a>
@@ -105,13 +107,29 @@ export default function AdminDashboard() {
       </div>
 
       {/* ── Mobile bottom tabs ──────────────────────── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-zinc-200 px-4 py-2 flex gap-2">
-        {([["projects", LayoutGrid, "Projects"], ["blogs", FileText, "Blogs"], ["settings", SettingsIcon, "Settings"]] as const).map(([id, Icon, label]) => (
-          <button key={id} onClick={() => setTab(id)} className="flex-1 flex flex-col items-center gap-1 py-2 rounded-xl text-xs font-semibold transition-all"
-            style={tab === id ? { background: "rgba(255,170,23,0.1)", color: "#b37200" } : { color: "#a1a1aa" }}>
-            <Icon className="h-5 w-5" />{label}
-          </button>
-        ))}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-zinc-200 px-2 py-1.5 flex justify-between items-center shadow-[0_-4px_16px_rgba(0,0,0,0.04)]">
+        {([
+          ["projects", LayoutGrid, "Projects"], 
+          ["blogs", FileText, "Blogs"], 
+          ["settings", SettingsIcon, "Settings"],
+          ["portfolio", Home, "View"],
+          ["reset", RefreshCw, "Reset"],
+          ["logout", LogOut, "Exit"]
+        ] as const).map(([id, Icon, label]) => {
+          const isActive = tab === id;
+          return (
+            <button key={id} onClick={() => {
+              if (id === "portfolio") window.open("/", "_blank");
+              else if (id === "reset") setResetConfirm(true);
+              else if (id === "logout") handleLogout();
+              else setTab(id as Tab);
+            }} className="flex-1 flex flex-col items-center gap-0.5 py-1 transition-all"
+              style={isActive ? { color: "#ffaa17" } : { color: "#a1a1aa" }}>
+              <Icon className="h-5 w-5" />
+              <span className="text-[9px] font-bold">{label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* ── Main content ────────────────────────────── */}
@@ -190,7 +208,7 @@ export default function AdminDashboard() {
                     <svg viewBox="0 0 80 24" className="w-full h-8 my-2 opacity-60" fill="none">
                       <polyline
                         points="0,20 12,14 24,16 36,8 48,12 60,6 72,10 80,4"
-                        stroke="#FFAA17"
+                        stroke="#ffcc00"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
