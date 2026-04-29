@@ -1,1 +1,1 @@
-only show six cards on phone view with add a load more button at the buttom of the six cards.these should be in arranged in 1 line with a sroll effect on phone view
+docker run --pull=always -it --rm --name n8n-atom -p 5888:5888 -v ~/.n8n:/home/node/.n8n atom8n/n8n:fork

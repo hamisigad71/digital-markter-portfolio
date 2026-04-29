@@ -1,0 +1,551 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "62577f43-45f2-4884-8b18-0d6a30ef5c9a",
+      "name": "Manual Trigger - Test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "social-media-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "172d078f-fa0f-423f-8235-67e21773580a",
+      "name": "Universal Social Media Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        320
+      ],
+      "webhookId": "multi-platform-webhook"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ee6d45e7-3cac-4d9f-9eab-2c59dfa926fa",
+      "name": "Platform Router",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "text": "{{ $('AI Response Generator').item.json.response }}",
+        "additionalFields": {}
+      },
+      "id": "55a17e0d-f1d4-4892-a0f3-138551e970e3",
+      "name": "Twitter Reply",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d76651b8-9245-43d3-a785-1137d9a488fa",
+      "name": "Facebook Reply",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        16,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "{{ $json.body.email_address }}",
+        "subject": "Re: {{ $json.body.subject || 'Your inquiry' }}",
+        "message": "{{ $('AI Response Generator').item.json.response }}",
+        "options": {
+          "replyTo": "support@yourcompany.com"
+        }
+      },
+      "id": "82bbe93c-a2ca-4b3a-b37f-7899fb177c2b",
+      "name": "Gmail Reply",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        16,
+        288
+      ],
+      "webhookId": "7bb05353-040d-420e-b1af-29fe0555ebd4"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "text": "{{ $('AI Response Generator').item.json.response }}",
+        "additionalFields": {
+          "visibility": "public"
+        }
+      },
+      "id": "0ae19242-6e65-4175-9307-6d4012aef73e",
+      "name": "LinkedIn Post",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        16,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.tiktok.com/v1/comments/",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "tiktokApi",
+        "options": {}
+      },
+      "id": "a9664e77-999a-4197-a11b-fa15a708620a",
+      "name": "TikTok Comment Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        16,
+        576
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an AI customer service agent that adapts to different social media platforms. \n\nPlatform-specific guidelines:\n- TWITTER: Keep responses under 280 characters, use relevant hashtags, casual tone\n- FACEBOOK: Friendly, conversational, can be longer format, use emojis moderately  \n- LINKEDIN: Professional tone, business-focused, formal language\n- GMAIL: Professional email format, detailed responses, proper email etiquette\n- TIKTOK: Trendy, youth-oriented language, use popular slang appropriately, keep it fun\n\nGeneral rules:\n1. Always be helpful and solution-oriented\n2. If you detect high purchase intent, end with [HOT_LEAD]\n3. Match the tone and style of the platform\n4. Provide accurate information about products/services\n5. Escalate complex issues when needed\n\nCompany Info:\n- Free shipping on orders over $50\n- 30-day return policy\n- Support hours: 9 AM - 6 PM EST\n- Processing: 1-3 business days",
+              "role": "system"
+            },
+            {
+              "content": "Platform: {{ $json.body.platform }}\nCustomer: {{ $json.body.customer_name || 'Customer' }}\nMessage: {{ $json.body.message }}\nContext: {{ $json.body.context || 'General inquiry' }}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 500,
+          "temperature": 0.7
+        }
+      },
+      "id": "4481d4b7-0cb5-4d0d-b460-8157ba5d79fe",
+      "name": "AI Response Generator",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "hot-lead-check",
+              "leftValue": "={{ $json.choices[0].message.content }}",
+              "rightValue": "HOT_LEAD",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combineOperation": "any"
+        },
+        "options": {}
+      },
+      "id": "77c7bce2-26dd-448f-98d9-317050956fd4",
+      "name": "Hot Lead Detector",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        224,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Multi-Platform-Leads",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "values": {
+            "Timestamp": "={{ new Date().toISOString() }}",
+            "Platform": "={{ $('Universal Social Media Webhook').item.json.body.platform }}",
+            "Customer_ID": "={{ $('Universal Social Media Webhook').item.json.body.customer_id || 'unknown' }}",
+            "Customer_Name": "={{ $('Universal Social Media Webhook').item.json.body.customer_name || 'unknown' }}",
+            "Customer_Email": "={{ $('Universal Social Media Webhook').item.json.body.email_address || 'N/A' }}",
+            "Message": "={{ $('Universal Social Media Webhook').item.json.body.message }}",
+            "AI_Response": "={{ $('AI Response Generator').item.json.choices[0].message.content.replace('[HOT_LEAD]', '') }}",
+            "Is_Hot_Lead": "={{ $('AI Response Generator').item.json.choices[0].message.content.includes('[HOT_LEAD]') ? 'YES' : 'NO' }}",
+            "Lead_Score": "={{ $('AI Response Generator').item.json.choices[0].message.content.includes('[HOT_LEAD]') ? 95 : Math.floor(Math.random() * 50) + 25 }}",
+            "Context": "={{ $('Universal Social Media Webhook').item.json.body.context || 'General' }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "c16ca39f-445e-4e0b-8fb3-8cce629baca1",
+      "name": "Multi-Platform Data Logger",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        416,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "🔥 HOT LEAD ALERT! 🔥\n\n📱 Platform: {{ $('Universal Social Media Webhook').item.json.body.platform.toUpperCase() }}\n👤 Customer: {{ $('Universal Social Media Webhook').item.json.body.customer_name || 'Anonymous' }}\n📧 Email: {{ $('Universal Social Media Webhook').item.json.body.email_address || 'Not provided' }}\n💬 Message: {{ $('Universal Social Media Webhook').item.json.body.message }}\n🤖 AI Response: {{ $('AI Response Generator').item.json.choices[0].message.content.replace('[HOT_LEAD]', '') }}\n\n⏰ Time: {{ new Date().toLocaleString() }}\n🎯 Action: Follow up within 15 minutes!",
+        "additionalFields": {}
+      },
+      "id": "a71e852c-9e75-4a49-92fa-6a375c5e2397",
+      "name": "Hot Lead Telegram Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        224,
+        112
+      ],
+      "webhookId": "8a08dbe1-9292-4f14-a457-f04222013f23"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \n  \"status\": \"success\",\n  \"platform\": $('Universal Social Media Webhook').item.json.body.platform,\n  \"response_sent\": true,\n  \"ai_response\": $('AI Response Generator').item.json.choices[0].message.content.replace('[HOT_LEAD]', ''),\n  \"is_hot_lead\": $('AI Response Generator').item.json.choices[0].message.content.includes('[HOT_LEAD]'),\n  \"timestamp\": new Date().toISOString()\n} }}",
+        "options": {}
+      },
+      "id": "b73e5f72-abcf-4ceb-9b6b-3d95f695b388",
+      "name": "Send Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        448,
+        544
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "aa3412b6-b8c7-4d24-8a91-b8fb52101a0b",
+      "name": "Daily Analytics Trigger",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEETS_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Multi-Platform-Leads",
+          "mode": "list"
+        },
+        "options": {}
+      },
+      "id": "ea571920-1a24-4c16-a9fe-eb76699ec8b9",
+      "name": "Read Analytics Data",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -720,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "path": "b46d0d54-a446-48d1-a609-02a6e9476e64",
+        "options": {}
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "id": "b9d8b8dc-993e-4071-bfe9-599f7ac769ca",
+      "position": [
+        -896,
+        1184
+      ],
+      "webhookId": "b46d0d54-a446-48d1-a609-02a6e9476e64"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Data Scraper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "id": "512a294e-f690-40e7-8170-a0eb22605f36",
+      "position": [
+        -704,
+        1184
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Relevance Filter",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "id": "0e327538-a6cf-445d-b307-b0b936745a65",
+      "position": [
+        -496,
+        1184
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4",
+        "options": {},
+        "requestOptions": {}
+      },
+      "name": "OpenAI Content Generator",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "id": "63be63a7-1a21-4e30-b5b3-a9c6d2888dcc",
+      "position": [
+        -304,
+        1184
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "open-ai-api-key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "add",
+        "sheetId": "{{$json.body.sheetId}}"
+      },
+      "name": "Google Sheets Output",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "id": "d7265b21-120f-4c31-ac1e-287e962d01d8",
+      "position": [
+        -80,
+        1184
+      ]
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "options": {}
+      },
+      "name": "Notion Output",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 1,
+      "id": "7ca12635-23b9-4218-9aa7-282422c81256",
+      "position": [
+        -160,
+        1392
+      ]
+    }
+  ],
+  "connections": {
+    "Universal Social Media Webhook": {
+      "main": [
+        [
+          {
+            "node": "Platform Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Platform Router": {
+      "main": [
+        [
+          {
+            "node": "AI Response Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Response Generator": {
+      "main": [
+        [
+          {
+            "node": "Hot Lead Detector",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Twitter Reply",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Facebook Reply",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail Reply",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LinkedIn Post",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "TikTok Comment Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hot Lead Detector": {
+      "main": [
+        [
+          {
+            "node": "Hot Lead Telegram Alert",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Multi-Platform Data Logger",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Multi-Platform Data Logger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Multi-Platform Data Logger": {
+      "main": [
+        [
+          {
+            "node": "Send Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hot Lead Telegram Alert": {
+      "main": [
+        [
+          {
+            "node": "Multi-Platform Data Logger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Analytics Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Analytics Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Scraper": {
+      "main": [
+        [
+          {
+            "node": "Relevance Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Content Generator": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "availableInMCP": false
+  },
+  "pinData": {}
+}

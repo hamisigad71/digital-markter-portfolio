@@ -21,9 +21,9 @@ export default function BlogsManager({ blogs, onUpdate }: Props) {
 
   const handleSave = async (p: BlogPost) => {
     if (editing) await updateBlog(editing.id, p); else await addBlog(p);
-    setFormOpen(false); setEditing(null); onUpdate();
+    setFormOpen(false); setEditing(null); await onUpdate();
   };
-  const handleDelete = async (id: string) => { await deleteBlog(id); setConfirmDelete(null); onUpdate(); };
+  const handleDelete = async (id: string) => { await deleteBlog(id); setConfirmDelete(null); await onUpdate(); };
 
   return (
     <div>

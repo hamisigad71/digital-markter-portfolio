@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login, isAuthenticated } from "@/lib/store";
-import { Eye, EyeOff, Lock, Zap } from "lucide-react";
+import { Eye, EyeOff, Lock } from "lucide-react";
+import Image from "next/image";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -43,8 +44,14 @@ export default function AdminLoginPage() {
       <div className="relative z-10 w-full max-w-md px-6">
         {/* Logo */}
         <div className="flex flex-col items-center mb-10">
-          <div className="h-14 w-14 rounded-2xl flex items-center justify-center shadow-xl mb-4" style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 8px 24px rgba(255,170,23,0.35)" }}>
-            <Zap className="h-7 w-7 text-white" strokeWidth={2.5} />
+          <div className="h-14 w-14 rounded-2xl flex items-center justify-center shadow-xl mb-4 overflow-hidden border border-zinc-100 bg-white" style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.08)" }}>
+            <Image 
+              src="/administrator (1).png" 
+              alt="Admin" 
+              width={56} 
+              height={56} 
+              className="w-full h-full object-cover"
+            />
           </div>
           <h1 className="text-zinc-900 text-2xl font-semibold tracking-tight"></h1>
           <p className="text-zinc-400 text-sm mt-1">Admin access only</p>

@@ -7,7 +7,8 @@ import type { Project, BlogPost } from "@/lib/store";
 import ProjectsManager from "@/components/admin/ProjectsManager";
 import BlogsManager from "@/components/admin/BlogsManager";
 import SettingsManager from "@/components/admin/SettingsManager";
-import { LayoutGrid, FileText, LogOut, Home, RefreshCw, Zap, ChevronRight, Settings as SettingsIcon, ClipboardList, Tag, BookOpen, Tags } from "lucide-react";
+import { LayoutGrid, FileText, LogOut, Home, RefreshCw, ChevronRight, Settings as SettingsIcon, ClipboardList, Tag, BookOpen, Tags } from "lucide-react";
+import Image from "next/image";
 
 type Tab = "projects" | "blogs" | "settings";
 
@@ -60,8 +61,8 @@ export default function AdminDashboard() {
       <aside className="fixed left-0 top-0 h-full w-60 bg-white border-r border-zinc-200 flex-col z-40 hidden md:flex shadow-sm">
         <div className="px-6 py-6 border-b border-zinc-100">
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)", boxShadow: "0 4px 12px rgba(255,170,23,0.35)" }}>
-              <Zap className="h-4 w-4 text-white" strokeWidth={2.5} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center overflow-hidden bg-white border border-zinc-100 shadow-sm">
+              <Image src="/administrator (1).png" alt="Admin" width={32} height={32} className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="font-semibold text-sm text-zinc-900">.</p>
@@ -92,8 +93,8 @@ export default function AdminDashboard() {
       {/* ── Mobile top bar ─────────────────────────── */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-zinc-200 px-4 py-3 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #FFAA17, #e8900a)" }}>
-            <Zap className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
+          <div className="h-7 w-7 rounded-lg flex items-center justify-center overflow-hidden bg-white border border-zinc-100 shadow-sm">
+            <Image src="/administrator (1).png" alt="Admin" width={28} height={28} className="w-full h-full object-cover" />
           </div>
           <span className="font-semibold text-sm text-zinc-900">.</span>
         </div>
