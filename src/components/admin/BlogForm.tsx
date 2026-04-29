@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Tag, FileText, User, Calendar, Clock } from "lucide-react";
 import type { BlogPost } from "@/lib/store";
 import ImageUpload from "./ImageUpload";
+import AIChatAssistant from "./AIChatAssistant";
 
 const CATEGORIES = ["Analytics", "SEO", "PPC", "Content", "Social Media", "Strategy", "Design", "Email", "Other"];
 
@@ -36,6 +37,12 @@ export default function BlogForm({ post, onSave, onClose }: Props) {
   const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   const handleTitleChange = (v: string) => { set("title", v); if (!post) set("id", slugify(v)); };
 
+  const handleAIGenerated = (data: Partial<BlogPost>) => {
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) set(key as keyof BlogPost, value as string);
+    });
+  };
+
   const validate = (): boolean => {
     const e: Partial<Record<keyof BlogPost, string>> = {};
     if (!form.title.trim()) e.title = "Title is required";
@@ -61,7 +68,11 @@ export default function BlogForm({ post, onSave, onClose }: Props) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-5">
+        <div className="px-8 pt-8">
+          <AIChatAssistant type="blog" onGenerate={handleAIGenerated} />
+        </div>
+
+        <form onSubmit={handleSubmit} className="px-8 pb-8 space-y-5">
           {/* Title */}
           <div>
             <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 mb-1.5 uppercase tracking-wider"><FileText className="h-3 w-3" />Title *</label>

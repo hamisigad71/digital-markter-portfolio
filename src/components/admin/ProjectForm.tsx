@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { X, Tag, FileText, Link2 } from "lucide-react";
 import type { Project } from "@/lib/store";
 import ImageUpload from "./ImageUpload";
+import AIChatAssistant from "./AIChatAssistant";
 
 const CATEGORIES = ["Marketing", "Development", "Design", "SEO", "Content", "Social Media"];
 
@@ -34,6 +35,12 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
   const set = (key: keyof Project, value: string) => setForm(f => ({ ...f, [key]: value }));
   const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   const handleTitleChange = (v: string) => { set("title", v); if (!project) set("slug", slugify(v)); };
+
+  const handleAIGenerated = (data: Partial<Project>) => {
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) set(key as keyof Project, value as string);
+    });
+  };
 
   const validate = (): boolean => {
     const e: Partial<Record<keyof Project, string>> = {};
@@ -66,7 +73,11 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-5">
+        <div className="px-8 pt-8">
+          <AIChatAssistant type="project" onGenerate={handleAIGenerated} />
+        </div>
+
+        <form onSubmit={handleSubmit} className="px-8 pb-8 space-y-5">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label icon={<FileText className="h-3 w-3" />}>Title *</Label>
