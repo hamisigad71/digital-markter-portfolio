@@ -53,15 +53,25 @@ export default function Portfolio() {
             <h2 className="font-display text-5xl md:text-6xl font-black tracking-tight leading-[1.08] text-zinc-900 dark:text-white">
               Recent <span className="text-primary italic">Projects</span>
             </h2>
-            <p className="text-zinc-500 dark:text-zinc-400 text-[15px] leading-relaxed">
-              Explore my latest work and see how I help businesses achieve their digital goals.
+            <p className="text-zinc-500 dark:text-zinc-400 text-[15px] leading-relaxed mb-6">
+              Explore my latest work and see how I help businesses achieve their digital goals, or view my complete repository of content and designs on Google Drive.
             </p>
+            <div className="pt-2">
+              <Link
+                href="https://drive.google.com/drive/folders/1RgAY5w_HQUha4jrp61Hldb1AeAN6HzlD?usp=sharing"
+                target="_blank"
+                className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white font-semibold text-sm transition-all duration-300"
+              >
+                Access Full Drive Portfolio
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </div>
           </div>
           <div className="shrink-0 text-right hidden md:block">
             <p className="font-display text-6xl font-black text-zinc-900 dark:text-white">
               {filtered.length}<span className="text-primary text-4xl">+</span>
             </p>
-            <p className="text-sm text-zinc-400 mt-1">Projects shown</p>
+            <p className="text-sm text-zinc-400 mt-1">Projects highlighted</p>
           </div>
         </div>
 
@@ -161,25 +171,36 @@ export default function Portfolio() {
 
         {/* Footer */}
         <div className="mt-14 flex flex-col sm:flex-row items-center justify-between gap-6 pt-9 border-t border-zinc-200 dark:border-zinc-800">
-          <p className="text-zinc-500 dark:text-zinc-400 text-sm">
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm text-center sm:text-left">
             Showing <span className="font-semibold text-zinc-800 dark:text-zinc-200">{displayedProjects.length}</span> of{" "}
-            <span className="font-semibold text-zinc-800 dark:text-zinc-200">{filtered.length}</span> projects
+            <span className="font-semibold text-zinc-800 dark:text-zinc-200">{filtered.length}</span> highlighted projects
           </p>
           
-          {visibleCount < filtered.length && (
-            <button 
-              onClick={handleLoadMore}
-              className="group flex items-center gap-2 px-7 py-3 rounded-full border-[1.5px] border-primary text-primary font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-lg hover:shadow-primary/25"
+          <div className="flex flex-wrap justify-center sm:justify-end gap-3 md:gap-4">
+            <Link 
+              href="https://drive.google.com/drive/folders/1RgAY5w_HQUha4jrp61Hldb1AeAN6HzlD?usp=sharing"
+              target="_blank"
+              className="group flex items-center gap-2 px-6 md:px-7 py-3 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-semibold text-sm hover:opacity-90 transition-all duration-300 shadow-md"
             >
-              Load More Projects
-              <motion.div
-                animate={{ y: [0, 2, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+              Google Drive Portfolio
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+
+            {visibleCount < filtered.length && (
+              <button 
+                onClick={handleLoadMore}
+                className="group flex items-center gap-2 px-6 md:px-7 py-3 rounded-full border-[1.5px] border-primary text-primary font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-300 shadow-sm"
               >
-                <ArrowUpRight className="h-4 w-4 rotate-90" />
-              </motion.div>
-            </button>
-          )}
+                Load More
+                <motion.div
+                  animate={{ y: [0, 2, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowUpRight className="h-4 w-4 rotate-90" />
+                </motion.div>
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </section>
