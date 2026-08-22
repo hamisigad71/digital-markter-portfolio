@@ -6,23 +6,23 @@ import Image from "next/image";
 const testimonials = [
   {
     name: "Sarah Johnson",
-    role: "CEO, TechFlow",
+    role: "CEO, Hills candle ",
     content: "Working with this team was a game-changer for our brand. Our organic traffic increased by 150% in just six months.",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop",
+    avatar: "https://i.pinimg.com/736x/0c/8d/93/0c8d932c2e465aad6b0bc87b733a1ee7.jpg",
     rating: 5,
   },
   {
     name: "Michael Chen",
-    role: "Marketing Director, GlobalStore",
+    role: "Marketing Director, Bomexa",
     content: "The level of expertise and dedication is unmatched. They don't just deliver results; they provide strategic insights that help us grow.",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop",
+    avatar: "https://i.pinimg.com/1200x/d1/64/2b/d1642b15c97573bc2eb45bbd204770a4.jpg",
     rating: 5,
   },
   {
     name: "Elena Rodriguez",
-    role: "Founder, BloomCreative",
+    role: "Founder, Iphone Ke",
     content: "Transparent, professional, and results-oriented. The social media campaign they handled exceeded all our expectations.",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop",
+    avatar: "https://i.pinimg.com/736x/80/eb/e3/80ebe32dc5f1015457504ab24979ceee.jpg",
     rating: 5,
   },
 ];
@@ -33,7 +33,7 @@ const brands = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-24 bg-zinc-50 dark:bg-zinc-950 overflow-hidden">
+    <section id="testimonials" className="py-24 bg-white dark:bg-zinc-950 overflow-hidden">
       <div className="container mx-auto px-4">
         
         {/* Brand Logos */}

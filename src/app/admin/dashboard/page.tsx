@@ -44,7 +44,7 @@ export default function AdminDashboard() {
       onClick={() => setTab(id)}
       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all"
       style={tab === id
-        ? { background: "rgba(255,170,23,0.1)", color: "#b37200", border: "1px solid rgba(255,170,23,0.25)" }
+        ? { background: "rgba(10,38,71,0.08)", color: "#0a2647", border: "1px solid rgba(10,38,71,0.2)" }
         : { color: "#71717a", border: "1px solid transparent" }}
       onMouseEnter={(e) => { if (tab !== id) { e.currentTarget.style.background = "#f4f4f5"; e.currentTarget.style.color = "#18181b"; } }}
       onMouseLeave={(e) => { if (tab !== id) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#71717a"; } }}
@@ -62,7 +62,7 @@ export default function AdminDashboard() {
         <div className="px-6 py-6 border-b border-zinc-100">
           <div className="flex items-center gap-2.5">
             <div className="h-9 w-9 rounded-xl flex items-center justify-center overflow-hidden border border-white/50 bg-white" 
-                 style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 12px rgba(255,170,23,0.3)" }}>
+                 style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)", boxShadow: "0 4px 12px rgba(10,38,71,0.3)" }}>
               <User className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-zinc-200 px-4 py-3 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg flex items-center justify-center overflow-hidden border border-white/40 shadow-sm"
-               style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)" }}>
+               style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)" }}>
             <User className="h-4 w-4 text-white" />
           </div>
           <span className="font-bold text-sm text-zinc-900">Admin</span>
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
               else if (id === "logout") handleLogout();
               else setTab(id as Tab);
             }} className="flex-1 flex flex-col items-center gap-0.5 py-1 transition-all"
-              style={isActive ? { color: "#ffaa17" } : { color: "#a1a1aa" }}>
+              style={isActive ? { color: "#0a2647" } : { color: "#a1a1aa" }}>
               <Icon className="h-5 w-5" />
               <span className="text-[9px] font-bold">{label}</span>
             </button>
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
                     <svg viewBox="0 0 80 24" className="w-full h-5 md:h-8 my-1 md:my-2 opacity-60" fill="none">
                       <polyline
                         points="0,20 12,14 24,16 36,8 48,12 60,6 72,10 80,4"
-                        stroke="#ffcc00"
+                        stroke="#0a2647"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"

@@ -78,7 +78,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-zinc-900 font-medium text-xs shadow-lg hover:bg-amber-400 hover:text-white transition-all"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-zinc-900 font-medium text-xs shadow-lg hover:bg-blue-700 hover:text-white transition-all"
               >
                 {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
                 {isUploading ? "Uploading…" : "Replace"}
@@ -102,17 +102,17 @@ export default function ImageUpload({ value, onChange, label }: Props) {
         ) : (
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="h-44 w-full border-2 border-dashed border-zinc-200 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-amber-400 hover:bg-amber-50/30 transition-all group"
+            className="h-44 w-full border-2 border-dashed border-zinc-200 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-blue-700 hover:bg-blue-50/30 transition-all group"
           >
             {isUploading ? (
-              <Loader2 className="h-8 w-8 text-amber-500 animate-spin" />
+              <Loader2 className="h-8 w-8 text-blue-600 animate-spin" />
             ) : (
               <>
-                <div className="h-12 w-12 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-amber-100 group-hover:text-amber-600 transition-all">
+                <div className="h-12 w-12 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-blue-100 group-hover:text-blue-600 transition-all">
                   <Upload className="h-6 w-6" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-zinc-900 group-hover:text-amber-700">Click to upload</p>
+                  <p className="text-sm font-medium text-zinc-900 group-hover:text-blue-700">Click to upload</p>
                   <p className="text-xs text-zinc-400">PNG, JPG, WebP — max 50MB</p>
                 </div>
               </>
@@ -135,7 +135,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
           type="button"
           onClick={() => fileInputRef.current?.click()}
           disabled={isUploading}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-dashed border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-600 hover:bg-amber-50/30 transition-all text-xs font-medium disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-dashed border-zinc-200 text-zinc-500 hover:border-blue-700 hover:text-blue-600 hover:bg-blue-50/30 transition-all text-xs font-medium disabled:opacity-50"
         >
           {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
           {isUploading ? "Uploading…" : "Upload New Image"}
@@ -152,14 +152,14 @@ export default function ImageUpload({ value, onChange, label }: Props) {
               value={value.startsWith('data:') ? '' : value}
               onChange={(e) => onChange(e.target.value)}
               placeholder="Or paste an image URL…"
-              className="w-full bg-zinc-50 border border-zinc-200 rounded-xl pl-9 pr-4 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-500/10 transition-all"
+              className="w-full bg-zinc-50 border border-zinc-200 rounded-xl pl-9 pr-4 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-500/10 transition-all"
             />
           </div>
         ) : (
           <button
             type="button"
             onClick={() => setShowUrlInput(true)}
-            className="text-xs font-medium text-amber-600 hover:text-amber-700 transition-colors flex items-center gap-1"
+            className="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1"
           >
             <Link2 className="h-3 w-3" />
             Use URL instead

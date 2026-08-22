@@ -17,9 +17,9 @@ interface Props {
 const empty: Project = { slug: "", title: "", category: "Marketing", description: "", image: "", challenge: "", solution: "", results: "" };
 
 const inputCls = "w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-zinc-900 text-sm placeholder-zinc-400 focus:outline-none transition-all";
-const focusAmber = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  e.currentTarget.style.borderColor = "#ffcc00";
-  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.12)";
+const focusBlue = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  e.currentTarget.style.borderColor = "#0a2647";
+  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(10,38,71,0.12)";
 };
 const blurField = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
   e.currentTarget.style.borderColor = "#e4e4e7";
@@ -81,26 +81,26 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label icon={<FileText className="h-3 w-3" />}>Title *</Label>
-              <input type="text" value={form.title} onChange={e => handleTitleChange(e.target.value)} placeholder="Project title" className={inputCls} onFocus={focusAmber} onBlur={blurField} />
+              <input type="text" value={form.title} onChange={e => handleTitleChange(e.target.value)} placeholder="Project title" className={inputCls} onFocus={focusBlue} onBlur={blurField} />
               {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
             </div>
             <div>
               <Label icon={<Link2 className="h-3 w-3" />}>Slug *</Label>
-              <input type="text" value={form.slug} onChange={e => set("slug", e.target.value)} placeholder="project-slug" className={inputCls} onFocus={focusAmber} onBlur={blurField} />
+              <input type="text" value={form.slug} onChange={e => set("slug", e.target.value)} placeholder="project-slug" className={inputCls} onFocus={focusBlue} onBlur={blurField} />
               {errors.slug && <p className="text-red-500 text-xs mt-1">{errors.slug}</p>}
             </div>
           </div>
 
           <div>
             <Label icon={<Tag className="h-3 w-3" />}>Category</Label>
-            <select value={form.category} onChange={e => set("category", e.target.value)} className={inputCls} onFocus={focusAmber} onBlur={blurField}>
+            <select value={form.category} onChange={e => set("category", e.target.value)} className={inputCls} onFocus={focusBlue} onBlur={blurField}>
               {CATEGORIES.map(c => <option key={c}>{c}</option>)}
             </select>
           </div>
 
           <div>
             <Label>Description *</Label>
-            <textarea rows={3} value={form.description} onChange={e => set("description", e.target.value)} placeholder="Short project description..." className={`${inputCls} resize-none`} onFocus={focusAmber} onBlur={blurField} />
+            <textarea rows={3} value={form.description} onChange={e => set("description", e.target.value)} placeholder="Short project description..." className={`${inputCls} resize-none`} onFocus={focusBlue} onBlur={blurField} />
             {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
           </div>
 
@@ -118,7 +118,7 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
                 <Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Label>
                 <textarea rows={3} value={form[field]} onChange={e => set(field, e.target.value)}
                   placeholder={field === "challenge" ? "What problem needed solving?" : field === "solution" ? "How did you solve it?" : "What were the measurable outcomes?"}
-                  className={`${inputCls} resize-none`} onFocus={focusAmber} onBlur={blurField} />
+                  className={`${inputCls} resize-none`} onFocus={focusBlue} onBlur={blurField} />
               </div>
             ))}
           </div>
@@ -128,7 +128,7 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
               Cancel
             </button>
             <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
-              style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
+              style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)", boxShadow: "0 4px 14px rgba(10,38,71,0.3)" }}>
               {project ? "Save Changes" : "Add Project"}
             </button>
           </div>

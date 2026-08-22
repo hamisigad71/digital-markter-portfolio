@@ -18,9 +18,9 @@ const today = new Date().toLocaleDateString("en-US", { month: "short", day: "2-d
 const empty: BlogPost = { id: "", title: "", excerpt: "", category: "Analytics", date: today, author: "Hamisi", readTime: "5 min read", image: "" };
 
 const inputCls = "w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-zinc-900 text-sm placeholder-zinc-400 focus:outline-none transition-all";
-const focusAmber = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  e.currentTarget.style.borderColor = "#ffcc00";
-  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.12)";
+const focusBlue = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  e.currentTarget.style.borderColor = "#0a2647";
+  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(10,38,71,0.12)";
 };
 const blurField = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
   e.currentTarget.style.borderColor = "#e4e4e7";
@@ -76,21 +76,21 @@ export default function BlogForm({ post, onSave, onClose }: Props) {
           {/* Title */}
           <div>
             <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 mb-1.5 uppercase tracking-wider"><FileText className="h-3 w-3" />Title *</label>
-            <input type="text" value={form.title} onChange={e => handleTitleChange(e.target.value)} placeholder="Article title" className={inputCls} onFocus={focusAmber} onBlur={blurField} />
+            <input type="text" value={form.title} onChange={e => handleTitleChange(e.target.value)} placeholder="Article title" className={inputCls} onFocus={focusBlue} onBlur={blurField} />
             {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
           </div>
 
           {/* Excerpt */}
           <div>
             <label className="text-xs font-semibold text-zinc-500 mb-1.5 uppercase tracking-wider block">Excerpt *</label>
-            <textarea rows={3} value={form.excerpt} onChange={e => set("excerpt", e.target.value)} placeholder="Short summary of the article..." className={`${inputCls} resize-none`} onFocus={focusAmber} onBlur={blurField} />
+            <textarea rows={3} value={form.excerpt} onChange={e => set("excerpt", e.target.value)} placeholder="Short summary of the article..." className={`${inputCls} resize-none`} onFocus={focusBlue} onBlur={blurField} />
             {errors.excerpt && <p className="text-red-500 text-xs mt-1">{errors.excerpt}</p>}
           </div>
 
           {/* Category */}
           <div>
             <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 mb-1.5 uppercase tracking-wider"><Tag className="h-3 w-3" />Category</label>
-            <select value={form.category} onChange={e => set("category", e.target.value)} className={inputCls} onFocus={focusAmber} onBlur={blurField}>
+            <select value={form.category} onChange={e => set("category", e.target.value)} className={inputCls} onFocus={focusBlue} onBlur={blurField}>
               {CATEGORIES.map(c => <option key={c}>{c}</option>)}
             </select>
           </div>
@@ -113,15 +113,15 @@ export default function BlogForm({ post, onSave, onClose }: Props) {
               <div key={key}>
                 <label className="flex items-center gap-1 text-xs font-semibold text-zinc-500 mb-1.5 uppercase tracking-wider">{label}</label>
                 <input type="text" value={form[key]} onChange={e => set(key, e.target.value)} placeholder={placeholder}
-                  className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3 py-3 text-zinc-900 text-sm focus:outline-none transition-all" onFocus={focusAmber} onBlur={blurField} />
+                  className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3 py-3 text-zinc-900 text-sm focus:outline-none transition-all" onFocus={focusBlue} onBlur={blurField} />
               </div>
             ))}
           </div>
 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 py-3 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-300 font-semibold text-sm transition-all">Cancel</button>
-            <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
-              style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}>
+             <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
+              style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)", boxShadow: "0 4px 14px rgba(10,38,71,0.3)" }}>
               {post ? "Save Changes" : "Add Post"}
             </button>
           </div>

@@ -20,7 +20,7 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-  profileImage: "/profile-avatar.jpg",
+  profileImage: "https://i.pinimg.com/736x/66/66/b4/6666b4545ca06fc06a45b8f710596789.jpg",
 };
 
 // ── Auth ──────────────────────────────────────────────────────────────────────

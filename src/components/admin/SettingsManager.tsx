@@ -48,7 +48,7 @@ export default function SettingsManager() {
             type="submit"
             disabled={isSaving}
             className="flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-medium text-sm text-white transition-all w-full md:w-auto"
-            style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 14px rgba(255,170,23,0.3)" }}
+            style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)", boxShadow: "0 4px 14px rgba(10,38,71,0.3)" }}
           >
             {isSaving ? (
               <span className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export default function SettingsManager() {
           <div className="md:col-span-2 space-y-6">
             <section className="bg-white border border-zinc-200 rounded-3xl p-8 space-y-6 shadow-sm">
               <div className="flex items-center gap-3 pb-4 border-b border-zinc-50">
-                <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+                <div className="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
                   <UserCircle className="h-6 w-6" />
                 </div>
                 <h3 className="font-semibold text-lg text-zinc-900">Brand Identity</h3>
@@ -113,12 +113,12 @@ export default function SettingsManager() {
 
           {/* Sidebar info column */}
           <div className="space-y-6">
-            <div className="bg-amber-50/50 border border-amber-100 rounded-3xl p-6 space-y-4">
-              <div className="h-10 w-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
+            <div className="bg-blue-50/50 border border-blue-100 rounded-3xl p-6 space-y-4">
+              <div className="h-10 w-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
                 <Shield className="h-5 w-5" />
               </div>
-              <h4 className="font-medium text-amber-900">Privacy & Security</h4>
-              <p className="text-sm text-amber-800/70 leading-relaxed">
+              <h4 className="font-medium text-blue-900">Privacy & Security</h4>
+              <p className="text-sm text-blue-800/70 leading-relaxed">
                 Changes to these settings take effect immediately across all public pages. Be sure to verify your changes in a new tab.
               </p>
             </div>

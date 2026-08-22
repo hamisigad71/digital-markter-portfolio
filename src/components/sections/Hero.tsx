@@ -7,7 +7,7 @@ import Image from "next/image";
 import { getSettings } from "@/lib/store";
 
 export default function Hero() {
-  const [profileImg, setProfileImg] = useState("/profile-avatar.jpg");
+  const [profileImg, setProfileImg] = useState("https://i.pinimg.com/736x/66/66/b4/6666b4545ca06fc06a45b8f710596789.jpg");
 
   useEffect(() => {
     const load = async () => {
@@ -32,7 +32,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-white dark:bg-black">
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-background dark:bg-black">
       {/* Background Gradients */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/3 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />

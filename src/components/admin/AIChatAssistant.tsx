@@ -57,14 +57,14 @@ export default function AIChatAssistant({ type, onGenerate }: Props) {
           disabled={loading || !prompt.trim()}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-all group shrink-0 active:scale-95 disabled:opacity-50 disabled:active:scale-100"
           style={{ 
-            background: "linear-gradient(135deg, #ffcc00, #e8900a)",
-            boxShadow: "0 4px 12px rgba(255,170,23,0.2)"
+            background: "linear-gradient(135deg, #1e40af, #0a2647)",
+            boxShadow: "0 4px 12px rgba(10,38,71,0.2)"
           }}
         >
           {loading ? (
-            <Loader2 className="h-4 w-4 animate-spin text-amber-100" />
+            <Loader2 className="h-4 w-4 animate-spin text-blue-100" />
           ) : (
-            <Sparkles className="h-4 w-4 text-amber-100 group-hover:rotate-12 transition-transform" />
+            <Sparkles className="h-4 w-4 text-blue-100 group-hover:rotate-12 transition-transform" />
           )}
           <span>{loading ? 'Thinking...' : 'Generate'}</span>
         </button>

@@ -14,7 +14,7 @@ const categoryColors: Record<string, string> = {
   Design: "bg-pink-50 text-pink-600 border-pink-200",
   SEO: "bg-green-50 text-green-600 border-green-200",
   Content: "bg-purple-50 text-purple-600 border-purple-200",
-  "Social Media": "bg-yellow-50 text-yellow-700 border-yellow-200",
+  "Social Media": "bg-sky-50 text-sky-700 border-sky-200",
 };
 
 export default function ProjectsManager({ projects, onUpdate }: Props) {

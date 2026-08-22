@@ -41,7 +41,7 @@ export default function Portfolio() {
   };
 
   return (
-    <section id="portfolio" className="py-24 bg-zinc-50 dark:bg-zinc-950">
+    <section id="portfolio" className="py-24 bg-background dark:bg-zinc-950">
       <div className="container mx-auto px-6 lg:px-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-10">
