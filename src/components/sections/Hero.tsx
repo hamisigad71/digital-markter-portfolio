@@ -32,7 +32,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-background dark:bg-black">
+    <section className="relative min-h-screen flex items-center pt-28 md:pt-32 lg:pt-20 overflow-hidden bg-background dark:bg-black">
       {/* Background Gradients */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/3 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
@@ -47,24 +47,24 @@ export default function Hero() {
             <span className="text-xs font-bold uppercase tracking-wider">Expert Digital Marketer</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-display font-extrabold leading-[1.1] tracking-tight">
-            Scale up your <br />
-            <span className="text-primary italic">Business</span> with <br />
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-extrabold leading-[1.1] tracking-tight">
+            Scale up your <br className="hidden sm:inline" />
+            <span className="text-primary italic">Business</span> with <br className="hidden sm:inline" />
             my expertise
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg">
             I help brands grow through innovative digital marketing strategies, data-driven SEO, and impactful social media campaigns.
           </p>
 
-          <div className="flex flex-row items-center gap-2 sm:gap-4">
-            <Button size="lg" className="rounded-full px-5 md:px-8 h-12 md:h-14 text-[13px] md:text-base font-bold group shrink-0">
+          <div className="flex flex-row items-center gap-3 sm:gap-4">
+            <Button size="lg" className="rounded-full w-auto px-6 md:px-8 h-12 md:h-14 text-[13px] md:text-base font-bold group shrink-0 justify-center">
               Get Started Now
-              <ArrowRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <button className="flex items-center space-x-2 md:space-x-3 group px-3 md:px-6 py-2 md:py-3 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors shrink-0">
-              <div className="h-10 w-10 md:h-12 md:w-12 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                <Play className="h-4 w-4 md:h-5 md:w-5 fill-current text-primary group-hover:text-white" />
+            <button className="flex items-center justify-center space-x-3 group px-6 py-2.5 md:py-3 rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors w-auto">
+              <div className="h-9 w-9 md:h-12 md:w-12 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
+                <Play className="h-3.5 w-3.5 md:h-5 md:w-5 fill-current text-primary group-hover:text-white" />
               </div>
               <span className="font-bold text-[13px] md:text-sm">Watch Video</span>
             </button>
@@ -96,7 +96,7 @@ export default function Hero() {
           </div>
           
           {/* Floating Decorative Elements */}
-          <div className="absolute -bottom-6 -left-6 z-20 bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-xl border border-zinc-100 dark:border-zinc-800 animate-bounce-slow">
+          <div className="absolute bottom-4 left-4 sm:-bottom-6 sm:-left-6 z-20 bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-xl border border-zinc-100 dark:border-zinc-800 animate-bounce-slow">
             <div className="flex items-center space-x-4">
               <div className="h-12 w-12 bg-primary/20 rounded-full flex items-center justify-center text-primary">
                 <ArrowRight className="h-6 w-6 -rotate-45" />

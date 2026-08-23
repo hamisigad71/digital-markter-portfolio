@@ -15,7 +15,7 @@ const services = [
     color: "bg-primary/10 text-primary",
   },
   {
-    title: "Social Marketing",
+    title: "Social Media Marketing",
     description: "Engaging your audience across social platforms with creative content and targeted campaigns.",
     icon: Share2,
     color: "bg-pink-500/10 text-pink-500",

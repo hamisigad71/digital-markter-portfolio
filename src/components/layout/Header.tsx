@@ -40,7 +40,7 @@ export default function Header() {
           <div className="relative w-10 h-10 bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden transition-transform duration-300 group-hover:scale-110">
             <Image
               src="/logo.png"
-              alt="Daysman Marketer Logo"
+              alt="Daysman Gad  : Digital Marketer. Logo"
               fill
               className="object-contain p-1.5"
             />

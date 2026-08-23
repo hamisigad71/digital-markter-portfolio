@@ -6,10 +6,10 @@ import { CheckCircle2, Award, Briefcase, GraduationCap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const stats = [
-  { label: "Years Experience", value: "8+", icon: Briefcase },
+  { label: "Years Experience", value: "5+", icon: Briefcase },
   { label: "Successful Projects", value: "120+", icon: CheckCircle2 },
   { label: "Global Clients", value: "25k+", icon: Award },
-  { label: "Certifications", value: "15+", icon: GraduationCap },
+  { label: "Certifications", value: "9+", icon: GraduationCap },
 ];
 
 export default function About() {

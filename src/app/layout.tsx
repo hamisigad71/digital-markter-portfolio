@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Daysman Marketer",
+  title: "Daysman Gad  : Digital Marketer.",
   description: "Expert Digital Marketer – SEO, Social Media & Growth Strategy",
   icons: {
     icon: "/logo.png",

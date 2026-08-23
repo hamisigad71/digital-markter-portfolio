@@ -141,9 +141,9 @@ export default function Resume() {
                 </div>
                 <div className="bg-slate-50 dark:bg-zinc-800/50 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800 print:bg-transparent print:border-none print:p-0">
                   <ul className="space-y-3 text-slate-600 dark:text-slate-300 text-sm list-disc list-inside marker:text-primary/70 print:text-black">
-                    <li>Grew Autohub's TikTok audience by 60% in 6 months through trend-based content.</li>
-                    <li>Created a festive campaign for DriveNow Motors that generated 5,000+ engagements in 3 weeks.</li>
-                    <li>Launched a "Behind the Wheel" weekly series that increased story reach by 45%.</li>
+                    <li>Grew Hills Candle Collection's TikTok audience by 60% in 6 months through trend-based content.</li>
+                    <li>Created a festive campaign for Bomexa Ltd that generated 5,000+ engagements in 3 weeks.</li>
+                    <li>Launched a "Behind the Build" weekly series that increased story reach by 45%.</li>
                     <li>Developed and maintained consistent digital branding across multiple businesses and campaigns.</li>
                   </ul>
                 </div>

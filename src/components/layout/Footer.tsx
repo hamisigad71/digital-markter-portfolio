@@ -15,7 +15,7 @@ export default function Footer() {
               <div className="relative w-10 h-10 md:w-12 md:h-12 bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden group">
                 <Image
                   src="/logo.png"
-                  alt="Daysman Marketer Logo"
+                  alt="Daysman Gad  : Digital Marketer. Logo"
                   fill
                   className="object-contain p-1.5 md:p-2"
                 />
@@ -86,7 +86,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm text-muted-foreground">
-          <p>© {currentYear} Daysman Marketer. All rights reserved.</p>
+          <p>© {currentYear} Daysman Gad  : Digital Marketer.. All rights reserved.</p>
           <div className="flex space-x-6">
             <Link href="#" className="hover:text-primary">Privacy Policy</Link>
             <Link href="#" className="hover:text-primary">Terms of Service</Link>
