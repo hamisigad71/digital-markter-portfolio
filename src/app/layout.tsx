@@ -17,8 +17,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Daysman Gad – Digital Marketer & Graphic Designer | Nairobi, Kenya",
-  description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience. Expert in content strategy, brand design, social media campaigns, and audience engagement.",
+  metadataBase: new URL("https://digital-markter-portfolio.vercel.app"),
+  title: "Daysman Gad – Digital Marketer & Graphic Designer",
+  description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience in content strategy, brand design & campaigns.",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
@@ -27,11 +28,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Daysman Gad – Digital Marketer & Graphic Designer",
     description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience. Based in Nairobi, Kenya.",
-    url: "https://daysmangad.com",
+    url: "https://digital-markter-portfolio.vercel.app",
     siteName: "Daysman Gad Portfolio",
     images: [
       {
-        url: "/metadata.png",
+        url: "https://digital-markter-portfolio.vercel.app/metadata.png",
         width: 1200,
         height: 630,
         alt: "Daysman Gad – Digital Marketer & Graphic Designer",
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Daysman Gad – Digital Marketer & Graphic Designer",
     description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience. Based in Nairobi, Kenya.",
-    images: ["/metadata.png"],
+    images: ["https://digital-markter-portfolio.vercel.app/metadata.png"],
   },
 };
 
