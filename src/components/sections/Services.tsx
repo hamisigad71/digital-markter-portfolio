@@ -64,36 +64,36 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {services.map((service) => (
             <Card
               key={service.title}
               className="group relative border border-border/70 bg-card hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] flex flex-col justify-between"
             >
-              <CardHeader className="p-6 pb-3">
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`h-12 w-12 rounded-xl border ${service.color} flex items-center justify-center transition-transform duration-200 group-hover:scale-105`}>
-                    <service.icon className="h-6 w-6" />
+              <CardHeader className="p-4 sm:p-6 pb-2 sm:pb-3">
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                  <div className={`h-9 w-9 sm:h-12 sm:w-12 rounded-xl border ${service.color} flex items-center justify-center transition-transform duration-200 group-hover:scale-105`}>
+                    <service.icon className="h-4 w-4 sm:h-6 sm:w-6" />
                   </div>
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/80 bg-muted/60 px-2.5 py-1 rounded-full border border-border/40">
+                  <span className="text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/80 bg-muted/60 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-border/40">
                     {service.badge}
                   </span>
                 </div>
-                <CardTitle className="text-xl font-display font-bold text-foreground group-hover:text-primary transition-colors">
+                <CardTitle className="text-sm sm:text-xl font-display font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
                   {service.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6 pt-0 flex-grow flex flex-col justify-between">
-                <CardDescription className="text-sm text-muted-foreground leading-relaxed">
+              <CardContent className="p-4 sm:p-6 pt-0 flex-grow flex flex-col justify-between">
+                <CardDescription className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                   {service.description}
                 </CardDescription>
-                <div className="mt-6 pt-4 border-t border-border/50">
+                <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-border/50">
                   <Link
                     href="#contact"
-                    className="text-xs font-bold inline-flex items-center text-primary group-hover:translate-x-1 transition-transform duration-150 cursor-pointer"
+                    className="text-[11px] sm:text-xs font-bold inline-flex items-center text-primary group-hover:translate-x-1 transition-transform duration-150 cursor-pointer"
                   >
                     <span>Request Proposal</span>
-                    <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                    <ArrowRight className="ml-1 h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </Link>
                 </div>
               </CardContent>

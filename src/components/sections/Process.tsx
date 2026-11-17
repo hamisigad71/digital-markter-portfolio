@@ -46,24 +46,24 @@ export default function Process() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 relative">
           {steps.map((step, index) => (
             <div
               key={index}
-              className="relative p-6 sm:p-7 rounded-2xl bg-card border border-border/70 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] flex flex-col items-center text-center group"
+              className="relative p-4 sm:p-7 rounded-2xl bg-card border border-border/70 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] flex flex-col items-center text-center group"
             >
-              <div className="relative mb-5">
-                <div className={`h-16 w-16 rounded-2xl ${step.color} text-white flex items-center justify-center shadow-md transition-transform duration-200 group-hover:scale-105`}>
-                  <step.icon className="h-7 w-7" />
+              <div className="relative mb-4 sm:mb-5">
+                <div className={`h-12 w-12 sm:h-16 sm:w-16 rounded-2xl ${step.color} text-white flex items-center justify-center shadow-md transition-transform duration-200 group-hover:scale-105`}>
+                  <step.icon className="h-5 w-5 sm:h-7 sm:w-7" />
                 </div>
-                <div className="absolute -top-2.5 -right-2.5 h-7 w-7 rounded-full bg-background border-2 border-border flex items-center justify-center text-xs font-mono font-bold text-foreground shadow-xs">
+                <div className="absolute -top-2.5 -right-2.5 h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-background border-2 border-border flex items-center justify-center text-[10px] sm:text-xs font-mono font-bold text-foreground shadow-xs">
                   0{index + 1}
                 </div>
               </div>
-              <h4 className="text-base sm:text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+              <h4 className="text-sm sm:text-lg font-bold text-foreground mb-1.5 sm:mb-2 group-hover:text-primary transition-colors leading-tight">
                 {step.title}
               </h4>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-[11px] sm:text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
             </div>

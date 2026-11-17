@@ -46,28 +46,32 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            <span className="uppercase tracking-wider">Expert Digital Marketer & Strategist</span>
+            <span className="uppercase tracking-wider">Digital Marketer & Graphic Designer</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-extrabold leading-[1.08] tracking-tight text-foreground">
             Scale up your <br className="hidden sm:inline" />
             <span className="text-primary italic">Business</span> with <br className="hidden sm:inline" />
-            precision marketing
+            marketing & design
           </h1>
 
           <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
-            I help modern companies, brands, and startups dominate search rankings, maximize ROI from paid campaigns, and turn followers into lifelong customers.
+            I help modern brands grow through data-driven digital marketing, 
+            compelling social media content, and high-impact graphic design — 
+            from eye-catching posters to full brand identities.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
+          {/* 2 columns in 1 line side by side on mobile view */}
+          <div className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:items-center sm:gap-4 pt-2 w-full max-w-md sm:max-w-none">
             <Button
               asChild
               size="lg"
-              className="rounded-full px-7 h-12 md:h-13 text-sm md:text-base font-bold shadow-md shadow-primary/20 group shrink-0"
+              className="rounded-full w-full sm:w-auto px-3 sm:px-7 h-11 sm:h-13 text-xs sm:text-base font-bold shadow-md shadow-primary/20 group justify-center text-center"
             >
-              <Link href="#contact">
-                Get Started Now
-                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
+              <Link href="#contact" className="inline-flex items-center justify-center">
+                <span className="hidden sm:inline">Get Started Now</span>
+                <span className="sm:hidden">Get Started</span>
+                <ArrowRight className="ml-1 sm:ml-2 h-3.5 w-3.5 sm:h-5 sm:w-5 shrink-0 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
 
@@ -75,11 +79,12 @@ export default function Hero() {
               asChild
               variant="outline"
               size="lg"
-              className="rounded-full px-6 h-12 md:h-13 text-sm md:text-base font-medium group shrink-0 border-border/80 hover:bg-muted/60"
+              className="rounded-full w-full sm:w-auto px-3 sm:px-6 h-11 sm:h-13 text-xs sm:text-base font-medium group border-border/80 hover:bg-muted/60 justify-center text-center"
             >
-              <Link href="#portfolio">
-                <Play className="mr-2 h-4 w-4 fill-primary text-primary group-hover:scale-110 transition-transform" />
-                View Case Studies
+              <Link href="#portfolio" className="inline-flex items-center justify-center">
+                <Play className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 fill-primary text-primary shrink-0 group-hover:scale-110 transition-transform" />
+                <span className="hidden sm:inline">View Case Studies</span>
+                <span className="sm:hidden">Case Studies</span>
               </Link>
             </Button>
           </div>
@@ -108,7 +113,7 @@ export default function Hero() {
           <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-card h-[380px] sm:h-[540px] lg:h-[600px] w-full bg-muted/30">
             <Image
               src={profileImg}
-              alt="Daysman Gad - Digital Marketer"
+              alt="Daysman Gad - Digital Marketer & Graphic Designer"
               fill
               className="object-cover object-top"
               priority
@@ -130,7 +135,7 @@ export default function Hero() {
           {/* Top-Right Badge */}
           <div className="absolute -top-3 right-4 sm:-top-5 sm:-right-4 z-20 bg-card/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-lg border border-border/80 flex items-center space-x-2 transition-transform duration-200 hover:scale-105">
             <Award className="h-4 w-4 text-amber-500" />
-            <span className="text-xs font-bold text-foreground">Top Rated Marketer 2026</span>
+            <span className="text-xs font-bold text-foreground">Marketer & Graphic Designer</span>
           </div>
         </div>
       </div>

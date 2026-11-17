@@ -111,7 +111,7 @@ export default function Portfolio() {
 
         {/* Portfolio Grid */}
         <motion.div layout>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             <AnimatePresence mode="popLayout">
               {displayedProjects.map((project, index) => {
                 const isGraphic = project.category === "Graphic Design" || project.category === "Design";
@@ -157,39 +157,39 @@ export default function Portfolio() {
                         </div>
                       </div>
 
-                      <div className="p-5 space-y-2">
-                        <h4 className="font-display font-bold text-base md:text-lg text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-1">
+                      <div className="p-3 sm:p-5 space-y-1.5 sm:space-y-2">
+                        <h4 className="font-display font-bold text-xs sm:text-lg text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
                           {project.title}
                         </h4>
-                        <p className="text-muted-foreground text-xs md:text-sm leading-relaxed line-clamp-2">
+                        <p className="text-muted-foreground text-[11px] sm:text-sm leading-relaxed line-clamp-2 hidden sm:block">
                           {project.description}
                         </p>
                       </div>
                     </div>
 
-                    <div className="p-5 pt-0">
-                      <div className="h-px w-full bg-border/60 mb-3" />
+                    <div className="p-3 sm:p-5 pt-0">
+                      <div className="h-px w-full bg-border/60 mb-2 sm:mb-3" />
                       <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-mono text-muted-foreground">
+                        <span className="text-[10px] sm:text-[11px] font-mono text-muted-foreground">
                           {isGraphic ? "Visual Poster" : "Case Study"}
                         </span>
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1 sm:gap-1.5">
                           {isGraphic && (
                             <button
                               type="button"
                               onClick={() => setPreviewProject(project)}
-                              className="h-8 w-8 rounded-full bg-muted hover:bg-muted/80 text-foreground flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
+                              className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-muted hover:bg-muted/80 text-foreground flex items-center justify-center transition-colors active:scale-95 cursor-pointer"
                               title="Inspect Full Poster"
                             >
-                              <Eye className="h-3.5 w-3.5" />
+                              <Eye className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                             </button>
                           )}
                           <Link
                             href={`/case-study/${project.slug}`}
-                            className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors active:scale-95 cursor-pointer"
+                            className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors active:scale-95 cursor-pointer"
                             title="View Case Study Details"
                           >
-                            <ArrowUpRight className="h-4 w-4" />
+                            <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           </Link>
                         </div>
                       </div>

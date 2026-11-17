@@ -8,9 +8,9 @@ export default function Footer() {
   return (
     <footer className="bg-card/40 border-t border-border/60 pt-16 pb-12">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-14">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12 mb-14">
           {/* Brand Section */}
-          <div className="space-y-4">
+          <div className="col-span-2 lg:col-span-1 space-y-4">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="relative w-10 h-10 bg-card rounded-xl shadow-xs border border-border overflow-hidden transition-transform duration-200 group-hover:scale-105 active:scale-95">
                 <Image

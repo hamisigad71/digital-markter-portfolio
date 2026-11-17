@@ -17,12 +17,34 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Daysman Gad : Digital Marketer & Growth Strategist",
-  description: "Expert Digital Marketer – Data-Driven SEO, High-Converting Paid Ads, Social Media & Brand Growth Strategy",
+  title: "Daysman Gad – Digital Marketer & Graphic Designer | Nairobi, Kenya",
+  description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience. Expert in content strategy, brand design, social media campaigns, and audience engagement.",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
     apple: "/logo.png",
+  },
+  openGraph: {
+    title: "Daysman Gad – Digital Marketer & Graphic Designer",
+    description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience. Based in Nairobi, Kenya.",
+    url: "https://daysmangad.com",
+    siteName: "Daysman Gad Portfolio",
+    images: [
+      {
+        url: "/metadata.png",
+        width: 1200,
+        height: 630,
+        alt: "Daysman Gad – Digital Marketer & Graphic Designer",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Daysman Gad – Digital Marketer & Graphic Designer",
+    description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience. Based in Nairobi, Kenya.",
+    images: ["/metadata.png"],
   },
 };
 

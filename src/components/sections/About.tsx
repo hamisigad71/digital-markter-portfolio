@@ -1,13 +1,13 @@
 'use client';
 
-import { CheckCircle2, Award, Briefcase, GraduationCap, ArrowUpRight } from "lucide-react";
+import { CheckCircle2, Award, Briefcase, GraduationCap, Palette } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const stats = [
-  { label: "Years Experience", value: "5+", icon: Briefcase },
-  { label: "Successful Projects", value: "120+", icon: CheckCircle2 },
-  { label: "Global Clients", value: "25k+", icon: Award },
-  { label: "Certifications", value: "9+", icon: GraduationCap },
+  { label: "Years Experience", value: "4+", icon: Briefcase },
+  { label: "Brands Worked With", value: "10+", icon: CheckCircle2 },
+  { label: "Campaigns Executed", value: "50+", icon: Award },
+  { label: "Design Projects", value: "100+", icon: GraduationCap },
 ];
 
 export default function About() {
@@ -40,10 +40,12 @@ export default function About() {
                 About Me
               </Badge>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight leading-[1.15] text-foreground">
-                Passion for <span className="text-primary italic">Digital Excellence</span> & Scalable Growth
+                Passion for <span className="text-primary italic">Digital Marketing</span> & Creative Design
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                With over 5 years in digital marketing, I've partnered with leading brands and high-growth startups to scale customer acquisition through data-driven campaigns, technical SEO, and compelling conversion funnels.
+                With 4+ years of hands-on experience, I help brands grow through data-driven digital marketing, 
+                compelling social media content, and high-impact graphic design. From real estate campaigns to 
+                e-commerce brands — I bring strategy, creativity, and consistency to every project.
               </p>
             </div>
 
@@ -53,24 +55,24 @@ export default function About() {
                   <CheckCircle2 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-foreground mb-1">Data-Driven Approach</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">Every recommendation is backed by real conversion metrics, analytics, and consumer behavior.</p>
+                  <h4 className="font-bold text-base text-foreground mb-1">Social Media & Content Strategy</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">Managing platforms across Facebook, Instagram, TikTok, LinkedIn & WhatsApp with a focus on engagement, growth, and brand consistency.</p>
                 </div>
               </div>
 
               <div className="flex gap-4 p-5 rounded-2xl bg-card border border-border/70 hover:border-border transition-colors">
                 <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 text-primary">
-                  <Briefcase className="h-5 w-5" />
+                  <Palette className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-base text-foreground mb-1">Global Campaign Reach</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">Executed multi-channel digital strategies across 20+ countries and diverse industries.</p>
+                  <h4 className="font-bold text-base text-foreground mb-1">Graphic Design & Visual Branding</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">Creating brand-consistent marketing materials — posters, ad creatives, carousels, and corporate visuals — using Canva, Adobe Photoshop & Illustrator.</p>
                 </div>
               </div>
             </div>
 
             <p className="text-sm sm:text-base text-muted-foreground/90 italic border-l-2 border-primary/60 pl-4 py-1">
-              &quot;My focus is not just vanity metrics, but building high-retention, high-converting customer ecosystems.&quot;
+              &quot;Creativity meets strategy — I build brands that look great and grow consistently.&quot;
             </p>
           </div>
         </div>
@@ -79,9 +81,9 @@ export default function About() {
         <div className="mt-20 pt-16 border-t border-border/60">
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { id: 'mission', title: 'The Mission', content: 'Democratize high-level digital growth strategies that drive measurable revenue. I believe every business has a story worth telling and an audience waiting to convert.' },
-              { id: 'vision', title: 'The Vision', content: 'A digital landscape where data and creativity coexist seamlessly, empowering brands to build lasting organic authority and sustainable paid pipelines.' },
-              { id: 'values', title: 'The Values', content: ['Radical Transparency', 'Data Over Assumptions', 'Continuous Optimization', 'Human-Centric Storytelling'], type: 'list' }
+              { id: 'mission', title: 'The Mission', content: 'Help brands grow online through creative digital marketing, compelling content, and professional graphic design — delivering work that is both beautiful and effective.' },
+              { id: 'vision', title: 'The Vision', content: 'A digital world where every business, big or small, can tell its story with confidence, consistency, and creative impact across every platform.' },
+              { id: 'values', title: 'The Values', content: ['Creativity & Innovation', 'Integrity in Every Campaign', 'Purpose-Driven Work', 'Continuous Growth'], type: 'list' }
             ].map((item) => (
               <div key={item.id} className="p-6 rounded-2xl bg-card/50 border border-border/60 space-y-3">
                 <h3 className="text-xl font-bold font-display tracking-tight text-foreground">{item.title}</h3>

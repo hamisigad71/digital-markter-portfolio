@@ -39,7 +39,7 @@ export default function Blog() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {posts.map((post, index) => (
             <article 
               key={index} 
@@ -59,9 +59,9 @@ export default function Blog() {
                 </div>
               </div>
 
-              <div className="p-5 sm:p-6 flex flex-col flex-grow justify-between">
+              <div className="p-3 sm:p-6 flex flex-col flex-grow justify-between">
                 <div>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3 font-mono">
+                  <div className="flex items-center gap-1.5 sm:gap-3 text-[10px] sm:text-xs text-muted-foreground mb-2 sm:mb-3 font-mono flex-wrap">
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" /> {post.date}
                     </span>
@@ -70,24 +70,24 @@ export default function Blog() {
                     </span>
                   </div>
 
-                  <h4 className="text-base sm:text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors leading-snug line-clamp-2">
+                  <h4 className="text-xs sm:text-lg font-bold text-foreground mb-1.5 sm:mb-2 group-hover:text-primary transition-colors leading-snug line-clamp-3">
                     {post.title}
                   </h4>
                   
-                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-6 line-clamp-2">
+                  <p className="text-muted-foreground text-[11px] sm:text-sm leading-relaxed mb-3 sm:mb-6 line-clamp-2 hidden sm:block">
                     {post.excerpt}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-border/60 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="h-7 w-7 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs uppercase">
+                <div className="pt-3 sm:pt-4 border-t border-border/60 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs uppercase">
                       {post.author[0]}
                     </div>
-                    <span className="text-xs font-semibold text-foreground">{post.author}</span>
+                    <span className="text-[11px] sm:text-xs font-semibold text-foreground">{post.author}</span>
                   </div>
-                  <div className="h-8 w-8 rounded-full border border-border/70 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-[background-color,border-color,color] duration-150">
-                    <ArrowRight className="h-3.5 w-3.5" />
+                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full border border-border/70 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-[background-color,border-color,color] duration-150">
+                    <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </div>
                 </div>
               </div>

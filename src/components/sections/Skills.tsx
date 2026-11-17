@@ -46,18 +46,18 @@ const skillCategories = [
 ];
 
 const tools = [
-  { name: "Adobe Premiere", category: "Video" },
-  { name: "Photoshop", category: "Design" },
-  { name: "Figma", category: "Design/UI" },
-  { name: "Canva Pro", category: "Design" },
-  { name: "Google Analytics 4", category: "Analytics" },
-  { name: "Google Ads", category: "PPC" },
-  { name: "Meta Business", category: "Social" },
-  { name: "SEMrush", category: "SEO" },
-  { name: "Ahrefs", category: "SEO" },
-  { name: "HubSpot", category: "CRM" },
+  { name: "Canva", category: "Design" },
+  { name: "Adobe Photoshop", category: "Design" },
+  { name: "Adobe Illustrator", category: "Design" },
+  { name: "Adobe Creative Suite", category: "Design" },
   { name: "CapCut", category: "Video" },
-  { name: "Mailchimp", category: "Email" },
+  { name: "Meta Business Suite", category: "Social" },
+  { name: "Meta Ads Manager", category: "Paid Ads" },
+  { name: "Google Analytics", category: "Analytics" },
+  { name: "Google Sheets", category: "Reporting" },
+  { name: "TikTok", category: "Social" },
+  { name: "Instagram", category: "Social" },
+  { name: "Facebook", category: "Social" },
 ];
 
 const certifications = [
@@ -88,21 +88,21 @@ export default function Skills() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {skillCategories.map((category) => (
                 <div
                   key={category.title}
-                  className="p-6 rounded-2xl border border-border/70 bg-card hover:border-primary/40 hover:shadow-md transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] group"
+                  className="p-4 sm:p-6 rounded-2xl border border-border/70 bg-card hover:border-primary/40 hover:shadow-md transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] group"
                 >
-                  <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 transition-transform duration-150 group-hover:scale-105">
-                    <category.icon className="h-5 w-5" />
+                  <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-3 sm:mb-4 transition-transform duration-150 group-hover:scale-105">
+                    <category.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
-                  <h4 className="text-base font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                  <h4 className="text-sm sm:text-base font-bold text-foreground mb-2 sm:mb-3 group-hover:text-primary transition-colors leading-tight">
                     {category.title}
                   </h4>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1.5 sm:space-y-2">
                     {category.skills.map((skill, sIndex) => (
-                      <li key={sIndex} className="flex items-center gap-2 text-xs text-muted-foreground font-medium">
+                      <li key={sIndex} className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-muted-foreground font-medium">
                         <div className="h-1.5 w-1.5 rounded-full bg-primary/60 shrink-0" />
                         <span>{skill}</span>
                       </li>
