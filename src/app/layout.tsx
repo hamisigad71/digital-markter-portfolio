@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Daysman Gad Portfolio",
     images: [
       {
-        url: "https://digital-markter-portfolio.vercel.app/metadata.png",
+        url: "https://digital-markter-portfolio.vercel.app/opengraph-image.jpg",
         width: 1200,
         height: 630,
         alt: "Daysman Gad – Digital Marketer & Graphic Designer",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Daysman Gad – Digital Marketer & Graphic Designer",
     description: "Creative Digital Marketer, Social Media Manager & Graphic Designer with 4+ years of experience. Based in Nairobi, Kenya.",
-    images: ["https://digital-markter-portfolio.vercel.app/metadata.png"],
+    images: ["https://digital-markter-portfolio.vercel.app/opengraph-image.jpg"],
   },
 };
 
