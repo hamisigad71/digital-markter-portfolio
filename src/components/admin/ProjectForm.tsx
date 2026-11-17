@@ -5,6 +5,9 @@ import { X, Tag, FileText, Link2 } from "lucide-react";
 import type { Project } from "@/lib/store";
 import ImageUpload from "./ImageUpload";
 import AIChatAssistant from "./AIChatAssistant";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const CATEGORIES = ["Marketing", "Development", "Design", "SEO", "Content", "Social Media"];
 
@@ -15,16 +18,6 @@ interface Props {
 }
 
 const empty: Project = { slug: "", title: "", category: "Marketing", description: "", image: "", challenge: "", solution: "", results: "" };
-
-const inputCls = "w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-zinc-900 text-sm placeholder-zinc-400 focus:outline-none transition-all";
-const focusBlue = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  e.currentTarget.style.borderColor = "#0a2647";
-  e.currentTarget.style.boxShadow = "0 0 0 3px rgba(10,38,71,0.12)";
-};
-const blurField = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-  e.currentTarget.style.borderColor = "#e4e4e7";
-  e.currentTarget.style.boxShadow = "none";
-};
 
 export default function ProjectForm({ project, onSave, onClose }: Props) {
   const [form, setForm] = useState<Project>(project ?? empty);
@@ -52,56 +45,85 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); if (validate()) onSave({ ...form, slug: slugify(form.slug) }); };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validate()) onSave({ ...form, slug: slugify(form.slug) });
+  };
 
-  const Label = ({ icon, children }: { icon?: React.ReactNode; children: React.ReactNode }) => (
-    <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 mb-1.5 uppercase tracking-wider">
+  const FieldLabel = ({ icon, children }: { icon?: React.ReactNode; children: React.ReactNode }) => (
+    <label className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">
       {icon}{children}
     </label>
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
-      <div className="bg-white border border-zinc-200 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
-        <div className="sticky top-0 bg-white border-b border-zinc-100 px-8 py-5 flex items-center justify-between rounded-t-3xl z-10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-150">
+      <div className="bg-card border border-border rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="sticky top-0 bg-card/95 backdrop-blur-md border-b border-border/80 px-6 sm:px-8 py-5 flex items-center justify-between rounded-t-3xl z-10">
           <div>
-            <h2 className="text-zinc-900 font-semibold text-xl">{project ? "Edit Project" : "New Project"}</h2>
-            <p className="text-zinc-400 text-xs mt-0.5">Fields marked * are required</p>
+            <h2 className="text-foreground font-display font-bold text-xl">{project ? "Edit Project" : "New Project"}</h2>
+            <p className="text-muted-foreground text-xs mt-0.5">Fields marked * are required</p>
           </div>
-          <button onClick={onClose} className="h-9 w-9 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors">
-            <X className="h-4 w-4 text-zinc-500" />
-          </button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="h-9 w-9 rounded-full"
+            aria-label="Close form"
+          >
+            <X className="h-4 w-4" />
+          </Button>
         </div>
 
-        <div className="px-8 pt-8">
+        <div className="px-6 sm:px-8 pt-6">
           <AIChatAssistant type="project" onGenerate={handleAIGenerated} />
         </div>
 
-        <form onSubmit={handleSubmit} className="px-8 pb-8 space-y-5">
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="px-6 sm:px-8 pb-8 space-y-5">
+          <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <Label icon={<FileText className="h-3 w-3" />}>Title *</Label>
-              <input type="text" value={form.title} onChange={e => handleTitleChange(e.target.value)} placeholder="Project title" className={inputCls} onFocus={focusBlue} onBlur={blurField} />
-              {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
+              <FieldLabel icon={<FileText className="h-3 w-3" />}>Title *</FieldLabel>
+              <Input
+                type="text"
+                value={form.title}
+                onChange={e => handleTitleChange(e.target.value)}
+                placeholder="Project title"
+              />
+              {errors.title && <p className="text-destructive text-xs mt-1">{errors.title}</p>}
             </div>
             <div>
-              <Label icon={<Link2 className="h-3 w-3" />}>Slug *</Label>
-              <input type="text" value={form.slug} onChange={e => set("slug", e.target.value)} placeholder="project-slug" className={inputCls} onFocus={focusBlue} onBlur={blurField} />
-              {errors.slug && <p className="text-red-500 text-xs mt-1">{errors.slug}</p>}
+              <FieldLabel icon={<Link2 className="h-3 w-3" />}>Slug *</FieldLabel>
+              <Input
+                type="text"
+                value={form.slug}
+                onChange={e => set("slug", e.target.value)}
+                placeholder="project-slug"
+              />
+              {errors.slug && <p className="text-destructive text-xs mt-1">{errors.slug}</p>}
             </div>
           </div>
 
           <div>
-            <Label icon={<Tag className="h-3 w-3" />}>Category</Label>
-            <select value={form.category} onChange={e => set("category", e.target.value)} className={inputCls} onFocus={focusBlue} onBlur={blurField}>
-              {CATEGORIES.map(c => <option key={c}>{c}</option>)}
+            <FieldLabel icon={<Tag className="h-3 w-3" />}>Category</FieldLabel>
+            <select
+              value={form.category}
+              onChange={e => set("category", e.target.value)}
+              className="w-full bg-background border border-input rounded-xl px-3.5 py-2.5 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer"
+            >
+              {CATEGORIES.map(c => <option key={c} value={c} className="bg-card text-foreground">{c}</option>)}
             </select>
           </div>
 
           <div>
-            <Label>Description *</Label>
-            <textarea rows={3} value={form.description} onChange={e => set("description", e.target.value)} placeholder="Short project description..." className={`${inputCls} resize-none`} onFocus={focusBlue} onBlur={blurField} />
-            {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+            <FieldLabel>Summary Description *</FieldLabel>
+            <Textarea
+              rows={3}
+              value={form.description}
+              onChange={e => set("description", e.target.value)}
+              placeholder="Short project description..."
+              className="resize-none"
+            />
+            {errors.description && <p className="text-destructive text-xs mt-1">{errors.description}</p>}
           </div>
 
           <ImageUpload 
@@ -109,28 +131,39 @@ export default function ProjectForm({ project, onSave, onClose }: Props) {
             value={form.image}
             onChange={(val) => set("image", val)}
           />
-          {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
+          {errors.image && <p className="text-destructive text-xs mt-1">{errors.image}</p>}
 
-          <div className="border-t border-zinc-100 pt-5 space-y-5">
-            <p className="text-zinc-400 text-xs font-semibold uppercase tracking-wider">Case Study Details</p>
+          <div className="border-t border-border/80 pt-5 space-y-4">
+            <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">Case Study Details</p>
             {(["challenge", "solution", "results"] as const).map(field => (
               <div key={field}>
-                <Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Label>
-                <textarea rows={3} value={form[field]} onChange={e => set(field, e.target.value)}
+                <FieldLabel>{field.charAt(0).toUpperCase() + field.slice(1)}</FieldLabel>
+                <Textarea
+                  rows={3}
+                  value={form[field]}
+                  onChange={e => set(field, e.target.value)}
                   placeholder={field === "challenge" ? "What problem needed solving?" : field === "solution" ? "How did you solve it?" : "What were the measurable outcomes?"}
-                  className={`${inputCls} resize-none`} onFocus={focusBlue} onBlur={blurField} />
+                  className="resize-none"
+                />
               </div>
             ))}
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={onClose} className="flex-1 py-3 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-300 font-semibold text-sm transition-all">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="flex-1 rounded-xl h-11"
+            >
               Cancel
-            </button>
-            <button type="submit" className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-all"
-              style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)", boxShadow: "0 4px 14px rgba(10,38,71,0.3)" }}>
-              {project ? "Save Changes" : "Add Project"}
-            </button>
+            </Button>
+            <Button
+              type="submit"
+              className="flex-1 rounded-xl h-11"
+            >
+              {project ? "Save Changes" : "Publish Project"}
+            </Button>
           </div>
         </form>
       </div>

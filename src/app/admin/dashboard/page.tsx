@@ -8,7 +8,9 @@ import ProjectsManager from "@/components/admin/ProjectsManager";
 import BlogsManager from "@/components/admin/BlogsManager";
 import SettingsManager from "@/components/admin/SettingsManager";
 import { LayoutGrid, FileText, LogOut, Home, RefreshCw, ChevronRight, Settings as SettingsIcon, ClipboardList, Tag, BookOpen, Tags, User } from "lucide-react";
-import Image from "next/image";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 type Tab = "projects" | "blogs" | "settings";
 
@@ -36,123 +38,162 @@ export default function AdminDashboard() {
     };
   }, [router, loadData]);
 
-  const handleLogout = () => { logout(); router.replace("/admin"); };
-  const handleReset = async () => { await resetAll(); await loadData(); setResetConfirm(false); };
+  const handleLogout = () => {
+    logout();
+    toast.success("Logged out successfully");
+    router.replace("/admin");
+  };
 
-  const NavBtn = ({ id, Icon, label }: { id: Tab; Icon: React.ElementType; label: string }) => (
-    <button
-      onClick={() => setTab(id)}
-      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all"
-      style={tab === id
-        ? { background: "rgba(10,38,71,0.08)", color: "#0a2647", border: "1px solid rgba(10,38,71,0.2)" }
-        : { color: "#71717a", border: "1px solid transparent" }}
-      onMouseEnter={(e) => { if (tab !== id) { e.currentTarget.style.background = "#f4f4f5"; e.currentTarget.style.color = "#18181b"; } }}
-      onMouseLeave={(e) => { if (tab !== id) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#71717a"; } }}
-    >
-      <Icon className="h-4 w-4" />{label}
-      {tab === id && <ChevronRight className="h-3.5 w-3.5 ml-auto" />}
-    </button>
-  );
+  const handleReset = async () => {
+    await resetAll();
+    await loadData();
+    setResetConfirm(false);
+    toast.success("Default data restored", {
+      description: "Projects and blogs have been reset to their initial starter state.",
+    });
+  };
+
+  const NavBtn = ({ id, Icon, label }: { id: Tab; Icon: React.ElementType; label: string }) => {
+    const isActive = tab === id;
+    return (
+      <button
+        onClick={() => setTab(id)}
+        className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-[background-color,border-color,color,transform] duration-150 active:scale-[0.98] cursor-pointer ${
+          isActive
+            ? "bg-primary/10 text-primary border border-primary/25"
+            : "text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-transparent"
+        }`}
+      >
+        <Icon className="h-4 w-4 shrink-0" />
+        <span>{label}</span>
+        {isActive && <ChevronRight className="h-3.5 w-3.5 ml-auto text-primary" />}
+      </button>
+    );
+  };
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
+    <div className="min-h-screen bg-background text-foreground">
 
       {/* ── Sidebar (desktop) ─────────────────────── */}
-      <aside className="fixed left-0 top-0 h-full w-60 bg-white border-r border-zinc-200 flex-col z-40 hidden md:flex shadow-sm">
-        <div className="px-6 py-6 border-b border-zinc-100">
-          <div className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-xl flex items-center justify-center overflow-hidden border border-white/50 bg-white" 
-                 style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)", boxShadow: "0 4px 12px rgba(10,38,71,0.3)" }}>
-              <User className="h-5 w-5 text-white" />
+      <aside className="fixed left-0 top-0 h-full w-64 bg-card border-r border-border/80 flex-col z-40 hidden md:flex shadow-xs">
+        <div className="px-6 py-5 border-b border-border/80 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl flex items-center justify-center bg-primary text-primary-foreground shadow-xs">
+              <User className="h-4 w-4" />
             </div>
             <div>
-              <p className="font-bold text-sm text-zinc-900 tracking-tight">Admin</p>
-              <p className="text-zinc-400 text-[10px]">Dashboard</p>
+              <p className="font-bold text-sm text-foreground tracking-tight">Admin Console</p>
+              <p className="text-muted-foreground text-[11px] font-mono">Daysman Marketer</p>
             </div>
           </div>
+          <ThemeToggle />
         </div>
 
-        <nav className="flex-1 px-3 py-5 space-y-1">
+        <nav className="flex-1 px-3 py-6 space-y-1.5">
           <NavBtn id="projects" Icon={LayoutGrid} label="Projects" />
           <NavBtn id="blogs" Icon={FileText} label="Blog Posts" />
-          <NavBtn id="settings" Icon={SettingsIcon} label="Settings" />
+          <NavBtn id="settings" Icon={SettingsIcon} label="Site Settings" />
         </nav>
 
-        <div className="px-3 py-5 border-t border-zinc-100 space-y-1">
-          <a href="/" target="_blank" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-zinc-400 hover:text-zinc-900 hover:bg-zinc-50 transition-all">
-            <Home className="h-4 w-4" />View Portfolio
+        <div className="px-3 py-5 border-t border-border/80 space-y-1.5">
+          <a
+            href="/"
+            target="_blank"
+            rel="noreferrer"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          >
+            <Home className="h-4 w-4" />View Live Site
           </a>
-          <button onClick={() => setResetConfirm(true)} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-zinc-400 hover:text-orange-600 hover:bg-orange-50 transition-all">
+          <button
+            onClick={() => setResetConfirm(true)}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-muted-foreground hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-500/10 transition-colors cursor-pointer"
+          >
             <RefreshCw className="h-4 w-4" />Reset to Defaults
           </button>
-          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-all">
-            <LogOut className="h-4 w-4" />Logout
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors cursor-pointer"
+          >
+            <LogOut className="h-4 w-4" />Sign Out
           </button>
         </div>
       </aside>
 
       {/* ── Mobile top bar ─────────────────────────── */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-zinc-200 px-4 py-3 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg flex items-center justify-center overflow-hidden border border-white/40 shadow-sm"
-               style={{ background: "linear-gradient(135deg, #1e40af, #0a2647)" }}>
-            <User className="h-4 w-4 text-white" />
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-b border-border px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-primary text-primary-foreground">
+            <User className="h-4 w-4" />
           </div>
-          <span className="font-bold text-sm text-zinc-900">Admin</span>
+          <span className="font-bold text-sm text-foreground">Admin Console</span>
         </div>
-        <div className="flex gap-2">
-          <a href="/" className="h-8 w-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-zinc-900 transition-colors"><Home className="h-4 w-4" /></a>
-          <button onClick={handleLogout} className="h-8 w-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 hover:text-red-600 transition-colors"><LogOut className="h-4 w-4" /></button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <a
+            href="/"
+            className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground"
+          >
+            <Home className="h-4 w-4" />
+          </a>
+          <button
+            onClick={handleLogout}
+            className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-destructive"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
         </div>
       </div>
 
       {/* ── Mobile bottom tabs ──────────────────────── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-zinc-200 px-2 py-1.5 flex justify-between items-center shadow-[0_-4px_16px_rgba(0,0,0,0.04)]">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-md border-t border-border px-2 py-1.5 flex justify-between items-center shadow-lg">
         {([
           ["projects", LayoutGrid, "Projects"], 
           ["blogs", FileText, "Blogs"], 
           ["settings", SettingsIcon, "Settings"],
-          ["portfolio", Home, "View"],
           ["reset", RefreshCw, "Reset"],
           ["logout", LogOut, "Exit"]
         ] as const).map(([id, Icon, label]) => {
           const isActive = tab === id;
           return (
-            <button key={id} onClick={() => {
-              if (id === "portfolio") window.open("/", "_blank");
-              else if (id === "reset") setResetConfirm(true);
-              else if (id === "logout") handleLogout();
-              else setTab(id as Tab);
-            }} className="flex-1 flex flex-col items-center gap-0.5 py-1 transition-all"
-              style={isActive ? { color: "#0a2647" } : { color: "#a1a1aa" }}>
+            <button
+              key={id}
+              onClick={() => {
+                if (id === "reset") setResetConfirm(true);
+                else if (id === "logout") handleLogout();
+                else setTab(id as Tab);
+              }}
+              className={`flex-1 flex flex-col items-center gap-0.5 py-1.5 transition-colors cursor-pointer ${
+                isActive ? "text-primary font-bold" : "text-muted-foreground"
+              }`}
+            >
               <Icon className="h-5 w-5" />
-              <span className="text-[9px] font-bold">{label}</span>
+              <span className="text-[10px]">{label}</span>
             </button>
           );
         })}
       </div>
 
       {/* ── Main content ────────────────────────────── */}
-      <main className="md:pl-60 pt-16 md:pt-0 pb-24 md:pb-0">
-        <div className="p-6 md:p-10">
+      <main className="md:pl-64 pt-16 md:pt-0 pb-24 md:pb-10">
+        <div className="p-6 md:p-10 max-w-7xl mx-auto">
 
-          {/* Breadcrumb */}
+          {/* Breadcrumb & Header */}
           <div className="mb-8">
-            <div className="flex items-center gap-2 text-zinc-400 text-xs mb-3">
+            <div className="flex items-center gap-2 text-muted-foreground text-xs mb-2">
               <span>Admin</span><ChevronRight className="h-3 w-3" />
-              <span className="text-zinc-900 font-semibold capitalize">{tab}</span>
+              <span className="text-foreground font-semibold capitalize">{tab}</span>
             </div>
-            <h1 className="text-3xl font-semibold text-zinc-900">
-              {tab === "projects" ? "Projects" : tab === "blogs" ? "Blog Posts" : "Site Settings"}
+            <h1 className="text-3xl font-display font-extrabold text-foreground tracking-tight">
+              {tab === "projects" ? "Projects Manager" : tab === "blogs" ? "Blog Intelligence" : "Site Settings"}
             </h1>
             {tab !== "settings" && (
-              <p className="text-zinc-400 text-sm mt-1">
-                {tab === "projects" ? `${projects.length} total projects` : `${blogs.length} total posts`}
+              <p className="text-muted-foreground text-sm mt-1">
+                {tab === "projects" ? `${projects.length} total projects indexed` : `${blogs.length} published intelligence articles`}
               </p>
             )}
           </div>
 
-          {/* Stats (only on projects/blogs) */}
+          {/* Stats Summary Cards */}
           {tab !== "settings" && (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {[
@@ -161,64 +202,44 @@ export default function AdminDashboard() {
                   value: projects.length,
                   icon: ClipboardList,
                   sub: `${new Set(projects.map(p => p.category)).size} categories`,
-                  subDot: "bg-amber-400",
-                  iconColor: "text-amber-500",
-                  chart: true,
+                  subDot: "bg-emerald-500",
                 },
                 {
-                  label: "Total Orders",
+                  label: "Intelligence Articles",
                   value: blogs.length,
                   icon: BookOpen,
                   sub: `${new Set(blogs.map(b => b.category)).size} topics`,
-                  subDot: "bg-emerald-400",
-                  iconColor: "text-amber-500",
-                  chart: false,
+                  subDot: "bg-blue-500",
                 },
                 {
                   label: "Active Categories",
                   value: `${new Set(projects.map(p => p.category)).size} / 7`,
                   icon: Tag,
-                  sub: `${Math.round((new Set(projects.map(p => p.category)).size / 7) * 100)}% covered`,
-                  subDot: "bg-amber-400",
-                  iconColor: "text-amber-500",
-                  chart: false,
+                  sub: `${Math.round((new Set(projects.map(p => p.category)).size / 7) * 100)}% coverage`,
+                  subDot: "bg-amber-500",
                 },
                 {
-                  label: "Blog Posts",
-                  value: blogs.length,
+                  label: "System Status",
+                  value: "Live",
                   icon: Tags,
-                  sub: "Published today",
-                  subDot: "bg-emerald-400",
-                  iconColor: "text-amber-500",
-                  chart: false,
+                  sub: "Supabase & Local Sync",
+                  subDot: "bg-emerald-500",
                 },
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="relative bg-white border border-zinc-100 rounded-2xl md:rounded-3xl p-3 md:p-6 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                  className="bg-card border border-border/80 rounded-2xl p-4 sm:p-5 shadow-xs flex flex-col justify-between"
                 >
-                  <div className="flex items-start justify-between mb-2 md:mb-3">
-                    <p className="text-zinc-500 text-[10px] md:text-sm font-medium md:font-semibold leading-tight max-w-[70%]">{stat.label}</p>
-                    <div className="h-7 w-7 md:h-10 md:w-10 rounded-xl md:rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
-                      <stat.icon className={`${stat.iconColor} md:w-5 md:h-5`} style={{ height: 14, width: 14 }} strokeWidth={1.8} />
+                  <div className="flex items-start justify-between mb-2">
+                    <p className="text-muted-foreground text-xs font-semibold">{stat.label}</p>
+                    <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <stat.icon className="h-4 w-4" />
                     </div>
                   </div>
-                  <p className="text-2xl md:text-4xl font-semibold text-zinc-900 mb-1 leading-none tracking-tight">{stat.value}</p>
-                  {stat.chart && (
-                    <svg viewBox="0 0 80 24" className="w-full h-5 md:h-8 my-1 md:my-2 opacity-60" fill="none">
-                      <polyline
-                        points="0,20 12,14 24,16 36,8 48,12 60,6 72,10 80,4"
-                        stroke="#0a2647"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        fill="none"
-                      />
-                    </svg>
-                  )}
+                  <p className="text-2xl sm:text-3xl font-bold font-display text-foreground mb-1 tabular-nums">{stat.value}</p>
                   <div className="flex items-center gap-1.5 mt-1">
                     <span className={`h-2 w-2 rounded-full ${stat.subDot} shrink-0`} />
-                    <p className="text-[10px] md:text-xs text-zinc-500 font-medium">{stat.sub}</p>
+                    <p className="text-[11px] text-muted-foreground font-medium">{stat.sub}</p>
                   </div>
                 </div>
               ))}
@@ -226,7 +247,7 @@ export default function AdminDashboard() {
           )}
 
           {/* Manager area */}
-          <div className={tab === "settings" ? "" : "bg-white border border-zinc-200 rounded-3xl p-6 shadow-sm"}>
+          <div className={tab === "settings" ? "" : "bg-card border border-border/80 rounded-3xl p-6 md:p-8 shadow-xs"}>
             {tab === "projects" && <ProjectsManager projects={projects} onUpdate={loadData} />}
             {tab === "blogs" && <BlogsManager blogs={blogs} onUpdate={loadData} />}
             {tab === "settings" && <SettingsManager />}
@@ -235,18 +256,32 @@ export default function AdminDashboard() {
         </div>
       </main>
 
-      {/* ── Reset confirm ─────────────────────────── */}
+      {/* ── Reset Confirmation Modal ─────────────────────────── */}
       {resetConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-sm">
-          <div className="bg-white border border-zinc-200 rounded-2xl p-7 w-full max-w-sm shadow-2xl text-center">
-            <div className="h-12 w-12 rounded-full bg-orange-50 flex items-center justify-center mx-auto mb-4">
-              <RefreshCw className="h-6 w-6 text-orange-500" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 w-full max-w-sm shadow-2xl text-center space-y-4">
+            <div className="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-500 border border-amber-500/20 flex items-center justify-center mx-auto">
+              <RefreshCw className="h-6 w-6" />
             </div>
-            <h3 className="text-zinc-900 font-semibold text-lg mb-2">Reset All Data?</h3>
-            <p className="text-zinc-500 text-sm mb-6">This will restore all projects and blog posts to their original defaults. Your custom edits will be lost.</p>
-            <div className="flex gap-3">
-              <button onClick={() => setResetConfirm(false)} className="flex-1 py-2.5 rounded-xl border border-zinc-200 text-zinc-500 hover:text-zinc-900 font-semibold text-sm transition-all">Cancel</button>
-              <button onClick={handleReset} className="flex-1 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-medium text-sm transition-all">Reset</button>
+            <h3 className="text-foreground font-display font-bold text-lg">Reset All Data?</h3>
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              This will restore all projects and blog posts to their original defaults. Any custom edits will be reverted.
+            </p>
+            <div className="flex gap-3 pt-2">
+              <Button
+                variant="outline"
+                onClick={() => setResetConfirm(false)}
+                className="flex-1 rounded-xl"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={handleReset}
+                className="flex-1 rounded-xl"
+              >
+                Reset Data
+              </Button>
             </div>
           </div>
         </div>

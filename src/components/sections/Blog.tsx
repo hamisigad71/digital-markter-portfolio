@@ -19,79 +19,85 @@ export default function Blog() {
   }, []);
 
   return (
-    <section id="blog" className="py-24 bg-background dark:bg-zinc-900/30">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-          <div className="max-w-2xl space-y-4">
-            <h2 className="text-primary font-bold uppercase tracking-wider text-sm">Expertise</h2>
-            <h3 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight">
-              Latest <span className="text-primary italic">Insights</span> & Articles
-            </h3>
-            <p className="text-muted-foreground text-lg">
-              Sharing my expertise on digital growth, data analytics, and marketing trends.
+    <section id="blog" className="py-24 bg-muted/20 border-t border-border/40">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-8">
+          <div className="max-w-2xl space-y-3.5">
+            <Badge variant="outline" className="px-3.5 py-1.5 border-primary/20 bg-primary/5 text-primary rounded-full text-xs font-semibold uppercase tracking-wider">
+              Marketing Intelligence
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-foreground">
+              Latest <span className="text-primary italic">Insights</span> & Growth Playbooks
+            </h2>
+            <p className="text-muted-foreground text-base leading-relaxed">
+              Actionable guides on search ranking algorithms, ad optimization, CRO frameworks, and generative marketing workflows.
             </p>
           </div>
-          <button className="hidden md:flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
-            View All Posts <ArrowRight className="h-5 w-5" />
+          <button className="hidden md:inline-flex items-center gap-2 text-primary font-bold text-sm hover:gap-3 transition-[gap] duration-150 cursor-pointer">
+            <span>View All Insights</span>
+            <ArrowRight className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post, index) => (
             <article 
               key={index} 
-              className="group flex flex-col bg-white dark:bg-zinc-900 rounded-2xl md:rounded-[2rem] overflow-hidden border border-zinc-100 dark:border-zinc-800 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
+              className="group flex flex-col bg-card rounded-2xl overflow-hidden border border-border/70 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99]"
             >
-              <div className="relative h-32 md:h-64 w-full overflow-hidden">
+              <div className="relative aspect-video w-full overflow-hidden bg-muted/40">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]"
                 />
-                <div className="absolute top-2 left-2 md:top-4 md:left-4">
-                  <Badge className="bg-white/90 dark:bg-zinc-900/90 text-zinc-900 dark:text-white backdrop-blur-md border-none px-2 py-0.5 md:px-4 md:py-1 text-[8px] md:text-sm">
+                <div className="absolute top-3 left-3">
+                  <Badge className="bg-background/90 dark:bg-card/90 text-foreground backdrop-blur-md border border-border/50 px-2.5 py-1 text-xs font-semibold">
                     {post.category}
                   </Badge>
                 </div>
               </div>
 
-              <div className="p-4 md:p-8 flex flex-col flex-grow">
-                <div className="flex items-center gap-2 md:gap-4 text-[8px] md:text-xs text-muted-foreground mb-2 md:mb-4">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-2.5 w-2.5 md:h-3.5 md:w-3.5" /> {post.date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-2.5 w-2.5 md:h-3.5 md:w-3.5" /> {post.readTime}
-                  </span>
+              <div className="p-5 sm:p-6 flex flex-col flex-grow justify-between">
+                <div>
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3 font-mono">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3" /> {post.date}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" /> {post.readTime}
+                    </span>
+                  </div>
+
+                  <h4 className="text-base sm:text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors leading-snug line-clamp-2">
+                    {post.title}
+                  </h4>
+                  
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-6 line-clamp-2">
+                    {post.excerpt}
+                  </p>
                 </div>
 
-                <h4 className="text-[11px] md:text-2xl font-bold mb-2 md:mb-4 group-hover:text-primary transition-colors leading-tight line-clamp-2">
-                  {post.title}
-                </h4>
-                
-                <p className="text-muted-foreground text-[10px] md:text-sm leading-relaxed mb-4 md:mb-6 line-clamp-2 md:line-clamp-none">
-                  {post.excerpt}
-                </p>
-
-                <div className="mt-auto pt-3 md:pt-6 border-t border-zinc-50 dark:border-zinc-800 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 md:gap-2">
-                    <div className="h-6 w-6 md:h-8 md:w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-[8px] md:text-xs uppercase">
+                <div className="pt-4 border-t border-border/60 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="h-7 w-7 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs uppercase">
                       {post.author[0]}
                     </div>
-                    <span className="text-[10px] md:text-sm font-semibold">{post.author}</span>
+                    <span className="text-xs font-semibold text-foreground">{post.author}</span>
                   </div>
-                  <button className="h-7 w-7 md:h-10 md:w-10 rounded-full border border-zinc-100 dark:border-zinc-800 flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
-                    <ArrowRight className="h-3 w-3 md:h-4 md:w-4" />
-                  </button>
+                  <div className="h-8 w-8 rounded-full border border-border/70 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-[background-color,border-color,color] duration-150">
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </div>
                 </div>
               </div>
             </article>
           ))}
         </div>
 
-        <button className="md:hidden w-full mt-12 py-4 rounded-2xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold flex items-center justify-center gap-2">
-          View All Posts <ArrowRight className="h-5 w-5" />
+        <button className="md:hidden w-full mt-8 py-3.5 rounded-xl border border-border/80 bg-card text-foreground font-semibold text-sm flex items-center justify-center gap-2 active:scale-[0.98]">
+          <span>View All Insights</span>
+          <ArrowRight className="h-4 w-4" />
         </button>
       </div>
     </section>

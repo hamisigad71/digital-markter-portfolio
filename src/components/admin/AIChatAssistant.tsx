@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { Sparkles, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 interface Props {
   type: 'project' | 'blog';
@@ -18,6 +20,7 @@ export default function AIChatAssistant({ type, onGenerate }: Props) {
     
     setLoading(true);
     setError(null);
+    const toastId = toast.loading('Generating content with AI...');
     
     try {
       const response = await fetch('/api/ai/generate', {
@@ -34,43 +37,56 @@ export default function AIChatAssistant({ type, onGenerate }: Props) {
       
       onGenerate(data);
       setPrompt('');
+      toast.success('Generated successfully!', {
+        id: toastId,
+        description: 'Form fields have been filled with AI-generated content.',
+      });
     } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+      const errMsg = err.message || 'Something went wrong';
+      setError(errMsg);
+      toast.error('Generation failed', {
+        id: toastId,
+        description: errMsg,
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mb-8 p-1 rounded-2xl bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-zinc-200 ring-1 ring-zinc-100 overflow-hidden">
-      <div className="relative flex items-center gap-2 p-1 pl-4 bg-gradient-to-b from-zinc-50/50 to-transparent">
+    <div className="mb-6 p-1 rounded-2xl bg-card border border-border/80 shadow-xs overflow-hidden">
+      <div className="relative flex items-center gap-2 p-1.5 pl-4 bg-muted/30 rounded-xl">
+        <Sparkles className="h-4 w-4 text-primary shrink-0" />
         <input
           type="text"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && (e.ctrlKey || e.metaKey) && handleGenerate()}
-          placeholder="Message (Ctrl+Enter to generate)..."
-          className="flex-1 bg-transparent border-none text-zinc-900 text-sm focus:ring-0 placeholder-zinc-400 py-2.5"
+          placeholder={`Describe your ${type} (e.g., "Meta Ads campaign for luxury watch brand increasing ROAS to 4.2x")... Press Ctrl+Enter`}
+          className="flex-1 bg-transparent border-none text-foreground text-sm focus:outline-none placeholder:text-muted-foreground/70 py-1.5"
         />
-        <button
+        <Button
           onClick={handleGenerate}
           disabled={loading || !prompt.trim()}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-all group shrink-0 active:scale-95 disabled:opacity-50 disabled:active:scale-100"
-          style={{ 
-            background: "linear-gradient(135deg, #1e40af, #0a2647)",
-            boxShadow: "0 4px 12px rgba(10,38,71,0.2)"
-          }}
+          size="sm"
+          className="rounded-lg shrink-0 gap-1.5"
         >
           {loading ? (
-            <Loader2 className="h-4 w-4 animate-spin text-blue-100" />
+            <>
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              <span>Generating...</span>
+            </>
           ) : (
-            <Sparkles className="h-4 w-4 text-blue-100 group-hover:rotate-12 transition-transform" />
+            <>
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Generate</span>
+            </>
           )}
-          <span>{loading ? 'Thinking...' : 'Generate'}</span>
-        </button>
+        </Button>
       </div>
+
       {error && (
-        <div className="px-4 py-2 text-[11px] text-red-500 font-medium bg-red-50 border-t border-zinc-100 animate-in fade-in slide-in-from-top-1">
+        <div className="px-4 py-2 text-xs text-destructive bg-destructive/10 border-t border-destructive/20">
           {error}
         </div>
       )}

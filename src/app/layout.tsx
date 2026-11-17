@@ -1,23 +1,24 @@
-import type { Metadata } from "next";
-import { Outfit, DM_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Loader from "@/components/layout/Loader";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-});
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#090d16" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
-  title: "Daysman Gad  : Digital Marketer.",
-  description: "Expert Digital Marketer – SEO, Social Media & Growth Strategy",
+  title: "Daysman Gad : Digital Marketer & Growth Strategist",
+  description: "Expert Digital Marketer – Data-Driven SEO, High-Converting Paid Ads, Social Media & Brand Growth Strategy",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
@@ -25,22 +26,26 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${outfit.variable} ${dmSans.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <Loader />
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+    <html lang="en" suppressHydrationWarning className="h-full antialiased">
+      <body className="min-h-full flex flex-col font-sans bg-background text-foreground selection:bg-primary/20 selection:text-primary">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Loader />
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+          <Toaster richColors position="top-right" closeButton />
+        </ThemeProvider>
       </body>
     </html>
   );

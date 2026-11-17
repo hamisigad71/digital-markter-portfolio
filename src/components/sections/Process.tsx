@@ -1,62 +1,69 @@
 'use client';
 
 import { Search, Lightbulb, Zap, BarChart3 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const steps = [
   {
     title: "Discovery & Audit",
-    description: "Deep dive into your current digital presence, competitors, and market opportunities.",
+    description: "Deep dive into your current digital presence, organic search visibility, and competitor benchmarks.",
     icon: Search,
-    color: "bg-blue-500",
+    color: "bg-blue-600 dark:bg-blue-500",
   },
   {
-    title: "Strategy Planning",
-    description: "Developing a custom roadmap focused on your specific business KPIs and growth goals.",
+    title: "Strategy & Funnel Plan",
+    description: "Architecting a customized roadmap focused on high-converting channels and measurable revenue KPIs.",
     icon: Lightbulb,
-    color: "bg-primary",
+    color: "bg-indigo-600 dark:bg-indigo-500",
   },
   {
     title: "Execution & Launch",
-    description: "Implementing high-impact campaigns across SEO, Social, and Paid media channels.",
+    description: "Deploying high-impact creative campaigns across SEO, targeted paid media, and social funnels.",
     icon: Zap,
-    color: "bg-emerald-500",
+    color: "bg-emerald-600 dark:bg-emerald-500",
   },
   {
-    title: "Optimization & ROI",
-    description: "Continuous monitoring and refining for maximum performance and scalable growth.",
+    title: "Optimization & Scaling",
+    description: "Continuous multivariate testing and data iteration to lower CPA and scale your monthly return on ad spend.",
     icon: BarChart3,
-    color: "bg-violet-500",
+    color: "bg-purple-600 dark:bg-purple-500",
   },
 ];
 
 export default function Process() {
   return (
-    <section id="process" className="py-24 bg-white dark:bg-zinc-950 overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-          <h2 className="text-primary font-bold uppercase tracking-wider text-sm">My Approach</h2>
-          <h3 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight">
-            A Proven <span className="text-primary italic">Process</span> for Growth
-          </h3>
-          <p className="text-muted-foreground text-lg">
-            I follow a systematic, data-backed methodology to ensure every campaign delivers measurable results.
+    <section id="process" className="py-24 bg-muted/30 border-t border-border/40 overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3.5">
+          <Badge variant="outline" className="px-3.5 py-1.5 border-primary/20 bg-primary/5 text-primary rounded-full text-xs font-semibold uppercase tracking-wider">
+            Execution Framework
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-foreground">
+            A Proven <span className="text-primary italic">Process</span> for High-Growth Brands
+          </h2>
+          <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+            A systematic, data-backed 4-stage methodology ensuring every dollar spent delivers compounding returns.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 relative">
-          {/* Connector line for desktop */}
-          <div className="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-zinc-100 dark:bg-zinc-800 z-0" />
-          
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
           {steps.map((step, index) => (
-            <div key={index} className="relative z-10 flex flex-col items-center text-center group">
-              <div className={`h-14 w-14 md:h-20 md:w-20 rounded-2xl md:rounded-3xl ${step.color} text-white flex items-center justify-center mb-4 md:mb-8 shadow-xl shadow-${step.color.split('-')[1]}-500/20 group-hover:scale-110 transition-transform duration-500`}>
-                <step.icon className="h-7 w-7 md:h-10 md:w-10" />
-                <div className="absolute -top-2 -right-2 md:-top-4 md:-right-4 h-6 w-6 md:h-8 md:w-8 rounded-full bg-white dark:bg-zinc-900 border-2 border-zinc-100 dark:border-zinc-800 flex items-center justify-center text-[10px] md:text-xs font-bold text-zinc-400">
+            <div
+              key={index}
+              className="relative p-6 sm:p-7 rounded-2xl bg-card border border-border/70 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] flex flex-col items-center text-center group"
+            >
+              <div className="relative mb-5">
+                <div className={`h-16 w-16 rounded-2xl ${step.color} text-white flex items-center justify-center shadow-md transition-transform duration-200 group-hover:scale-105`}>
+                  <step.icon className="h-7 w-7" />
+                </div>
+                <div className="absolute -top-2.5 -right-2.5 h-7 w-7 rounded-full bg-background border-2 border-border flex items-center justify-center text-xs font-mono font-bold text-foreground shadow-xs">
                   0{index + 1}
                 </div>
               </div>
-              <h4 className="text-sm md:text-xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors line-clamp-1">{step.title}</h4>
-              <p className="text-[11px] md:text-base text-muted-foreground leading-relaxed line-clamp-2 md:line-clamp-none">
+              <h4 className="text-base sm:text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                {step.title}
+              </h4>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
             </div>

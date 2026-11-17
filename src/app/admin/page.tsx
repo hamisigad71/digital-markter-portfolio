@@ -3,13 +3,17 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login, isAuthenticated } from "@/lib/store";
-import { Eye, EyeOff, Lock, User } from "lucide-react";
+import { Eye, EyeOff, Lock, ArrowRight, Loader2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -22,103 +26,108 @@ export default function AdminLoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
     setTimeout(() => {
       if (login(password)) {
+        toast.success("Welcome back!", {
+          description: "Authenticated successfully to Admin Console.",
+        });
         router.push("/admin/dashboard");
       } else {
-        setError("Incorrect password. Please try again.");
+        toast.error("Incorrect password", {
+          description: "Please check your master credentials and try again.",
+        });
         setLoading(false);
       }
-    }, 500);
+    }, 400);
   };
 
   if (checking) return null;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-50 relative overflow-hidden">
-      {/* Subtle amber glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none" style={{ background: "rgba(255,170,23,0.06)", filter: "blur(80px)" }} />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full pointer-events-none" style={{ background: "rgba(255,170,23,0.04)", filter: "blur(100px)" }} />
+    <div className="min-h-screen flex items-center justify-center bg-background text-foreground relative overflow-hidden px-4">
+      <div className="absolute top-4 right-4 z-20">
+        <ThemeToggle />
+      </div>
 
-      <div className="relative z-10 w-full max-w-md px-6">
-        {/* Logo */}
-        <div className="flex flex-col items-center mb-10">
-         <div
-  className="h-16 w-16 rounded-2xl flex items-center justify-center mb-4 overflow-hidden relative"
-  style={{
-    background: "linear-gradient(145deg, #ffffff, #fff8e1)", // soft white → warm yellow tint
-    boxShadow: "0 10px 30px rgba(255, 193, 7, 0.25), 0 6px 12px rgba(0,0,0,0.08)",
-    border: "1px solid rgba(255, 215, 0, 0.25)" // subtle gold border
-  }}
->
-  {/* Glow Ring */}
-  <div
-    className="absolute inset-0 rounded-2xl"
-    style={{
-      boxShadow: "0 0 20px rgba(255, 214, 0, 0.4)",
-      opacity: 0.6
-    }}
-  />
+      {/* Subtle background ambient glow */}
+      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/10 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/4 w-[350px] h-[350px] rounded-full bg-sky-500/5 blur-[120px] pointer-events-none" />
 
-  <Image
-    src="/administrator (1).png"
-    alt="Admin"
-    width={64}
-    height={64}
-    className="w-full h-full object-cover rounded-2xl relative z-10"
-  />
-</div> 
-          <h1 className="text-zinc-900 text-2xl font-semibold tracking-tight">Admin Portal</h1>
-          <p className="text-zinc-400 text-sm mt-1">Admin access only</p>
+      <div className="relative z-10 w-full max-w-md">
+        {/* Logo & Heading */}
+        <div className="flex flex-col items-center mb-8 text-center space-y-2">
+          <div className="h-16 w-16 rounded-2xl flex items-center justify-center mb-2 overflow-hidden bg-card border border-border shadow-lg shadow-primary/10">
+            <Image
+              src="/logo.png"
+              alt="Admin Logo"
+              width={48}
+              height={48}
+              className="object-contain"
+            />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-foreground">
+            Admin Portal
+          </h1>
+          <p className="text-muted-foreground text-xs sm:text-sm">
+            Sign in to manage portfolio case studies and intelligence articles
+          </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-xl shadow-zinc-100">
-          <div className="flex items-center gap-2 mb-6">
-            <Lock className="h-4 w-4" style={{ color: "#ffcc00" }} />
-            <span className="text-zinc-700 font-semibold text-sm">Enter your password to continue</span>
+        <div className="bg-card border border-border/80 rounded-3xl p-6 sm:p-8 shadow-xl shadow-primary/5">
+          <div className="flex items-center gap-2 mb-6 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <Lock className="h-4 w-4 text-primary" />
+            <span>Master Password Authentication</span>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
-              <input
+              <Input
                 id="admin-password"
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder="Enter admin password"
                 autoComplete="current-password"
-                className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3.5 pr-12 text-zinc-900 placeholder-zinc-400 text-sm focus:outline-none transition-all"
-                onFocus={(e) => { e.currentTarget.style.borderColor = "#ffcc00"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(255,170,23,0.12)"; }}
-                onBlur={(e) => { e.currentTarget.style.borderColor = "#e4e4e7"; e.currentTarget.style.boxShadow = "none"; }}
+                className="pr-12 h-12"
+                required
               />
-              <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors">
+              <button
+                type="button"
+                onClick={() => setShowPass(!showPass)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                aria-label={showPass ? "Hide password" : "Show password"}
+              >
                 {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
 
-            {error && (
-              <p className="text-red-600 text-xs bg-red-50 border border-red-100 rounded-lg px-4 py-2.5">{error}</p>
-            )}
-
-            <button
+            <Button
               id="admin-login-btn"
               type="submit"
               disabled={loading || !password}
-              className="w-full py-3.5 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              style={{ background: "linear-gradient(135deg, #ffcc00, #e8900a)", boxShadow: "0 4px 16px rgba(255,170,23,0.35)" }}
+              className="w-full h-12 font-bold text-sm sm:text-base rounded-xl shadow-md group"
             >
               {loading ? (
-                <><svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg> Verifying...</>
-              ) : "Access Dashboard"}
-            </button>
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Verifying Credentials...
+                </>
+              ) : (
+                <>
+                  Access Console
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </Button>
           </form>
         </div>
 
-        <p className="text-center text-zinc-400 text-xs mt-6">
+        <p className="text-center text-muted-foreground text-xs mt-6">
           Not the admin?{" "}
-          <a href="/" className="text-zinc-500 hover:text-zinc-900 transition-colors">Return to portfolio →</a>
+          <Link href="/" className="text-primary font-semibold hover:underline transition-colors">
+            Return to portfolio website →
+          </Link>
         </p>
       </div>
     </div>

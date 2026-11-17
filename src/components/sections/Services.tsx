@@ -1,81 +1,100 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Code2, Search, Share2, PenTool, BarChart3, Globe } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Code2, Search, Share2, PenTool, BarChart3, Globe, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const services = [
   {
-    title: "Web Development",
-    description: "Building responsive, high-performance websites using the latest technologies and best practices.",
+    title: "Web & Landing Pages",
+    description: "High-performance, conversion-optimized landing pages designed to turn ad traffic into paying customers.",
     icon: Code2,
-    color: "bg-blue-500/10 text-blue-500",
+    badge: "Development",
+    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
   },
   {
-    title: "SEO Optimization",
-    description: "Improving your website's visibility on search engines to drive organic traffic and growth.",
+    title: "Search Engine Optimization",
+    description: "Technical SEO audits, keyword dominance strategies, and organic ranking boosts that drive compounding traffic.",
     icon: Search,
-    color: "bg-primary/10 text-primary",
+    badge: "Organic Growth",
+    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
   },
   {
-    title: "Social Media Marketing",
-    description: "Engaging your audience across social platforms with creative content and targeted campaigns.",
-    icon: Share2,
-    color: "bg-pink-500/10 text-pink-500",
-  },
-  {
-    title: "Content Writing",
-    description: "Creating compelling stories and informative content that resonate with your target market.",
-    icon: PenTool,
-    color: "bg-orange-500/10 text-orange-500",
-  },
-  {
-    title: "Digital Strategy",
-    description: "Developing comprehensive digital roadmaps to help your business achieve its long-term goals.",
+    title: "Paid Advertising & SEM",
+    description: "Targeted Meta, Google, and LinkedIn ad campaigns built with strict ROI monitoring and A/B tested creative.",
     icon: BarChart3,
-    color: "bg-purple-500/10 text-purple-500",
+    badge: "Paid Media",
+    color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
   },
   {
-    title: "Brand Identity",
-    description: "Designing unique brand elements that reflect your values and stand out in the marketplace.",
+    title: "Social Media Growth",
+    description: "Engaging cross-platform audience growth campaigns with viral content planning and active community management.",
+    icon: Share2,
+    badge: "Social Media",
+    color: "bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/20",
+  },
+  {
+    title: "Content Marketing & Copy",
+    description: "Persuasive sales copywriting, blog authority pieces, and email sequences that nurture and close prospects.",
+    icon: PenTool,
+    badge: "Content",
+    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+  },
+  {
+    title: "Brand Strategy & Positioning",
+    description: "Crafting distinct visual and strategic brand positioning that makes you the undeniable leader in your niche.",
     icon: Globe,
-    color: "bg-green-500/10 text-green-500",
+    badge: "Strategy",
+    color: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
   },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 bg-white dark:bg-zinc-950">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <h2 className="text-primary font-bold uppercase tracking-wider text-sm">My Expertise</h2>
-          <h3 className="text-4xl md:text-5xl font-display font-extrabold tracking-tight">
-            How I Can <span className="text-primary italic">Help</span> You
-          </h3>
-          <p className="text-muted-foreground text-lg">
-            Comprehensive digital solutions tailored to your unique business needs and goals.
+    <section id="services" className="py-24 bg-muted/30 border-t border-border/40">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3.5">
+          <Badge variant="outline" className="px-3.5 py-1.5 border-primary/20 bg-primary/5 text-primary rounded-full text-xs font-semibold uppercase tracking-wider">
+            My Services & Solutions
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold tracking-tight text-foreground">
+            How I Can <span className="text-primary italic">Help</span> You Grow
+          </h2>
+          <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+            End-to-end digital marketing solutions engineered to accelerate revenue, brand authority, and client retention.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
-          {services.map((service, index) => (
-            <Card key={service.title} className="group hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <CardHeader className="p-4 md:p-6 pb-2 md:pb-4">
-                <div className={`h-10 w-10 md:h-14 md:w-14 rounded-xl md:rounded-2xl ${service.color} flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform`}>
-                  <service.icon className="h-5 w-5 md:h-7 md:w-7" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service) => (
+            <Card
+              key={service.title}
+              className="group relative border border-border/70 bg-card hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] flex flex-col justify-between"
+            >
+              <CardHeader className="p-6 pb-3">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`h-12 w-12 rounded-xl border ${service.color} flex items-center justify-center transition-transform duration-200 group-hover:scale-105`}>
+                    <service.icon className="h-6 w-6" />
+                  </div>
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/80 bg-muted/60 px-2.5 py-1 rounded-full border border-border/40">
+                    {service.badge}
+                  </span>
                 </div>
-                <CardTitle className="text-base md:text-2xl font-display font-bold group-hover:text-primary transition-colors line-clamp-1">
+                <CardTitle className="text-xl font-display font-bold text-foreground group-hover:text-primary transition-colors">
                   {service.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-4 md:p-6 pt-0 md:pt-0">
-                <CardDescription className="text-xs md:text-base leading-relaxed line-clamp-2 md:line-clamp-none">
+              <CardContent className="p-6 pt-0 flex-grow flex flex-col justify-between">
+                <CardDescription className="text-sm text-muted-foreground leading-relaxed">
                   {service.description}
                 </CardDescription>
-                <div className="mt-3 md:mt-6 pt-3 md:pt-6 border-t border-zinc-100 dark:border-zinc-800">
-                  <button className="text-[10px] md:text-sm font-bold flex items-center text-primary hover:translate-x-1 transition-transform">
-                    Learn More
-                    <svg className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                <div className="mt-6 pt-4 border-t border-border/50">
+                  <Link
+                    href="#contact"
+                    className="text-xs font-bold inline-flex items-center text-primary group-hover:translate-x-1 transition-transform duration-150 cursor-pointer"
+                  >
+                    <span>Request Proposal</span>
+                    <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                  </Link>
                 </div>
               </CardContent>
             </Card>

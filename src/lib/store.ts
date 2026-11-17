@@ -48,16 +48,20 @@ export function logout(): void {
 // ── Projects ──────────────────────────────────────────────────────────────────
 
 export async function getProjects(): Promise<Project[]> {
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .order("created_at", { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: true });
 
-  if (error || !data) {
-    return [];
+    if (error || !data || data.length === 0) {
+      return defaultProjects;
+    }
+
+    return data as Project[];
+  } catch {
+    return defaultProjects;
   }
-
-  return data as Project[];
 }
 
 export async function addProject(project: Project): Promise<void> {
@@ -78,25 +82,29 @@ export async function deleteProject(slug: string): Promise<void> {
 // ── Blogs ─────────────────────────────────────────────────────────────────────
 
 export async function getBlogs(): Promise<BlogPost[]> {
-  const { data, error } = await supabase
-    .from("blogs")
-    .select("*")
-    .order("id", { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from("blogs")
+      .select("*")
+      .order("id", { ascending: true });
 
-  if (error || !data) {
-    return [];
+    if (error || !data || data.length === 0) {
+      return defaultBlogs;
+    }
+
+    return data.map((b) => ({
+      id: b.id,
+      title: b.title,
+      excerpt: b.excerpt,
+      category: b.category,
+      date: b.date,
+      author: b.author,
+      readTime: b.read_time,
+      image: b.image,
+    })) as BlogPost[];
+  } catch {
+    return defaultBlogs;
   }
-
-  return data.map((b) => ({
-    id: b.id,
-    title: b.title,
-    excerpt: b.excerpt,
-    category: b.category,
-    date: b.date,
-    author: b.author,
-    readTime: b.read_time,
-    image: b.image,
-  })) as BlogPost[];
 }
 
 export async function addBlog(post: BlogPost): Promise<void> {

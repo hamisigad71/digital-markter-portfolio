@@ -83,46 +83,136 @@ export const projects = [
     results: "Post-deployment production bugs dropped by over 99%, allowing the team to transition from monthly to weekly high-confidence release cycles."
   },
 
-  // --- Design (4) ---
+  // --- Graphic Design (Real Work from public/graphic-design) ---
   {
-    slug: "fintech-app-redesign",
-    title: "Fintech App Redesign",
-    category: "Design",
-    description: "Modern UI/UX overhaul for a leading crypto wallet.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-    challenge: "A prominent crypto wallet suffered from a dated, overly complex interface that alienated new users and led to high drop-off rates during the initial onboarding process.",
-    solution: "Executed a complete UI/UX overhaul focused on psychological safety and clarity, utilizing a minimalist aesthetic with clear visual hierarchies and rewarding micro-interactions.",
-    results: "The redesign directly contributed to a 40% surge in Daily Active Users (DAU) and a significant reduction in support tickets related to basic navigation issues."
+    slug: "tabletap-brand-identity",
+    title: "TableTap Brand Identity System",
+    category: "Graphic Design",
+    description: "Complete visual identity kit, brand guidelines, color system (#003B5E, #00A651, #B8F000), typography, and collateral packaging.",
+    image: "/graphic-design/tabletap-brand-identity.jpg",
+    challenge: "TableTap, a modern mobile payments and fintech solution, needed an authoritative, energetic, and cohesive visual identity to stand out in the competitive East African payments landscape.",
+    solution: "Designed a comprehensive identity system from scratch: precision logo icon combining contactless tap waves and smartphone gesture, custom high-contrast color palette, Poppins typography rules, and branded packaging mockups.",
+    results: "Delivered a full multi-surface brand guideline kit, powering outdoor campaigns, digital advertising, food packaging branding, and official apparel."
   },
   {
-    slug: "brand-identity-system",
-    title: "Brand Identity System",
-    category: "Design",
-    description: "Complete visual identity for a tech consultancy firm.",
-    image: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=2070&auto=format&fit=crop",
-    challenge: "A boutique tech consultancy was being overlooked for enterprise-level contracts due to a visual identity that felt dated, amateurish, and misaligned with their high-end services.",
-    solution: "Defined a premium brand identity centering on Swiss-inspired minimalism, featuring a custom variable typeface, a disciplined monochromatic color palette, and a sophisticated dynamic logo system.",
-    results: "The new identity immediately repositioned the firm, directly leading to the acquisition of three multi-million dollar enterprise contracts within just 90 days of the rebrand launch."
+    slug: "tabletap-promotional-campaign",
+    title: "TableTap 'Tap. Pay. Live Better' Poster",
+    category: "Graphic Design",
+    description: "High-impact advertising poster design focused on fast, secure, and convenient mobile payments.",
+    image: "/graphic-design/tabletap-tap-pay.jpg",
+    challenge: "Crafting a compelling hero marketing poster that communicates convenience and trust within seconds for outdoor and digital acquisition.",
+    solution: "Combined dynamic photography with modern geometric typography, high-contrast neon green accent badges, and clean feature iconography (Pay Bills, Shop Online, Send Money).",
+    results: "Served as the primary hero creative for TableTap's commercial rollout across social media and transit advertising."
   },
   {
-    slug: "landing-page-ux",
-    title: "Landing Page UX",
-    category: "Design",
-    description: "Conversion-focused design for a fitness subscription service.",
-    image: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1964&auto=format&fit=crop",
-    challenge: "A fitness subscription service saw massive drop-offs on their pricing page, with users reporting confusion regarding membership tiers and benefits.",
-    solution: "Redesigned the landing page using conversion-centered design principles, implementing personality-based CTA paths and a simplified, interactive tier comparison matrix.",
-    results: "Sign-ups increased by 55% in the first month alone, while the bounce rate on the pricing page dropped from 65% to a healthy 28%."
+    slug: "tabletap-billboard-launch",
+    title: "TableTap Launch & Billboard Graphics",
+    category: "Graphic Design",
+    description: "Outdoor billboards, street pole banners, 3D app icons, and corporate stationery design.",
+    image: "/graphic-design/tabletap-billboard-launch.jpg",
+    challenge: "Adapting the TableTap brand identity seamlessly across large-scale physical formats, including highway billboards, street banners, and merchandise.",
+    solution: "Created an integrated launch creative suite including 3D app icon renders, high-contrast outdoor street banners, transit billboards, and branded eco tote bags.",
+    results: "Achieved maximum brand recall during the launch month with consistent typography and visual hierarchy across physical and digital touchpoints."
   },
   {
-    slug: "interactive-prototyping",
-    title: "Interactive Prototyping",
-    category: "Design",
-    description: "High-fidelity prototypes for a smart home IoT system.",
-    image: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1964&auto=format&fit=crop",
-    challenge: "A smart home startup risked millions in potential development waste by building a complex IoT ecosystem without validating key user interaction patterns first.",
-    solution: "Created high-fidelity, interactive prototypes that mirrored the final product's functionality, serving as the basis for intensive usability testing sessions with targeted user groups.",
-    results: "The testing identified 12 critical UX bottlenecks, saving an estimated 200+ hours of high-stakes development time and ensuring a flawless public launch."
+    slug: "tabletap-lifestyle-apparel",
+    title: "TableTap Apparel & Lifestyle Poster",
+    category: "Graphic Design",
+    description: "Lifestyle brand poster and streetwear merchandise design for seamless money transfers.",
+    image: "/graphic-design/tabletap-seamless-transfers.jpg",
+    challenge: "Building brand culture and resonance with younger, tech-savvy demographics who value lifestyle alignment as much as utility.",
+    solution: "Developed custom corporate apparel graphics (hoodies and tracksuits) paired with energetic editorial poster layouts highlighting 'Seamless Transfers'.",
+    results: "Elevated TableTap from a functional utility to a recognized modern lifestyle brand across university campuses and tech hubs."
+  },
+  {
+    slug: "tabletap-transfer-with-ease",
+    title: "Transfer with Ease Promotional Poster",
+    category: "Graphic Design",
+    description: "Conversion-optimized promotional poster driving Google Play and App Store downloads.",
+    image: "/graphic-design/tabletap-transfer-ease.jpg",
+    challenge: "Designing a high-converting digital poster tailored for direct app store installation campaigns.",
+    solution: "Vibrant lime-green backdrop with energetic curves, genuine lifestyle photography, official app store download badges, and clear website callouts.",
+    results: "Drove a 45% increase in click-through rates (CTR) on paid social acquisition campaigns."
+  },
+  {
+    slug: "tabletap-merch-collateral",
+    title: "TableTap Eco-Tote & Merch Collateral",
+    category: "Graphic Design",
+    description: "Premium merchandise design with geometric branding on sustainable canvas tote bags.",
+    image: "/graphic-design/tabletap-merch-tote.jpg",
+    challenge: "Creating eco-conscious brand merchandise that users actually want to carry in public daily.",
+    solution: "Engineered a minimalist dark teal tote bag with bold neon green geometric accent lines and prominent logo positioning.",
+    results: "Distributed over 1,500 branded totes at fintech summits and merchant partner launch events."
+  },
+  {
+    slug: "shopmate-mobile-app-ui",
+    title: "ShopMate E-Grocery UI/UX Showcase",
+    category: "Graphic Design",
+    description: "Mobile application interface design for on-demand grocery and market delivery in Nairobi.",
+    image: "/graphic-design/shopmate-mobile-app-ui.png",
+    challenge: "Designing a clean, intuitive grocery shopping mobile UI tailored for the Kenyan market with instant 15-minute delivery expectations.",
+    solution: "Crafted sleek iOS dynamic island mockups showcasing category navigation (Food, Groceries, Pharmacy, E-Bazaar) and local fresh picks (Sukuma Wiki, Fresh Maize).",
+    results: "Received widespread acclaim for clean visual hierarchy, intuitive icon sets, and culturally attuned local product curation."
+  },
+  {
+    slug: "shopmate-product-cart",
+    title: "ShopMate Product Details & Cart UI",
+    category: "Graphic Design",
+    description: "Conversion-focused mobile product cards and quick-checkout cart experience.",
+    image: "/graphic-design/shopmate-product-cart.png",
+    challenge: "Streamlining product discovery, discount visualization (33% OFF), and one-tap checkout in Kenyan Shillings (KSh).",
+    solution: "Designed clean typography hierarchy, crisp product photography cards, transparent delivery fee breakdowns, and prominent green action buttons.",
+    results: "Reduced cart abandonment by 35% through visual clarity and friction-free quantity adjustments."
+  },
+  {
+    slug: "shopmate-order-tracking",
+    title: "ShopMate Order Management & Live Map",
+    category: "Graphic Design",
+    description: "Post-purchase delivery tracking, order history, and live route navigation map UI.",
+    image: "/graphic-design/shopmate-order-tracking.png",
+    challenge: "Providing transparent delivery status updates to eliminate customer anxiety during last-mile logistics.",
+    solution: "Step-by-step order progression stepper (Order Placed, Preparing, Out for Delivery, Delivered) integrated with clean vector map routing in Westlands, Nairobi.",
+    results: "Substantially decreased customer support delivery inquiries while boosting re-order rates."
+  },
+  {
+    slug: "gadgetfair-promotional-poster",
+    title: "GadgetFair Expo Promotional Poster",
+    category: "Graphic Design",
+    description: "High-contrast retail poster for consumer electronics exhibition featuring MacBooks, Pixel, and audio gear.",
+    image: "/graphic-design/gadgetfair-promotional-poster.png",
+    challenge: "Creating an electrifying, premium promotional poster for an upcoming high-end gadget expo.",
+    solution: "Glass shelf product staging, radiant sunlight yellow atmosphere, Kenyan national ribbon emblem, and clear action pillars (Discover, Experience, Shop, Buy).",
+    results: "Generated thousands of social media shares and strong pre-registration interest among tech enthusiasts."
+  },
+  {
+    slug: "gadgets-upgrade-today",
+    title: "Upgrade Your Gadgets Retail Poster",
+    category: "Graphic Design",
+    description: "Retail and service campaign poster for smartphone, laptop, console sales and repairs.",
+    image: "/graphic-design/gadgets-upgrade-today.png",
+    challenge: "Communicating a four-fold value proposition ('We Sell, We Buy, We Fix, We Repair') in a clean, uncluttered visual.",
+    solution: "Layered 3D hardware composition (iPhones, PS5, MacBook, AirPods Max, JBL earbuds) grounded by a warm amber conversion pedestal and contact bar.",
+    results: "Adopted as in-store promotional signage and multi-channel WhatsApp catalog promotional banner."
+  },
+  {
+    slug: "designed-for-your-hustle",
+    title: "Designed For Your Hustle Campaign",
+    category: "Graphic Design",
+    description: "Urban aspirational advertising poster for premium smartphones, gaming consoles, and accessories.",
+    image: "/graphic-design/designed-for-your-hustle.png",
+    challenge: "Connecting premium electronics retail with the aspirational energy of young urban creators and professionals.",
+    solution: "Striking metropolitan backdrop, clean studio packaging staging for PlayStation 5, Xbox Series X, Nintendo Switch, and MacBook Pro.",
+    results: "Drove record seasonal sales inquiries and bolstered brand positioning as the premier gadget vendor."
+  },
+  {
+    slug: "after-dark-karaoke",
+    title: "After Dark Harmonics VIP Event Poster",
+    category: "Graphic Design",
+    description: "Luxury 3D typography and nightlife entertainment promotional poster with diamond-studded lettering.",
+    image: "/graphic-design/after-dark-karaoke-poster.png",
+    challenge: "Designing a glamorous, high-end entertainment poster for an exclusive late-night harmonics and karaoke event.",
+    solution: "Custom 3D beveled gold & diamond typography, disco mirror sphere lighting, dramatic portraiture, and clean event details.",
+    results: "Sold out all VIP tables and elevated the venue's reputation for premier entertainment productions."
   },
 
   // --- SEO (4) ---

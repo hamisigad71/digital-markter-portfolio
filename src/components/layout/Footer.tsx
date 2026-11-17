@@ -1,49 +1,63 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowUp } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-50 dark:bg-zinc-950 pt-20 pb-10 border-t border-zinc-200 dark:border-zinc-800">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16">
+    <footer className="bg-card/40 border-t border-border/60 pt-16 pb-12">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-14">
           {/* Brand Section */}
-          <div className="col-span-2 lg:col-span-1 space-y-4 md:space-y-6">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-10 h-10 md:w-12 md:h-12 bg-white rounded-lg shadow-sm border border-zinc-200 overflow-hidden group">
+          <div className="space-y-4">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative w-10 h-10 bg-card rounded-xl shadow-xs border border-border overflow-hidden transition-transform duration-200 group-hover:scale-105 active:scale-95">
                 <Image
                   src="/logo.png"
-                  alt="Daysman Gad  : Digital Marketer. Logo"
+                  alt="Daysman Gad : Digital Marketer Logo"
                   fill
-                  className="object-contain p-1.5 md:p-2"
+                  className="object-contain p-1.5"
                 />
               </div>
-              <span className="text-lg md:text-xl font-display font-bold text-zinc-900 dark:text-white">
+              <span className="text-lg font-display font-bold text-foreground">
                 Daysman <span className="text-primary italic">Marketer.</span>
               </span>
             </Link>
 
-            <p className="text-xs md:text-base text-muted-foreground leading-relaxed">
-              I provide high-quality digital marketing services to help your business grow in the digital landscape.
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-sm">
+              Helping forward-thinking brands scale through high-converting marketing funnels, data-driven SEO, and tailored paid campaigns.
             </p>
-            <div className="flex space-x-3 md:space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
-                <Link key={i} href="#" className="p-1.5 md:p-2 bg-white dark:bg-zinc-900 rounded-full shadow-sm hover:bg-primary hover:text-primary-foreground transition-all">
-                  <Icon className="h-4 w-4 md:h-5 md:w-5" />
+
+            <div className="flex space-x-2.5 pt-1">
+              {[
+                { icon: Facebook, href: "#", label: "Facebook" },
+                { icon: Twitter, href: "#", label: "Twitter" },
+                { icon: Instagram, href: "#", label: "Instagram" },
+                { icon: Linkedin, href: "#", label: "LinkedIn" },
+              ].map(({ icon: Icon, href, label }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="p-2 bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-primary/10 rounded-xl border border-border/60 transition-[background-color,color,transform] duration-150 active:scale-90"
+                >
+                  <Icon className="h-4 w-4" />
                 </Link>
               ))}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4 md:space-y-6">
-            <h3 className="text-base md:text-lg font-bold font-display">Quick Links</h3>
-            <ul className="space-y-2 md:space-y-4">
-              {["Home", "About", "Services", "Portfolio", "Contact"].map((item) => (
+          <div className="space-y-3.5">
+            <h3 className="text-sm font-bold font-display uppercase tracking-wider text-foreground">Navigation</h3>
+            <ul className="space-y-2 text-xs sm:text-sm">
+              {["Home", "About", "Services", "Portfolio", "Testimonials", "Contact"].map((item) => (
                 <li key={item}>
-                  <Link href={`#${item.toLowerCase()}`} className="text-xs md:text-base text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href={`#${item.toLowerCase()}`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
                     {item}
                   </Link>
                 </li>
@@ -52,12 +66,15 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div className="space-y-4 md:space-y-6">
-            <h3 className="text-base md:text-lg font-bold font-display">Services</h3>
-            <ul className="space-y-2 md:space-y-4">
-              {["Web Dev", "SEO", "Social", "Content"].map((item) => (
+          <div className="space-y-3.5">
+            <h3 className="text-sm font-bold font-display uppercase tracking-wider text-foreground">Core Services</h3>
+            <ul className="space-y-2 text-xs sm:text-sm">
+              {["Search Engine Optimization (SEO)", "PPC & Google Ads", "Social Media Strategy", "Content & Copywriting", "Conversion Rate Optimization"].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-xs md:text-base text-muted-foreground hover:text-primary transition-colors">
+                  <Link
+                    href="#services"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
                     {item}
                   </Link>
                 </li>
@@ -66,30 +83,31 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="col-span-2 lg:col-span-1 space-y-4 md:space-y-6">
-            <h3 className="text-base md:text-lg font-bold font-display">Get In Touch</h3>
-            <ul className="space-y-3 md:space-y-4">
-              <li className="flex items-start space-x-2 md:space-x-3 text-xs md:text-base text-muted-foreground">
-                <MapPin className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
-                <span>Nairobi , KE</span>
+          <div className="space-y-3.5">
+            <h3 className="text-sm font-bold font-display uppercase tracking-wider text-foreground">Get In Touch</h3>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-muted-foreground">
+              <li className="flex items-start space-x-2.5">
+                <MapPin className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <span>Nairobi, Kenya (Global Remote)</span>
               </li>
-              <li className="flex items-center space-x-2 md:space-x-3 text-xs md:text-base text-muted-foreground">
-                <Phone className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
-                <span>+254 742630973</span>
+              <li className="flex items-center space-x-2.5">
+                <Phone className="h-4 w-4 text-primary shrink-0" />
+                <span>+254 742 630 973</span>
               </li>
-              <li className="flex items-center space-x-2 md:space-x-3 text-xs md:text-base text-muted-foreground">
-                <Mail className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
+              <li className="flex items-center space-x-2.5">
+                <Mail className="h-4 w-4 text-primary shrink-0" />
                 <span className="truncate">hamisigad77@gmail.com</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm text-muted-foreground">
-          <p>© {currentYear} Daysman Gad  : Digital Marketer.. All rights reserved.</p>
+        {/* Bottom bar */}
+        <div className="border-t border-border/60 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
+          <p>© {currentYear} Daysman Gad : Digital Marketer. All rights reserved.</p>
           <div className="flex space-x-6">
-            <Link href="#" className="hover:text-primary">Privacy Policy</Link>
-            <Link href="#" className="hover:text-primary">Terms of Service</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

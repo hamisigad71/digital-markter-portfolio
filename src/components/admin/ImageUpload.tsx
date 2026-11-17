@@ -3,6 +3,9 @@
 import { useState, useRef } from "react";
 import { Upload, Link2, X, ImageIcon, Loader2 } from "lucide-react";
 import { handleImageUpload } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 interface Props {
   value: string;
@@ -23,9 +26,12 @@ export default function ImageUpload({ value, onChange, label }: Props) {
       const base64 = await handleImageUpload(file);
       onChange(base64);
       setShowUrlInput(false);
+      toast.success("Image uploaded successfully!");
     } catch (err) {
       console.error("Upload failed", err);
-      alert("Failed to upload image. Your file might be too large for Supabase storage (default limit is 50MB).");
+      toast.error("Upload failed", {
+        description: "Your file might be too large or there was an issue connecting to Supabase storage.",
+      });
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -50,9 +56,12 @@ export default function ImageUpload({ value, onChange, label }: Props) {
         const base64 = await handleImageUpload(file);
         onChange(base64);
         setShowUrlInput(false);
+        toast.success("Image uploaded successfully!");
       } catch (err) {
         console.error("Upload failed", err);
-        alert("Upload failed. Check your Supabase storage limits.");
+        toast.error("Upload failed", {
+          description: "Check your file size or Supabase storage permissions.",
+        });
       } finally {
         setIsUploading(false);
       }
@@ -62,7 +71,7 @@ export default function ImageUpload({ value, onChange, label }: Props) {
   return (
     <div className="space-y-2.5">
       {label && (
-        <label className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+        <label className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
           <ImageIcon className="h-3 w-3" />
           {label}
         </label>
@@ -70,50 +79,54 @@ export default function ImageUpload({ value, onChange, label }: Props) {
 
       <div className="relative group" onDragOver={handleDragOver} onDrop={handleDrop}>
         {value ? (
-          <div className="relative h-44 w-full rounded-2xl overflow-hidden border border-zinc-200 bg-zinc-50">
+          <div className="relative h-44 w-full rounded-2xl overflow-hidden border border-border bg-card">
             <img src={value} alt="Preview" className="w-full h-full object-cover" />
 
             {/* Hover overlay with actions */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
-              <button
+            <div className="absolute inset-0 bg-background/60 backdrop-blur-xs transition-opacity flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+              <Button
                 type="button"
+                size="sm"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-zinc-900 font-medium text-xs shadow-lg hover:bg-blue-700 hover:text-white transition-all"
+                className="rounded-xl shadow-md gap-1.5"
               >
-                {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
-                {isUploading ? "Uploading…" : "Replace"}
-              </button>
-              <button
+                {isUploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+                <span>{isUploading ? "Uploading…" : "Replace"}</span>
+              </Button>
+              <Button
                 type="button"
+                variant="destructive"
+                size="sm"
                 onClick={handleClear}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-red-500 font-medium text-xs shadow-lg hover:bg-red-500 hover:text-white transition-all"
+                className="rounded-xl shadow-md gap-1.5"
               >
-                <X className="h-4 w-4" />Remove
-              </button>
+                <X className="h-3.5 w-3.5" />
+                <span>Remove</span>
+              </Button>
             </div>
 
             {/* Bottom label */}
-            <div className="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-black/30 to-transparent">
-              <p className="text-[10px] text-white font-medium truncate bg-black/40 backdrop-blur-md py-1 px-2 rounded-lg inline-block max-w-full">
-                {value.startsWith('data:') ? 'Uploaded Image' : value}
+            <div className="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-background/80 to-transparent">
+              <p className="text-[10px] text-foreground font-mono font-medium truncate bg-card/80 backdrop-blur-md py-0.5 px-2 rounded-md inline-block max-w-full border border-border/40">
+                {value.startsWith('data:') ? 'Local Base64 Image' : value}
               </p>
             </div>
           </div>
         ) : (
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="h-44 w-full border-2 border-dashed border-zinc-200 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-blue-700 hover:bg-blue-50/30 transition-all group"
+            className="h-44 w-full border-2 border-dashed border-border/80 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary/60 hover:bg-muted/30 transition-colors group"
           >
             {isUploading ? (
-              <Loader2 className="h-8 w-8 text-blue-600 animate-spin" />
+              <Loader2 className="h-7 w-7 text-primary animate-spin" />
             ) : (
               <>
-                <div className="h-12 w-12 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-blue-100 group-hover:text-blue-600 transition-all">
-                  <Upload className="h-6 w-6" />
+                <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+                  <Upload className="h-5 w-5" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-zinc-900 group-hover:text-blue-700">Click to upload</p>
-                  <p className="text-xs text-zinc-400">PNG, JPG, WebP — max 50MB</p>
+                  <p className="text-sm font-semibold text-foreground">Click to upload or drag & drop</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">PNG, JPG, WebP — up to 50MB</p>
                 </div>
               </>
             )}
@@ -129,47 +142,34 @@ export default function ImageUpload({ value, onChange, label }: Props) {
         />
       </div>
 
-      {/* Always-visible upload button when image is set */}
-      {value && (
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={isUploading}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 border-dashed border-zinc-200 text-zinc-500 hover:border-blue-700 hover:text-blue-600 hover:bg-blue-50/30 transition-all text-xs font-medium disabled:opacity-50"
-        >
-          {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
-          {isUploading ? "Uploading…" : "Upload New Image"}
-        </button>
-      )}
-
       {/* URL input row */}
       <div className="flex items-center gap-3">
         {showUrlInput ? (
           <div className="relative flex-1">
-            <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
-            <input
+            <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+            <Input
               type="text"
               value={value.startsWith('data:') ? '' : value}
               onChange={(e) => onChange(e.target.value)}
-              placeholder="Or paste an image URL…"
-              className="w-full bg-zinc-50 border border-zinc-200 rounded-xl pl-9 pr-4 py-2 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-500/10 transition-all"
+              placeholder="Or paste an image URL (Unsplash, Pinterest, etc.)…"
+              className="pl-9 h-9 text-xs"
             />
           </div>
         ) : (
           <button
             type="button"
             onClick={() => setShowUrlInput(true)}
-            className="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1"
+            className="text-xs font-semibold text-primary hover:underline transition-colors flex items-center gap-1 cursor-pointer"
           >
             <Link2 className="h-3 w-3" />
-            Use URL instead
+            Use direct image URL instead
           </button>
         )}
       </div>
 
       {value.length > 500000 && (
-        <p className="text-[10px] text-orange-500 font-medium bg-orange-50 p-2 rounded-lg">
-          ⚠️ Large image detected. Use WebP or compressed images for faster load times.
+        <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium bg-amber-500/10 border border-amber-500/20 p-2 rounded-xl">
+          ⚠️ Large file size detected. For optimal mobile load times, prefer compressed WebP images under 300KB.
         </p>
       )}
     </div>
